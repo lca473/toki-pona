@@ -1687,7 +1687,13 @@ async function loadAdmin(){
     renderAdminTable();
   }catch(e){
     console.warn("Admin load failed:", e);
-    body.innerHTML = `<div class="admin-empty">Couldn't load learner data. Check your network or Firebase database rules.</div>`;
+    const perm = e && (e.code === 'PERMISSION_DENIED' || /permission_denied|Permission denied/i.test(e.message||''));
+    body.innerHTML = perm
+      ? `<div class="admin-empty"><b>Permission denied by Firebase.</b><br>
+          Your database rules don't allow reading the whole <code>users/</code> node.<br>
+          See the note below for the rule you need to add.</div>`
+      : `<div class="admin-empty">Couldn't load learner data.<br>
+          <span style="font-size:12px">${escapeHTML((e && e.message) || 'Unknown error')}</span></div>`;
     document.getElementById('adminSummary').innerHTML = '';
   }
 }
@@ -1866,7 +1872,7 @@ function renderLessonList(){
   const el = document.getElementById('lessonList');
   const intro = lessonsByCourse('intro');
   const adv = lessonsByCourse('advanced');
-  const gateOpen = introDone();
+  const gateOpen = introDone() || isAdmin(username);
 
   let html = `<div class="course-label"><span class="course-tag intro">Intro course</span><span class="course-sub">The essentials — grammar & first words</span></div>`;
   html += renderCourseCards(intro);
@@ -1884,9 +1890,9 @@ function renderLessonList(){
 function renderCourseCards(list){
   return list.map((les,i)=>{
     const done = state.completed.includes(les.id);
-    // a lesson is unlocked if it's the first of its course, or the previous lesson in the same course is done
+    // a lesson is unlocked if it's the first of its course, or the previous lesson in the same course is done. Admins see everything unlocked.
     const prev = i===0 ? null : list[i-1];
-    const unlocked = i===0 || state.completed.includes(prev.id);
+    const unlocked = isAdmin(username) || i===0 || state.completed.includes(prev.id);
     const cls = done ? 'done' : (unlocked ? '' : 'locked');
     const badge = done ? '✓ done' : (unlocked ? 'start →' : '🔒');
     const onclick = unlocked ? `onclick="startLesson(${les.id})"` : '';
