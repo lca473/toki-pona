@@ -101,7 +101,7 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 .stat-chip.xp .num{color:var(--gold);}
 .stat-chip.words .num{color:var(--gold);}
 
-.nav-cards{display:grid;gap:14px;padding:28px 0 60px;}
+.nav-cards{display:grid;gap:14px;padding:28px 0 16px;}
 .nav-card{display:flex;align-items:center;gap:16px;background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:20px;text-align:left;transition:.18s;position:relative;overflow:hidden;}
 .nav-card:active{transform:scale(.985);}
 .nav-card:hover{border-color:var(--accent-soft);transform:translateY(-2px);box-shadow:0 8px 24px rgba(43,33,24,0.08);}
@@ -133,7 +133,35 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 .account-chip:hover{border-color:var(--accent-soft);}
 .account-chip .dot{width:7px;height:7px;border-radius:50%;background:var(--good);}
 .account-chip .dot.off{background:var(--ink-dim);}
-.sync-state{font-size:11px;color:var(--ink-dim);text-align:center;margin-top:-4px;margin-bottom:6px;min-height:14px;font-weight:600;}
+.sync-state{font-size:11px;color:var(--ink-dim);text-align:center;margin-top:6px;margin-bottom:6px;min-height:14px;font-weight:600;}
+.home-actions{display:flex;gap:8px;justify-content:center;margin-bottom:10px;flex-wrap:wrap;}
+.account-bar{display:flex;align-items:center;gap:8px;margin-top:6px;}
+.account-bar .account-chip{margin-right:auto;}
+.home-action{font-size:12.5px;font-weight:700;padding:7px 14px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);transition:.15s;}
+.home-action:hover{border-color:var(--accent-soft);}
+.home-action.logout{color:var(--bad);}
+.home-action.logout:hover{border-color:var(--bad);background:var(--bad-bg);}
+.home-action.admin{color:var(--accent);}
+
+/* ── admin: all users' progress ── */
+.admin-bar{display:flex;gap:10px;align-items:center;margin:18px 0 14px;flex-wrap:wrap;}
+.admin-search{flex:1;min-width:160px;font-size:15px;padding:11px 14px;border:1.5px solid var(--line);border-radius:11px;background:var(--card);}
+.admin-search:focus{border-color:var(--accent-soft);}
+.admin-refresh{font-size:13px;font-weight:700;color:var(--accent);padding:11px 16px;border:1.5px solid var(--line);border-radius:11px;background:var(--card);}
+.admin-refresh:hover{border-color:var(--accent-soft);}
+.admin-summary{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
+.admin-summary .chip{background:var(--card);border:1.5px solid var(--line);border-radius:11px;padding:9px 15px;text-align:center;}
+.admin-summary .chip .n{font-family:var(--serif);font-weight:800;font-size:20px;color:var(--ink);}
+.admin-summary .chip .l{font-size:10.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-dim);}
+.admin-table{width:100%;border-collapse:collapse;background:var(--card);border:1.5px solid var(--line);border-radius:12px;overflow:hidden;font-size:13.5px;}
+.admin-table th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink-dim);font-weight:700;padding:11px 12px;border-bottom:1.5px solid var(--line);background:var(--paper2);}
+.admin-table td{padding:11px 12px;border-bottom:1px solid var(--line-soft);}
+.admin-table tr:last-child td{border-bottom:none;}
+.admin-table .u{font-weight:700;color:var(--accent);}
+.admin-table .mini-bar{height:7px;background:var(--paper2);border-radius:99px;overflow:hidden;min-width:80px;border:1px solid var(--line-soft);}
+.admin-table .mini-fill{height:100%;background:var(--accent);border-radius:99px;}
+.admin-empty{text-align:center;padding:50px 20px;color:var(--ink-dim);font-size:14.5px;line-height:1.6;}
+.admin-note{font-size:12px;color:var(--ink-dim);line-height:1.6;margin:14px 0 50px;}
 
 /* course labels in lesson list */
 .course-label{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
@@ -390,8 +418,6 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
     <div class="tagline">“the language of good” — a tiny, gentle language of about 130 words. learn it the slow, careful way.</div>
   </div>
   <div class="wrap">
-    <div style="display:flex;justify-content:center;margin-bottom:4px"><button class="account-chip" id="accountChip" onclick="openAccount()"><span class="dot" id="accountDot"></span><span id="accountLabel">account</span></button></div>
-    <div class="sync-state" id="syncState"></div>
     <div class="stat-row" id="homeStats"></div>
     <div class="nav-cards">
       <button class="nav-card lessons" onclick="go('lessons')">
@@ -415,6 +441,12 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
         <div class="nav-card-arrow">→</div>
       </button>
     </div>
+    <div class="account-bar" id="homeActions">
+      <button class="account-chip" id="accountChip" onclick="openAccount()"><span class="dot" id="accountDot"></span><span id="accountLabel">account</span></button>
+      <button class="home-action admin" id="adminBtn" onclick="openAdmin()" style="display:none">👁 Admin</button>
+      <button class="home-action logout" id="logoutBtn" onclick="logout()">⎋ Log out</button>
+    </div>
+    <div class="sync-state" id="syncState"></div>
   </div>
   <div class="home-footer">
     Content built from the official <i>pu</i> word list (Sonja Lang, <i>Toki Pona: The Language of Good</i>).<br>
@@ -514,6 +546,25 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
     <div class="section-head"><h2>How toki pona works</h2><p>Tap any section to expand. Best read in order the first time.</p></div>
     <div class="notice"><b>Good to know:</b> toki pona has very few rules. Word order is fixed and there are no verb tenses or plurals. Meaning comes from context — the same word can be a noun, verb, or adjective depending on where it sits.</div>
     <div class="grammar-body" id="grammarBody"></div>
+  </div>
+</div>
+
+<!-- ═══════════ ADMIN — all users' progress ═══════════ -->
+<div class="view" id="view-admin">
+  <div class="topbar"><div class="topbar-inner">
+    <button class="back-btn" onclick="go('home')">‹ Home</button>
+    <div class="topbar-title">Admin</div>
+    <div class="topbar-spacer"></div>
+  </div></div>
+  <div class="wrap">
+    <div class="section-head"><h2>All learners' progress</h2><p>Everyone signed in to this app, pulled live from the cloud.</p></div>
+    <div class="admin-summary" id="adminSummary"></div>
+    <div class="admin-bar">
+      <input id="adminSearch" class="admin-search" type="text" placeholder="Filter by username…" autocomplete="off" oninput="renderAdminTable()">
+      <button class="admin-refresh" onclick="loadAdmin()">↻ Refresh</button>
+    </div>
+    <div id="adminBody"></div>
+    <div class="admin-note">Totals are read directly from each learner's saved progress. Sorted by lessons completed.</div>
   </div>
 </div>
 
@@ -1386,6 +1437,13 @@ const SAVE_KEY = "sonaPonaProgress_v1";
 const SRS_KEY = "sonaPonaSRS_v1";
 const USER_KEY = "sonaPonaUser_v1";
 
+/* Usernames allowed to see the Admin (all-users progress) screen.
+   Compared case-insensitively. Add or remove names here. */
+const ADMIN_USERS = ["admin"];
+function isAdmin(name){
+  return !!name && ADMIN_USERS.map(u=>u.toLowerCase()).includes(String(name).toLowerCase());
+}
+
 // the signed-in username ("" = playing as a local-only guest)
 let username = "";
 function fbKey(u){ return String(u).replace(/[.#$\/\[\]]/g,"_"); }
@@ -1559,6 +1617,11 @@ function updateAccountChip(){
     label.textContent = "Sign in to sync";
     dot.className = "dot off";
   }
+  // logout button only makes sense when signed in; admin button only for admins
+  const logoutBtn = document.getElementById('logoutBtn');
+  const adminBtn = document.getElementById('adminBtn');
+  if(logoutBtn) logoutBtn.style.display = username ? '' : 'none';
+  if(adminBtn) adminBtn.style.display = isAdmin(username) ? '' : 'none';
 }
 
 function openAccount(){
@@ -1582,6 +1645,99 @@ function logout(){
   document.getElementById('loginUser').value = "";
   document.getElementById('loginPass').value = "";
   setSyncState("");
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ADMIN — view every signed-in learner's progress (read-only)
+   Pulls the whole  users/  node from Firebase. Visible only to
+   usernames listed in ADMIN_USERS.
+═══════════════════════════════════════════════════════════════ */
+let adminData = [];   // [{user, completed, xp, streak, cards, updatedAt}]
+
+function openAdmin(){
+  if(!isAdmin(username)){ alert("This area is for admins only."); return; }
+  go('admin');
+}
+
+async function loadAdmin(){
+  const body = document.getElementById('adminBody');
+  if(!isAdmin(username)){ body.innerHTML = `<div class="admin-empty">This area is for admins only.</div>`; return; }
+  if(!firebaseReady || !db){
+    body.innerHTML = `<div class="admin-empty">Cloud sync isn't connected, so there's no shared progress to show.<br>Admin needs Firebase to be configured.</div>`;
+    document.getElementById('adminSummary').innerHTML = '';
+    return;
+  }
+  body.innerHTML = `<div class="admin-empty">Loading learners…</div>`;
+  try{
+    const snap = await db.ref("users").once("value");
+    const all = snap.exists() ? snap.val() : {};
+    adminData = Object.keys(all).map(key=>{
+      const rec = all[key] || {};
+      const st = rec.state || {};
+      const cards = (rec.srs && rec.srs.cards) ? Object.keys(rec.srs.cards).length : 0;
+      return {
+        user: key,
+        completed: Array.isArray(st.completed) ? st.completed.length : 0,
+        xp: st.xp || 0,
+        streak: st.streak || 0,
+        cards,
+        updatedAt: rec.updatedAt || 0
+      };
+    });
+    renderAdminTable();
+  }catch(e){
+    console.warn("Admin load failed:", e);
+    body.innerHTML = `<div class="admin-empty">Couldn't load learner data. Check your network or Firebase database rules.</div>`;
+    document.getElementById('adminSummary').innerHTML = '';
+  }
+}
+
+function renderAdminTable(){
+  const body = document.getElementById('adminBody');
+  const summaryEl = document.getElementById('adminSummary');
+  const totalLessons = LESSONS.length;
+
+  // summary across all learners
+  const learners = adminData.length;
+  const totalXP = adminData.reduce((s,d)=>s+d.xp, 0);
+  const activeStreaks = adminData.filter(d=>d.streak>0).length;
+  summaryEl.innerHTML = `
+    <div class="chip"><div class="n">${learners}</div><div class="l">learners</div></div>
+    <div class="chip"><div class="n">${totalXP.toLocaleString()}</div><div class="l">total XP</div></div>
+    <div class="chip"><div class="n">${activeStreaks}</div><div class="l">on a streak</div></div>`;
+
+  const q = (document.getElementById('adminSearch').value || '').trim().toLowerCase();
+  let rows = adminData.slice();
+  if(q) rows = rows.filter(d=>d.user.toLowerCase().includes(q));
+  rows.sort((a,b)=> b.completed - a.completed || b.xp - a.xp);
+
+  if(rows.length===0){
+    body.innerHTML = `<div class="admin-empty">${adminData.length===0 ? 'No learners have signed in yet.' : 'No learners match that filter.'}</div>`;
+    return;
+  }
+
+  const fmtDate=(ms)=> ms ? new Date(ms).toLocaleDateString(undefined,{month:'short',day:'numeric'}) : '—';
+  body.innerHTML = `
+    <table class="admin-table">
+      <thead><tr>
+        <th>Learner</th><th>Lessons</th><th>Progress</th>
+        <th>XP</th><th>Streak</th><th>Cards</th><th>Last active</th>
+      </tr></thead>
+      <tbody>
+        ${rows.map(d=>{
+          const pct = totalLessons ? Math.round((d.completed/totalLessons)*100) : 0;
+          return `<tr>
+            <td class="u">${escapeHTML(d.user)}</td>
+            <td>${d.completed}/${totalLessons}</td>
+            <td><div class="mini-bar"><div class="mini-fill" style="width:${pct}%"></div></div></td>
+            <td>${d.xp.toLocaleString()}</td>
+            <td>${d.streak>0?('🔥 '+d.streak):'—'}</td>
+            <td>${d.cards}</td>
+            <td>${fmtDate(d.updatedAt)}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>`;
 }
 function bumpStreak(){
   const today = new Date().toISOString().slice(0,10);
@@ -1685,6 +1841,7 @@ function go(view){
   if(view==='lessons') renderLessonList();
   if(view==='dict') renderDict();
   if(view==='grammar') renderGrammar();
+  if(view==='admin') loadAdmin();
   if(view==='review') renderReviewHome();
 }
 
