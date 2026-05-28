@@ -161,6 +161,10 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 .admin-table .mini-bar{height:7px;background:var(--paper2);border-radius:99px;overflow:hidden;min-width:80px;border:1px solid var(--line-soft);}
 .admin-table .mini-fill{height:100%;background:var(--accent);border-radius:99px;}
 .admin-empty{text-align:center;padding:50px 20px;color:var(--ink-dim);font-size:14.5px;line-height:1.6;}
+.admin-table .del{text-align:right;white-space:nowrap;}
+.del-btn{font-size:12px;font-weight:700;color:var(--bad);padding:5px 11px;border:1.5px solid var(--line);border-radius:8px;background:var(--card);transition:.15s;}
+.del-btn:hover{border-color:var(--bad);background:var(--bad-bg);}
+.del-protected{color:var(--ink-dim);font-weight:700;}
 .admin-note{font-size:12px;color:var(--ink-dim);line-height:1.6;margin:14px 0 50px;}
 
 /* course labels in lesson list */
@@ -1727,11 +1731,15 @@ function renderAdminTable(){
     <table class="admin-table">
       <thead><tr>
         <th>Learner</th><th>Lessons</th><th>Progress</th>
-        <th>XP</th><th>Streak</th><th>Cards</th><th>Last active</th>
+        <th>XP</th><th>Streak</th><th>Cards</th><th>Last active</th><th></th>
       </tr></thead>
       <tbody>
         ${rows.map(d=>{
           const pct = totalLessons ? Math.round((d.completed/totalLessons)*100) : 0;
+          const protectedRow = isAdmin(d.user) || d.user.toLowerCase()===String(username).toLowerCase();
+          const delCell = protectedRow
+            ? `<td class="del"><span class="del-protected" title="Admin accounts can't be deleted here">—</span></td>`
+            : `<td class="del"><button class="del-btn" onclick="deleteUser('${escapeAttr(d.user)}')">Delete</button></td>`;
           return `<tr>
             <td class="u">${escapeHTML(d.user)}</td>
             <td>${d.completed}/${totalLessons}</td>
@@ -1740,10 +1748,50 @@ function renderAdminTable(){
             <td>${d.streak>0?('🔥 '+d.streak):'—'}</td>
             <td>${d.cards}</td>
             <td>${fmtDate(d.updatedAt)}</td>
+            ${delCell}
           </tr>`;
         }).join('')}
       </tbody>
     </table>`;
+}
+
+/* Delete a learner's account from the cloud. Destructive + permanent, so
+   it requires the admin to type the exact username to confirm. Admin
+   accounts (and your own) can't be deleted from here. */
+async function deleteUser(user){
+  if(!isAdmin(username)){ alert("This area is for admins only."); return; }
+  if(isAdmin(user) || user.toLowerCase()===String(username).toLowerCase()){
+    alert("Admin accounts can't be deleted here.");
+    return;
+  }
+  if(!firebaseReady || !db){ alert("Cloud isn't connected — nothing to delete."); return; }
+
+  const typed = prompt(
+    `Permanently delete the account "${user}"?\n\n` +
+    `This removes all of their cloud progress and flashcards and CANNOT be undone.\n\n` +
+    `To confirm, type the username exactly:`
+  );
+  if(typed === null) return;            // cancelled
+  if(typed.trim() !== user){
+    alert("That didn't match the username. Nothing was deleted.");
+    return;
+  }
+
+  const k = fbKey(user);
+  try{
+    // remove both their data and any stored password
+    await db.ref("users/"+k).remove();
+    await db.ref("passwords/"+k).remove();
+    // drop from the in-memory list and re-render without a full refetch
+    adminData = adminData.filter(d=>d.user !== user);
+    renderAdminTable();
+  }catch(e){
+    console.warn("Delete failed:", e);
+    const perm = e && (e.code === 'PERMISSION_DENIED' || /permission_denied|Permission denied/i.test(e.message||''));
+    alert(perm
+      ? `Delete denied by Firebase. Your database rules don't allow removing users/${k}.`
+      : `Couldn't delete "${user}": ${(e && e.message) || 'unknown error'}`);
+  }
 }
 function bumpStreak(){
   const today = new Date().toISOString().slice(0,10);
