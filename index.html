@@ -317,6 +317,7 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 .dict-entry:hover{border-color:var(--accent-soft);}
 .dict-word{font-family:var(--mono);font-weight:600;font-size:19px;color:var(--accent);}
 .dict-pos{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-dim);margin-left:8px;}
+.dict-nonpu{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#b07a00;background:rgba(255,200,0,0.16);border:1px solid rgba(255,200,0,0.4);border-radius:6px;padding:2px 6px;margin-left:8px;vertical-align:middle;}
 .dict-def{font-size:14px;color:var(--ink-soft);margin-top:4px;line-height:1.5;}
 .dict-def .hl{background:var(--gold-glow);border-radius:3px;padding:0 2px;color:var(--ink);font-weight:600;}
 .dict-note{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.5;background:var(--paper2);border-radius:8px;padding:7px 10px;}
@@ -643,6 +644,23 @@ const WORDS = [
   {w:"wawa",pos:"adj/noun", def:"power, strength, energy; strong, intense, confident", keys:["power","strength","energy","strong","intense","confident","force","mighty","powerful"]},
   {w:"weka",pos:"adj/verb", def:"absent, away, far; to remove, get rid of", keys:["away","absent","far","remove","gone","distant","get rid of","discard","leave","missing"]},
   {w:"wile",pos:"verb",     def:"to want, need, wish, desire; must, should, have to", keys:["want","need","wish","desire","must","should","have to","require","would like"]},
+  {w:"namako",pos:"noun/adj",nonpu:true,def:"spice; extra, additional; ornament, decoration", keys:["spice","extra","additional","ornament","decoration","seasoning","bonus","more","flavor"]},
+  {w:"kin", pos:"particle",nonpu:true,def:"also, too, indeed, in fact (emphasis)", keys:["also","too","indeed","in fact","even","really","emphasis"]},
+  {w:"oko", pos:"noun",    nonpu:true,def:"eye (variant of lukin used as a noun)", keys:["eye","eyes","see","sight","vision","look"]},
+  {w:"kipisi",pos:"verb",  nonpu:true,def:"to cut, divide, split, slice", keys:["cut","divide","split","slice","sever","separate","chop","section"]},
+  {w:"leko",pos:"noun",    nonpu:true,def:"square, block, cube; stairs; corner", keys:["square","block","cube","stairs","corner","brick","step","box"]},
+  {w:"monsuta",pos:"noun", nonpu:true,def:"monster, fear, dread; scary thing", keys:["monster","fear","dread","scary","fright","terror","afraid","horror"]},
+  {w:"tonsi",pos:"noun/adj",nonpu:true,def:"non-binary, genderqueer; trans; (gender) other than man or woman", keys:["nonbinary","non-binary","genderqueer","trans","transgender","enby","gender"]},
+  {w:"jasima",pos:"noun/verb",nonpu:true,def:"mirror, reflect; echo; opposite", keys:["mirror","reflect","reflection","echo","opposite","reverse","bounce"]},
+  {w:"kijetesantakalu",pos:"noun",nonpu:true,def:"raccoon, procyonid (and similar musteloids); originally a joke word", keys:["raccoon","procyonid","musteloid","weasel","otter","badger","animal","joke"]},
+  {w:"soko",pos:"noun",    nonpu:true,def:"mushroom, fungus", keys:["mushroom","fungus","fungi","toadstool","mold"]},
+  {w:"meso",pos:"adj",     nonpu:true,def:"mediocre, average, middling; neither one extreme nor the other", keys:["mediocre","average","middling","medium","middle","moderate","so-so","neutral"]},
+  {w:"epiku",pos:"adj",    nonpu:true,def:"epic, awesome, cool, great", keys:["epic","awesome","cool","great","amazing","wonderful","impressive"]},
+  {w:"kokosila",pos:"verb",nonpu:true,def:"to speak a non-toki-pona language in a toki pona setting; to refuse to use toki pona", keys:["speak other language","not toki pona","off-topic language","switch language"]},
+  {w:"lanpan",pos:"verb",  nonpu:true,def:"to take, seize, capture, grab, steal", keys:["take","seize","capture","grab","steal","snatch","grasp","obtain"]},
+  {w:"n",   pos:"particle",nonpu:true,def:"hmm, uh, mm (hesitation, thinking, or agreement sound)", keys:["hmm","uh","mm","um","hesitation","thinking","agreement","filler"]},
+  {w:"misikeke",pos:"noun",nonpu:true,def:"medicine, medical treatment, cure, remedy", keys:["medicine","medical","treatment","cure","remedy","drug","heal","pharmacy"]},
+  {w:"ku",  pos:"noun/verb",nonpu:true,def:"interacting with the Toki Pona Dictionary (lipu ku); to interact with that book", keys:["ku","dictionary","lipu ku","toki pona dictionary","interact"]},
 ];
 
 /* ════════════════════════════════════════════════════════════════
@@ -2116,8 +2134,9 @@ function renderTpResults(){
 
 function dictEntryHTML(w, defHTML){
   const noteHTML = w.note ? `<div class="dict-note"><span class="dict-note-tag">note</span> ${escapeHTML(w.note)}</div>` : '';
+  const kuBadge = w.nonpu ? `<span class="dict-nonpu" title="Not one of the 120 original (pu) words. From the 2021 Toki Pona Dictionary survey.">non-pu · ku suli</span>` : '';
   return `<div class="dict-entry">
-    <div><span class="dict-word">${w.w}</span><span class="dict-pos">${w.pos}</span></div>
+    <div><span class="dict-word">${w.w}</span><span class="dict-pos">${w.pos}</span>${kuBadge}</div>
     <div class="dict-def">${defHTML}</div>
     ${noteHTML}
   </div>`;
