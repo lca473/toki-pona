@@ -8,6 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,500&family=Spline+Sans:wght@400;500;600;700&family=Spline+Sans+Mono:wght@500;600&display=swap" rel="stylesheet">
+<!-- Firebase SDK (compat build — same versions used in the Liru app) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <style>
 /* ════════════════════════════════════════════════════════════════
    sona pona — a local toki pona trainer
@@ -108,6 +111,29 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 .nav-card.grammar .nav-card-icon{background:var(--sky-glow);}
 .nav-card.review .nav-card-icon{background:var(--gold-glow);}
 .review-due-badge{display:inline-block;margin-top:4px;font-size:12px;font-weight:700;color:var(--accent);}
+
+/* ── account / login ── */
+.login-screen{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 22px;text-align:center;}
+.login-card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:30px 24px;max-width:380px;width:100%;box-shadow:0 10px 30px rgba(17,17,153,0.08);}
+.login-logo{width:78px;height:91px;margin:0 auto 14px;}
+.login-logo svg{width:100%;height:100%;display:block;}
+.login-title{font-family:var(--serif);font-weight:800;font-size:30px;color:var(--accent);line-height:1;}
+.login-title em{font-style:italic;color:var(--gold);}
+.login-sub{font-family:var(--mono);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--ink-dim);margin-top:8px;}
+.login-msg{font-family:var(--serif);font-style:italic;font-size:14.5px;color:var(--ink-soft);margin:18px 0 22px;line-height:1.5;}
+.login-field{width:100%;font-size:16px;padding:13px 15px;border:1.5px solid var(--line);border-radius:11px;background:var(--paper);margin-bottom:12px;color:var(--ink);}
+.login-field:focus{border-color:var(--accent-soft);}
+.login-btn{width:100%;font-size:16px;font-weight:700;padding:13px;border-radius:11px;background:var(--accent);color:#fff;transition:.15s;}
+.login-btn:hover{background:var(--accent-soft);}
+.login-btn:disabled{opacity:.5;cursor:default;}
+.login-err{color:var(--bad);font-size:13px;font-weight:600;margin-bottom:12px;min-height:18px;}
+.login-skip{display:inline-block;margin-top:16px;font-size:13px;font-weight:600;color:var(--ink-dim);text-decoration:underline;background:none;}
+.login-cloud-note{font-size:12px;color:var(--ink-dim);margin-top:14px;line-height:1.5;}
+.account-chip{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--accent);padding:7px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);transition:.15s;}
+.account-chip:hover{border-color:var(--accent-soft);}
+.account-chip .dot{width:7px;height:7px;border-radius:50%;background:var(--good);}
+.account-chip .dot.off{background:var(--ink-dim);}
+.sync-state{font-size:11px;color:var(--ink-dim);text-align:center;margin-top:-4px;margin-bottom:6px;min-height:14px;font-weight:600;}
 
 /* course labels in lesson list */
 .course-label{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
@@ -333,8 +359,34 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 </head>
 <body>
 
+<!-- ═══════════ LOGIN / ACCOUNT ═══════════ -->
+<div class="view active" id="view-login">
+  <div class="login-screen">
+    <div class="login-card fade-up">
+      <div class="login-logo" aria-label="toki pona logo">
+        <svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+          <path d="M40 20 L34 4" fill="none" stroke="var(--ultramarine)" stroke-width="6" stroke-linecap="round"/>
+          <path d="M60 16 L60 2" fill="none" stroke="var(--ultramarine)" stroke-width="6" stroke-linecap="round"/>
+          <path d="M80 20 L86 4" fill="none" stroke="var(--ultramarine)" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="60" cy="80" r="50" fill="var(--icterine)" stroke="var(--ultramarine)" stroke-width="6"/>
+          <path d="M38 88 Q60 112 82 88" fill="none" stroke="var(--ultramarine)" stroke-width="6" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="login-title">sona <em>pona</em></div>
+      <div class="login-sub">toki pona trainer</div>
+      <div class="login-msg" id="loginMsg">Pick a username to save your progress to the cloud — then you can pick up on any device.</div>
+      <div class="login-err" id="loginErr"></div>
+      <input class="login-field" id="loginUser" type="text" autocomplete="username" placeholder="Username" maxlength="24" spellcheck="false">
+      <input class="login-field" id="loginPass" type="password" autocomplete="current-password" placeholder="Password (optional)">
+      <button class="login-btn" id="loginBtn" onclick="submitLogin()">Continue</button>
+      <div class="login-cloud-note" id="loginCloudNote"></div>
+      <button class="login-skip" onclick="skipLogin()">Just use this device (no account)</button>
+    </div>
+  </div>
+</div>
+
 <!-- ═══════════ HOME ═══════════ -->
-<div class="view active" id="view-home">
+<div class="view" id="view-home">
   <div class="home-head">
     <div class="tp-logo" aria-label="toki pona logo">
       <svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
@@ -351,6 +403,8 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
     <div class="tagline">“the language of good” — a tiny, gentle language of about 130 words. learn it the slow, careful way.</div>
   </div>
   <div class="wrap">
+    <div style="display:flex;justify-content:center;margin-bottom:4px"><button class="account-chip" id="accountChip" onclick="openAccount()"><span class="dot" id="accountDot"></span><span id="accountLabel">account</span></button></div>
+    <div class="sync-state" id="syncState"></div>
     <div class="stat-row" id="homeStats"></div>
     <div class="nav-cards">
       <button class="nav-card lessons" onclick="go('lessons')">
@@ -378,7 +432,7 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
   <div class="home-footer">
     Content built from the official <i>pu</i> word list (Sonja Lang, <i>Toki Pona: The Language of Good</i>).<br>
     To double-check anything, see the free official course <b>o kama sona e toki pona</b> and jan Misali's video series.<br>
-    Runs entirely on your device. No account, no internet needed.
+    Runs on your device and, when you're signed in, syncs your progress to the cloud.
   </div>
 </div>
 
@@ -1306,32 +1360,242 @@ const GRAMMAR = [
 ];
 
 /* ════════════════════════════════════════════════════════════════
-   STATE & PERSISTENCE
+   FIREBASE CONFIG
+   ────────────────────────────────────────────────────────────────
+   Firebase web API keys are PUBLIC by design — security is enforced
+   by the database rules in the Firebase console, not by key secrecy.
+   It is safe to commit this to a public GitHub repo.
+
+   ▶▶ PASTE YOUR OWN firebaseConfig OBJECT FROM THE FIREBASE CONSOLE
+      OVER THE PLACEHOLDER BELOW. (Setup guide is in the chat.)
+═══════════════════════════════════════════════════════════════ */
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDxohEDO38OtmH3zfJrhXb_Ps8kA5jJZqc",
+  authDomain: "toki-pona-34adf.firebaseapp.com",
+  databaseURL: "https://toki-pona-34adf-default-rtdb.firebaseio.com",
+  projectId: "toki-pona-34adf",
+  storageBucket: "toki-pona-34adf.firebasestorage.app",
+  messagingSenderId: "116234463173",
+  appId: "1:116234463173:web:b1522a2460b7ea74740dac"
+};
+
+let db = null;
+let firebaseReady = false;
+try {
+  if (typeof firebase !== "undefined" && firebase.initializeApp && FIREBASE_CONFIG.apiKey !== "YOUR_API_KEY") {
+    firebase.initializeApp(FIREBASE_CONFIG);
+    db = firebase.database();
+    firebaseReady = true;
+  }
+} catch(e){ console.warn("Firebase init failed:", e); }
+
+/* ════════════════════════════════════════════════════════════════
+   STATE & PERSISTENCE  (local-first, with optional cloud sync)
+   ────────────────────────────────────────────────────────────────
+   • Progress (state) and flashcards (srs) always live in localStorage.
+   • When the user is signed in, every save also pushes to Firebase,
+     and on login we pull the cloud copy and merge it in.
 ═══════════════════════════════════════════════════════════════ */
 const SAVE_KEY = "sonaPonaProgress_v1";
 const SRS_KEY = "sonaPonaSRS_v1";
+const USER_KEY = "sonaPonaUser_v1";
+
+// the signed-in username ("" = playing as a local-only guest)
+let username = "";
+function fbKey(u){ return String(u).replace(/[.#$\/\[\]]/g,"_"); }
+
+// per-user localStorage keys so two accounts on one device don't collide
+function keyFor(base){ return username ? base + "__" + fbKey(username) : base; }
+
 let state = loadState();
 let srs = loadSRS();
 
 function loadState(){
   try{
-    const raw = localStorage.getItem(SAVE_KEY);
+    const raw = localStorage.getItem(keyFor(SAVE_KEY));
     if(raw) return JSON.parse(raw);
   }catch(e){}
   return { completed:[], xp:0, streak:0, lastDay:null };
 }
 function saveState(){
-  try{ localStorage.setItem(SAVE_KEY, JSON.stringify(state)); }catch(e){}
+  try{ localStorage.setItem(keyFor(SAVE_KEY), JSON.stringify(state)); }catch(e){}
+  cloudSave();
 }
 function loadSRS(){
   try{
-    const raw = localStorage.getItem(SRS_KEY);
+    const raw = localStorage.getItem(keyFor(SRS_KEY));
     if(raw) return JSON.parse(raw);
   }catch(e){}
   return { cards:{} }; // cards keyed by tp word
 }
 function saveSRS(){
-  try{ localStorage.setItem(SRS_KEY, JSON.stringify(srs)); }catch(e){}
+  try{ localStorage.setItem(keyFor(SRS_KEY), JSON.stringify(srs)); }catch(e){}
+  cloudSave();
+}
+
+/* ── CLOUD SYNC ──────────────────────────────────────────────────
+   All of a user's data lives under  users/<key>/  as:
+     { state:{...}, srs:{cards:{...}}, updatedAt:<ms> }
+   We debounce writes so a burst of saves becomes one network call. */
+let cloudSaveTimer = null;
+function setSyncState(txt){
+  const el = document.getElementById('syncState');
+  if(el) el.textContent = txt;
+}
+function cloudSave(){
+  if(!firebaseReady || !db || !username) return;
+  setSyncState("saving…");
+  clearTimeout(cloudSaveTimer);
+  cloudSaveTimer = setTimeout(()=>{
+    db.ref("users/"+fbKey(username)).update({
+      state: state,
+      srs: srs,
+      updatedAt: Date.now()
+    })
+    .then(()=> setSyncState("✓ saved to cloud"))
+    .catch(e=>{ console.warn("Firebase save error:", e); setSyncState("offline — saved on this device"); });
+  }, 600);
+}
+
+// Pull the cloud copy for this user. Returns {state, srs} or null.
+async function cloudPull(user){
+  if(!firebaseReady || !db || !user) return null;
+  try{
+    const snap = await db.ref("users/"+fbKey(user)).once("value");
+    if(snap.exists()) return snap.val();
+  }catch(e){ console.warn("Firebase load error:", e); }
+  return null;
+}
+
+// Merge a cloud snapshot into local state+srs. Cloud is treated as the
+// source of truth for "have I completed this lesson" and for which cards
+// exist; for XP/streak we keep whichever is larger so progress never
+// goes backwards after playing offline on a second device.
+function mergeCloud(cloud){
+  if(!cloud) return;
+  if(cloud.state){
+    const c = cloud.state;
+    state.completed = Array.from(new Set([...(state.completed||[]), ...(c.completed||[])]));
+    state.xp = Math.max(state.xp||0, c.xp||0);
+    state.streak = Math.max(state.streak||0, c.streak||0);
+    state.lastDay = c.lastDay || state.lastDay || null;
+  }
+  if(cloud.srs && cloud.srs.cards){
+    // adopt every cloud card; for cards in both, keep the one reviewed most recently
+    const cc = cloud.srs.cards;
+    Object.keys(cc).forEach(w=>{
+      const local = srs.cards[w];
+      if(!local){ srs.cards[w] = cc[w]; }
+      else {
+        const cloudNewer = (cc[w].due||0) >= (local.due||0);
+        srs.cards[w] = cloudNewer ? cc[w] : local;
+      }
+    });
+  }
+  try{
+    localStorage.setItem(keyFor(SAVE_KEY), JSON.stringify(state));
+    localStorage.setItem(keyFor(SRS_KEY), JSON.stringify(srs));
+  }catch(e){}
+}
+
+/* ── ACCOUNT / LOGIN ─────────────────────────────────────────────
+   Username-only by default. An OPTIONAL password adds a light guard
+   so a stranger can't load your data just by guessing your name.
+   This is convenience, NOT real security — see the README. */
+async function submitLogin(){
+  const errEl = document.getElementById('loginErr');
+  const btn   = document.getElementById('loginBtn');
+  errEl.textContent = "";
+  const name = document.getElementById('loginUser').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  if(!name){ errEl.textContent = "Please enter a username."; return; }
+  if(name.length < 2){ errEl.textContent = "Username must be at least 2 characters."; return; }
+
+  btn.disabled = true; btn.textContent = "Connecting…";
+
+  if(firebaseReady && db){
+    try{
+      const k = fbKey(name);
+      // Check for an existing stored password on this account.
+      const pwSnap = await db.ref("passwords/"+k).once("value");
+      const stored = pwSnap.exists() ? pwSnap.val() : null;
+      if(stored){
+        if(pass !== stored){
+          errEl.textContent = "Wrong password for that username.";
+          btn.disabled = false; btn.textContent = "Continue"; return;
+        }
+      } else if(pass){
+        // first time + a password given → claim it for this username
+        await db.ref("passwords/"+k).set(pass);
+      }
+    }catch(e){
+      console.warn("Login check failed:", e);
+      // fall through — let them in as a local user if the network is down
+    }
+  }
+
+  await finishLogin(name);
+}
+
+async function finishLogin(name){
+  username = name;
+  try{ localStorage.setItem(USER_KEY, name); }catch(e){}
+  // reload local data scoped to this username, then merge the cloud copy
+  state = loadState();
+  srs = loadSRS();
+  const cloud = await cloudPull(name);
+  if(cloud){ mergeCloud(cloud); }
+  // a fresh login also writes back the merged result
+  cloudSave();
+  enterApp();
+}
+
+function skipLogin(){
+  username = "";
+  state = loadState();
+  srs = loadSRS();
+  enterApp();
+}
+
+function enterApp(){
+  updateAccountChip();
+  go('home');
+}
+
+function updateAccountChip(){
+  const dot = document.getElementById('accountDot');
+  const label = document.getElementById('accountLabel');
+  if(!label) return;
+  if(username){
+    label.textContent = username;
+    dot.className = "dot" + (firebaseReady ? "" : " off");
+  } else {
+    label.textContent = "Sign in to sync";
+    dot.className = "dot off";
+  }
+}
+
+function openAccount(){
+  if(username){
+    if(confirm("Signed in as \""+username+"\".\n\nSign out? Your progress stays saved in the cloud and you can sign back in anytime.")){
+      logout();
+    }
+  } else {
+    // go back to the login screen
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById('view-login').classList.add('active');
+    window.scrollTo(0,0);
+  }
+}
+
+function logout(){
+  username = "";
+  try{ localStorage.removeItem(USER_KEY); }catch(e){}
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-login').classList.add('active');
+  document.getElementById('loginUser').value = "";
+  document.getElementById('loginPass').value = "";
+  setSyncState("");
 }
 function bumpStreak(){
   const today = new Date().toISOString().slice(0,10);
@@ -1431,7 +1695,7 @@ function go(view){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+view).classList.add('active');
   window.scrollTo(0,0);
-  if(view==='home') renderHome();
+  if(view==='home'){ updateAccountChip(); renderHome(); }
   if(view==='lessons') renderLessonList();
   if(view==='dict') renderDict();
   if(view==='grammar') renderGrammar();
@@ -2075,8 +2339,27 @@ function shuffle(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.rando
 function escapeHTML(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function escapeAttr(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-/* init */
-renderHome();
+/* Enter key submits the login form */
+['loginUser','loginPass'].forEach(id=>{
+  const el = document.getElementById(id);
+  if(el) el.addEventListener('keydown', e=>{ if(e.key==='Enter') submitLogin(); });
+});
+
+/* init / bootstrap ──────────────────────────────────────────────
+   If the user signed in before, silently resume their session and
+   re-sync from the cloud. Otherwise show the login screen. */
+async function boot(){
+  let saved = "";
+  try{ saved = localStorage.getItem(USER_KEY) || ""; }catch(e){}
+  if(saved){
+    document.getElementById('loginUser').value = saved;
+    await finishLogin(saved);   // pulls cloud, merges, enters app
+  } else {
+    // stay on the login screen (already the active view)
+    updateAccountChip();
+  }
+}
+boot();
 </script>
 </body>
 </html>
