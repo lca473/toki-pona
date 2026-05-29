@@ -19,30 +19,54 @@
    (Sonja Lang, Toki Pona: The Language of Good).
 ═══════════════════════════════════════════════════════════════ */
 :root{
-  /* toki pona official book palette: ultramarine #111199 + icterine #FFFF77 */
+  /* ── toki pona's own two colors. ultramarine #111199 + icterine #FFFF77.
+        nothing else competes: every accent is a tint of blue or gold. ── */
   --ultramarine:#111199;
   --icterine:#FFFF77;
-  --paper:#FBFBEC;       /* very soft warm white with a yellow hint */
-  --paper2:#F4F2D6;      /* pale icterine wash */
-  --card:#FFFFFF;
-  --ink:#15155A;         /* deep ultramarine-ink for body text */
-  --ink-soft:#33339A;
-  --ink-dim:#7A7AB8;
-  --line:#C9C9E8;
-  --line-soft:#E0E0F2;
-  --accent:#111199;      /* ultramarine — primary */
-  --accent-soft:#4A4AC4;
-  --accent-glow:rgba(17,17,153,0.12);
-  --leaf:#2E8B57;        /* a toki-pona-friendly green (laso leans blue-green) */
-  --leaf-glow:rgba(46,139,87,0.14);
-  --gold:#8A7400;        /* deepened icterine, legible as text on white */
-  --gold-glow:rgba(255,255,119,0.45);
-  --sky:#2A6FB0;
-  --sky-glow:rgba(42,111,176,0.12);
+
+  /* warm icterine-tinted paper, the colour of the official book's pages */
+  --paper:#FCFBE4;       /* soft warm yellow-white */
+  --paper2:#F6F2C8;      /* deeper icterine wash for headers */
+  --card:#FFFFFD;
+
+  /* ink: everything readable is deep ultramarine, never grey, never brown */
+  --ink:#13136B;         /* deep ultramarine-ink for body text */
+  --ink-soft:#2A2AA0;
+  --ink-dim:#6E6EC0;
+
+  /* hairlines: faint ultramarine, so even borders stay "blue" */
+  --line:#C7C7EC;
+  --line-soft:#E2E2F5;
+
+  /* primary action = ultramarine */
+  --accent:#111199;
+  --accent-soft:#3A3AC0;
+  --accent-glow:rgba(17,17,153,0.10);
+
+  /* the warm accent is gold (legible icterine) — used wherever a second
+     colour is needed. it REPLACES the old green & "sky" blue entirely. */
+  --gold:#9A7E00;        /* deepened icterine, legible as text on white */
+  --gold-deep:#7C6500;
+  --gold-fill:#E8C400;   /* bright icterine for solid fills that must read yellow */
+  --gold-glow:rgba(255,255,119,0.55);
+  --gold-bg:#FBF3B8;
+
+  /* legacy aliases kept so existing class names keep working. text-bearing
+     accents resolve to ultramarine; only soft yellow washes stay yellow. */
+  --leaf:var(--accent);
+  --leaf-glow:var(--accent-glow);
+  --sky:var(--accent);
+  --sky-glow:var(--gold-glow);
+
+  /* functional feedback only. success signals in ultramarine (no green, no
+     brown); only its wash background stays a soft icterine yellow. */
   --bad:#C0392B;
-  --bad-bg:#F7DCD8;
-  --good:#2E8B57;
-  --good-bg:#D8EFE0;
+  --bad-bg:#F8DAD5;
+  --good:var(--accent);
+  --good-bg:#FBF3B8;
+
+  --shadow:rgba(17,17,153,0.10);   /* every shadow is now ultramarine, not brown */
+
   --radius:14px;
   --serif:'Fraunces',Georgia,serif;
   --sans:'Spline Sans',system-ui,sans-serif;
@@ -54,8 +78,10 @@ body{
   font-family:var(--sans);background:var(--paper);color:var(--ink);
   min-height:100vh;min-height:100dvh;overflow-x:hidden;
   background-image:
-    radial-gradient(circle at 12% 18%, rgba(17,17,153,0.05), transparent 40%),
-    radial-gradient(circle at 88% 82%, rgba(255,255,119,0.18), transparent 42%);
+    radial-gradient(circle at 14% 10%, rgba(17,17,153,0.07), transparent 45%),
+    radial-gradient(circle at 86% 16%, rgba(255,255,119,0.30), transparent 46%),
+    radial-gradient(circle at 50% 100%, rgba(255,255,119,0.22), transparent 55%);
+  background-attachment:fixed;
 }
 button{font-family:var(--sans);cursor:pointer;border:none;outline:none;color:var(--ink);background:none;}
 input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
@@ -76,7 +102,7 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 .wrap{max-width:680px;margin:0 auto;padding:0 20px;}
 
 /* ── top nav ── */
-.topbar{position:sticky;top:0;z-index:100;background:rgba(244,236,216,0.92);backdrop-filter:blur(10px);border-bottom:1.5px solid var(--line);}
+.topbar{position:sticky;top:0;z-index:100;background:rgba(246,242,200,0.92);backdrop-filter:blur(10px);border-bottom:1.5px solid var(--line);}
 .topbar-inner{max-width:680px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:13px 20px;}
 .back-btn{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--ink-soft);padding:7px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);transition:.15s;}
 .back-btn:hover{border-color:var(--accent-soft);color:var(--accent);}
@@ -84,32 +110,37 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 .topbar-spacer{width:84px;}
 
 /* ── home ── */
-.home-head{text-align:center;padding:40px 20px 14px;}
+.home-head{text-align:center;padding:48px 20px 18px;position:relative;}
+.home-head::after{content:"";display:block;width:64px;height:4px;border-radius:99px;margin:22px auto 0;background:linear-gradient(90deg,var(--ultramarine) 0 50%,var(--icterine) 50% 100%);}
 .tp-logo{width:auto;height:107px;margin:0 auto 16px;filter:drop-shadow(0 4px 10px rgba(17,17,153,0.18));animation:logoPop .5s ease-out both;text-align:center;}
 .tp-logo svg,.tp-logo img{height:100%;width:auto;max-width:160px;display:inline-block;object-fit:contain;}
 @keyframes logoPop{from{opacity:0;transform:scale(.6) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.logo-mark{font-family:var(--serif);font-weight:800;font-size:46px;letter-spacing:-1px;color:var(--accent);line-height:1;}
-.logo-mark em{font-style:italic;color:var(--gold);}
+.logo-mark{font-family:var(--serif);font-weight:800;font-size:48px;letter-spacing:-1px;color:var(--accent);line-height:1;}
+.logo-mark em{font-style:italic;color:#1CA4C9;}
 .logo-sub{font-family:var(--mono);font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--ink-dim);margin-top:10px;}
-.tagline{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--ink-soft);margin-top:20px;max-width:420px;margin-left:auto;margin-right:auto;line-height:1.5;}
+.tagline{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--ink-soft);margin-top:20px;max-width:430px;margin-left:auto;margin-right:auto;line-height:1.55;}
 
 .stat-row{display:flex;gap:10px;justify-content:center;margin:24px 0 8px;flex-wrap:wrap;}
 .stat-chip{display:flex;flex-direction:column;align-items:center;gap:2px;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:10px 18px;min-width:84px;}
 .stat-chip .num{font-family:var(--serif);font-weight:800;font-size:22px;color:var(--ink);}
 .stat-chip .lbl{font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-dim);}
+.stat-chip.streak{border-color:var(--line);}
 .stat-chip.streak .num{color:var(--accent);}
-.stat-chip.xp .num{color:var(--gold);}
-.stat-chip.words .num{color:var(--gold);}
+.stat-chip.xp .num{color:var(--accent);}
+.stat-chip.words .num{color:var(--accent);}
 
 .nav-cards{display:grid;gap:14px;padding:28px 0 16px;}
 .nav-card{display:flex;align-items:center;gap:16px;background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:20px;text-align:left;transition:.18s;position:relative;overflow:hidden;}
+.nav-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--accent);opacity:.0;transition:.18s;}
+.nav-card:hover::before{opacity:1;}
 .nav-card:active{transform:scale(.985);}
-.nav-card:hover{border-color:var(--accent-soft);transform:translateY(-2px);box-shadow:0 8px 24px rgba(43,33,24,0.08);}
-.nav-card-icon{width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:27px;flex-shrink:0;}
-.nav-card.lessons .nav-card-icon{background:var(--accent-glow);}
-.nav-card.dict .nav-card-icon{background:var(--leaf-glow);}
-.nav-card.grammar .nav-card-icon{background:var(--sky-glow);}
-.nav-card.review .nav-card-icon{background:var(--gold-glow);}
+.nav-card:hover{border-color:var(--accent-soft);transform:translateY(-2px);box-shadow:0 8px 24px var(--shadow);}
+.nav-card-icon{width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:27px;flex-shrink:0;border:1.5px solid transparent;}
+/* alternate the two toki pona colours card-by-card for a unified rhythm */
+.nav-card.lessons .nav-card-icon{background:var(--accent-glow);border-color:rgba(17,17,153,0.22);}
+.nav-card.dict .nav-card-icon{background:var(--gold-bg);border-color:rgba(154,126,0,0.30);}
+.nav-card.review .nav-card-icon{background:var(--accent-glow);border-color:rgba(17,17,153,0.22);}
+.nav-card.grammar .nav-card-icon{background:var(--gold-bg);border-color:rgba(154,126,0,0.30);}
 .review-due-badge{display:inline-block;margin-top:4px;font-size:12px;font-weight:700;color:var(--accent);}
 
 /* ── account / login ── */
@@ -118,7 +149,7 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 .login-logo{width:auto;height:91px;margin:0 auto 14px;text-align:center;}
 .login-logo svg,.login-logo img{height:100%;width:auto;max-width:140px;display:inline-block;object-fit:contain;}
 .login-title{font-family:var(--serif);font-weight:800;font-size:30px;color:var(--accent);line-height:1;}
-.login-title em{font-style:italic;color:var(--gold);}
+.login-title em{font-style:italic;color:#1CA4C9;}
 .login-sub{font-family:var(--mono);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--ink-dim);margin-top:8px;}
 .login-msg{font-family:var(--serif);font-style:italic;font-size:14.5px;color:var(--ink-soft);margin:18px 0 22px;line-height:1.5;}
 .login-field{width:100%;font-size:16px;padding:13px 15px;border:1.5px solid var(--line);border-radius:11px;background:var(--paper);margin-bottom:12px;color:var(--ink);}
@@ -171,7 +202,7 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 .course-label{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
 .course-tag{font-family:var(--serif);font-weight:800;font-size:18px;padding:3px 12px;border-radius:9px;}
 .course-tag.intro{background:var(--accent-glow);color:var(--accent);}
-.course-tag.adv{background:var(--sky-glow);color:var(--sky);}
+.course-tag.adv{background:var(--gold-bg);color:var(--accent);}
 .course-sub{font-size:13px;color:var(--ink-dim);}
 .course-locked{background:var(--card);border:2px dashed var(--line);border-radius:var(--radius);padding:24px 18px;text-align:center;font-size:14.5px;color:var(--ink-soft);line-height:1.6;}
 
@@ -191,13 +222,13 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 .rb-word{font-family:var(--mono);font-weight:600;font-size:16px;color:var(--accent);min-width:64px;}
 .rb-en{flex:1;font-size:13.5px;color:var(--ink-soft);}
 .rb-status{font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;text-transform:uppercase;letter-spacing:.5px;}
-.rb-status.new{background:var(--sky-glow);color:var(--sky);}
+.rb-status.new{background:var(--gold-bg);color:var(--accent);}
 .rb-status.due{background:var(--accent-glow);color:var(--accent);}
 .rb-status.learned{background:var(--good-bg);color:var(--good);}
 
 /* flashcard session */
 .review-progress{height:10px;background:var(--paper2);border:1.5px solid var(--line);border-radius:99px;overflow:hidden;margin:20px 0 8px;}
-.review-progress-fill{height:100%;background:var(--gold);border-radius:99px;transition:width .4s;}
+.review-progress-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .4s;}
 .review-count{text-align:center;font-size:12.5px;font-weight:600;color:var(--ink-dim);margin-bottom:18px;}
 .flashcard{perspective:1200px;cursor:pointer;height:230px;margin-bottom:8px;}
 .flashcard-inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d;}
@@ -214,10 +245,10 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 .rate-btn span{font-size:10.5px;font-weight:600;opacity:.85;}
 .rate-btn:active{transform:scale(.95);}
 .rate-btn.forgot{background:var(--bad);}
-.rate-btn.hard{background:var(--accent-soft);}
-.rate-btn.good{background:var(--leaf);}
-.rate-btn.easy{background:var(--sky);}
-.complete-cards{background:var(--gold-glow);border:1.5px solid var(--gold);border-radius:12px;padding:11px 16px;font-size:13.5px;font-weight:700;color:var(--ink-soft);max-width:340px;margin:14px auto 0;}
+.rate-btn.hard{background:#5A5AD8;}
+.rate-btn.good{background:var(--ultramarine);}
+.rate-btn.easy{background:var(--gold-fill);color:var(--ultramarine);}
+.complete-cards{background:var(--gold-glow);border:1.5px solid rgba(154,126,0,0.35);border-radius:12px;padding:11px 16px;font-size:13.5px;font-weight:700;color:var(--ink-soft);max-width:340px;margin:14px auto 0;}
 .nav-card-title{font-family:var(--serif);font-weight:800;font-size:20px;margin-bottom:3px;}
 .nav-card-desc{font-size:13.5px;color:var(--ink-dim);line-height:1.4;}
 .nav-card-arrow{margin-left:auto;font-size:22px;color:var(--ink-dim);}
@@ -259,7 +290,7 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 
 .tile{display:block;width:100%;padding:16px 18px;background:var(--card);border:2px solid var(--line);border-radius:var(--radius);font-size:16.5px;font-weight:500;text-align:left;transition:.13s;margin-bottom:11px;}
 .tile:active{transform:scale(.98);}
-.tile.sel{border-color:var(--sky);background:var(--sky-glow);}
+.tile.sel{border-color:var(--accent-soft);background:var(--accent-glow);}
 .tile.correct{border-color:var(--ultramarine);background:var(--accent-glow);}
 .tile.wrong{border-color:var(--bad);background:var(--bad-bg);}
 .tile.faded{opacity:.4;}
@@ -284,7 +315,7 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 
 /* type answer */
 .type-input{width:100%;padding:16px;border:2px solid var(--line);border-radius:var(--radius);background:var(--card);font-size:17px;font-weight:500;}
-.type-input:focus{border-color:var(--sky);}
+.type-input:focus{border-color:var(--accent-soft);}
 
 .teach-card{background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:22px;margin-bottom:8px;}
 .teach-word{font-family:var(--mono);font-weight:600;font-size:32px;color:var(--accent);}
@@ -320,20 +351,20 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 .complete .tp-line{font-family:var(--mono);font-size:18px;color:var(--accent);margin:14px 0;}
 .complete-stats{display:flex;gap:14px;justify-content:center;margin:26px 0;}
 .complete-stat{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 22px;}
-.complete-stat .n{font-family:var(--serif);font-weight:800;font-size:26px;color:var(--gold);}
+.complete-stat .n{font-family:var(--serif);font-weight:800;font-size:26px;color:var(--accent);}
 .complete-stat .l{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink-dim);font-weight:600;}
 
 /* ── dictionary ── */
 .dict-stats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:18px 0 8px;}
 .dict-stat-chip{font-size:12px;font-weight:700;padding:6px 13px;border-radius:99px;border:1.5px solid var(--line);background:var(--card);color:var(--ink-soft);}
-.dict-stat-chip.a{border-color:var(--gold);color:var(--gold);background:var(--gold-glow);}
+.dict-stat-chip.a{border-color:rgba(154,126,0,0.35);color:var(--ink-soft);background:var(--gold-bg);}
 .dict-stat-chip.b{border-color:var(--accent-soft);color:var(--accent);background:var(--accent-glow);}
 
 .dict-panel{background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:16px;margin-top:4px;}
 .dict-panel.tp-panel{border-color:var(--accent-soft);}
 .dict-panel-label{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
 .dict-flag{font-family:var(--mono);font-weight:600;font-size:12px;letter-spacing:1px;padding:4px 9px;border-radius:7px;color:#fff;}
-.dict-flag.flag-en{background:var(--sky);}
+.dict-flag.flag-en{background:var(--gold-bg);color:var(--accent);border:1.5px solid var(--accent-soft);}
 .dict-flag.flag-tp{background:var(--accent);}
 .dict-panel-lang{font-family:var(--serif);font-weight:800;font-size:16px;}
 
@@ -354,7 +385,7 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 .dict-entry:hover{border-color:var(--accent-soft);}
 .dict-word{font-family:var(--mono);font-weight:600;font-size:19px;color:var(--accent);}
 .dict-pos{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-dim);margin-left:8px;}
-.dict-nonpu{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#b07a00;background:rgba(255,200,0,0.16);border:1px solid rgba(255,200,0,0.4);border-radius:6px;padding:2px 6px;margin-left:8px;vertical-align:middle;}
+.dict-nonpu{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--accent);background:var(--gold-bg);border:1px solid rgba(154,126,0,0.4);border-radius:6px;padding:2px 6px;margin-left:8px;vertical-align:middle;}
 .dict-def{font-size:14px;color:var(--ink-soft);margin-top:4px;line-height:1.5;}
 .dict-def .hl{background:var(--gold-glow);border-radius:3px;padding:0 2px;color:var(--ink);font-weight:600;}
 .dict-note{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.5;background:var(--paper2);border-radius:8px;padding:7px 10px;}
@@ -366,7 +397,7 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 .grammar-body{padding-bottom:70px;}
 .gram-section{background:var(--card);border:2px solid var(--line);border-radius:var(--radius);margin-bottom:13px;overflow:hidden;}
 .gram-head{display:flex;align-items:center;gap:12px;padding:17px 18px;width:100%;text-align:left;}
-.gram-head .gnum{width:34px;height:34px;border-radius:9px;background:var(--sky-glow);color:var(--sky);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:800;flex-shrink:0;}
+.gram-head .gnum{width:34px;height:34px;border-radius:9px;background:var(--gold-bg);color:var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:800;flex-shrink:0;}
 .gram-head .gt{flex:1;font-family:var(--serif);font-weight:800;font-size:17px;}
 .gram-head .gchev{font-size:18px;color:var(--ink-dim);transition:transform .25s;}
 .gram-section.open .gchev{transform:rotate(180deg);}
@@ -385,7 +416,7 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 .pron-say{font-family:var(--mono);font-weight:600;font-size:14px;color:var(--sky);min-width:42px;}
 .pron-eg{font-size:13.5px;color:var(--ink-soft);line-height:1.45;flex:1;}
 
-.notice{background:var(--gold-glow);border:1.5px solid var(--gold);border-radius:12px;padding:14px 16px;font-size:13.5px;line-height:1.55;color:var(--ink-soft);margin:14px 0 24px;}
+.notice{background:var(--gold-glow);border:1.5px solid rgba(154,126,0,0.35);border-radius:12px;padding:14px 16px;font-size:13.5px;line-height:1.55;color:var(--ink-soft);margin:14px 0 24px;}
 .notice b{color:var(--ink);}
 
 .confetti-piece{position:fixed;width:9px;height:9px;border-radius:2px;animation:confetti 1.1s ease-out forwards;pointer-events:none;z-index:999;}
@@ -424,7 +455,7 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
     </div>
     <div class="logo-mark">sona <em>pona</em></div>
     <div class="logo-sub">toki pona trainer</div>
-    <div class="tagline">“the language of good” — a tiny, gentle language of about 130 words. learn it the slow, careful way.</div>
+    <div class="tagline">toki pona — “the language of good.” about 130 words, two colours, one gentle idea: say more with less.</div>
   </div>
   <div class="wrap">
     <div class="stat-row" id="homeStats"></div>
@@ -2143,20 +2174,24 @@ function renderTrueFalse(d, qArea, checkBar){
       <button class="tile" data-val="True">True</button>
       <button class="tile" data-val="False">False</button>
     </div>`;
+  // Normalize correct answer: data may store a boolean (true/false) or a
+  // string ("True"/"False") with any casing. Reduce everything to "true"/"false".
+  const norm = v => String(v).trim().toLowerCase();
+  const correctVal = norm(d.correct);
   const list = document.getElementById('optList');
   list.querySelectorAll('.tile').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       if(list.dataset.answered) return;
       list.dataset.answered='1';
-      const val = btn.getAttribute('data-val');
-      const ok = val===d.correct;
+      const val = norm(btn.getAttribute('data-val'));
+      const ok = val===correctVal;
       list.querySelectorAll('.tile').forEach(b=>{
-        const v=b.getAttribute('data-val');
-        if(v===d.correct) b.classList.add('correct');
+        const v=norm(b.getAttribute('data-val'));
+        if(v===correctVal) b.classList.add('correct');
         else if(b===btn) b.classList.add('wrong');
         else b.classList.add('faded');
       });
-      markResult(ok, checkBar, d.correct, d.note);
+      markResult(ok, checkBar, correctVal==='true'?'True':'False', d.note);
     });
   });
   checkBar.innerHTML='';
@@ -2318,7 +2353,7 @@ function finishLesson(){
 }
 
 function fireConfetti(){
-  const colors=['#111199','#FFFF77','#2A6FB0','#2E8B57','#4A4AC4','#C8A800'];
+  const colors=['#111199','#FFFF77','#3A3AC0','#FFE94D','#5A5AD8','#C8A800'];
   for(let i=0;i<40;i++){
     const p=document.createElement('div');
     p.className='confetti-piece';
@@ -2473,7 +2508,7 @@ function renderReviewHome(){
     <div class="review-stat-grid">
       <div class="review-stat"><div class="n" style="color:var(--accent)">${c.due}</div><div class="l">due now</div></div>
       <div class="review-stat"><div class="n" style="color:var(--sky)">${c.learning}</div><div class="l">still learning</div></div>
-      <div class="review-stat"><div class="n" style="color:var(--gold)">${c.total}</div><div class="l">total</div></div>
+      <div class="review-stat"><div class="n" style="color:var(--accent)">${c.total}</div><div class="l">total</div></div>
     </div>
     ${dueList.length>0
       ? `<button class="btn-primary" style="margin-top:6px" onclick="startReview('due')">Review ${dueList.length} card${dueList.length>1?'s':''} →</button>`
