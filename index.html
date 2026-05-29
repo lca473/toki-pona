@@ -292,6 +292,11 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 .teach-note{font-size:14px;color:var(--ink-soft);margin-top:14px;line-height:1.55;border-top:1.5px solid var(--line-soft);padding-top:14px;}
 .teach-ex{font-family:var(--mono);font-size:14px;color:var(--ink-soft);background:var(--paper2);border-radius:10px;padding:11px 13px;margin-top:12px;}
 .teach-ex b{color:var(--accent);font-weight:600;}
+.teach-info{border-color:var(--accent-soft);background:linear-gradient(180deg,var(--paper2),var(--card));}
+.teach-info-title{font-family:var(--serif);font-weight:800;font-size:22px;color:var(--accent);line-height:1.25;}
+.teach-info-body{font-size:15px;color:var(--ink-soft);margin-top:12px;line-height:1.6;}
+.teach-info-body p{margin-top:10px;}
+.teach-info-body p:first-child{margin-top:0;}
 
 /* check bar */
 .check-bar{position:sticky;bottom:0;background:var(--paper);padding:14px 0 calc(16px + env(safe-area-inset-bottom));margin-top:20px;border-top:1.5px solid var(--line-soft);}
@@ -895,7 +900,7 @@ const LESSONS = [
       {type:"match", pairs:[["toki","hello"],["pona","good"],["olin","love"],["sona","know"]]},
     ]
   },
-  // ══════════════ ADVANCED COURSE (lessons 11-35) ══════════════
+  // ══════════════ ADVANCED COURSE (lessons 11-39) ══════════════
   {
     id:11, course:"advanced", title:"People & family", desc:"jan, meli, mije, mama", icon:"👪",
     teach:[
@@ -1301,7 +1306,77 @@ const LESSONS = [
     ]
   },
   {
-    id:35, course:"advanced", title:"Capstone & last words", desc:"pu, a + full review", icon:"🏆",
+    id:35, course:"advanced", title:"Beyond pu, part 1", desc:"non-pu words · kin, namako, oko, n", icon:"✨",
+    teach:[
+      {info:true, title:"pu vs. non-pu words",
+       body:"<p>So far every word you've learned comes from <span class='tp'>pu</span> — the official toki pona book by Sonja Lang, which defines 120 core words. That book is the shared foundation almost every speaker agrees on.</p><p>But the language has a living community, and a handful of extra words became popular afterward. The most common ones were gathered in a later book, <span class='tp'>lipu ku</span> (the Toki Pona Dictionary), and are often called <b>ku suli</b> — the \"essential\" non-pu words.</p><p>These 16 words aren't strictly necessary, and not everyone uses them — but you'll see them often enough that they're worth knowing. We teach them separately so you always know which words are core <span class='tp'>pu</span> and which are the extra <b>ku suli</b> set.</p>"},
+      {w:"kin", def:"also, too, indeed, in fact", note:"An emphasis particle meaning \"also\", \"too\", or \"indeed\". Often added at the end for a little extra punch. (Some speakers use it like a stronger <span class='tp'>a</span>.)",ex:["mi kin tawa.","I'm going too."]},
+      {w:"namako", def:"spice; extra, additional", note:"\"spice\", or more broadly anything \"extra\", \"additional\", or \"decorative\". <span class='tp'>pana e namako</span> = \"add a little something extra\".",ex:["moku ni li namako.","This food is spicy."]},
+      {w:"oko", def:"eye", note:"\"eye\" — a non-pu noun. In <span class='tp'>pu</span> you'd use <span class='tp'>lukin</span> for the eye too; <span class='tp'>oko</span> is the dedicated word some speakers prefer.",ex:["oko mi li pona.","My eyes are good."]},
+      {w:"n", def:"hmm, uh, mm", note:"A thinking / hesitation sound — like \"hmm\" or \"uh\", or a murmur of agreement. Usually said on its own.",ex:["n... mi sona ala.","Hmm... I don't know."]},
+    ],
+    drills:[
+      {type:"choose", q:"<span class='tp'>kin</span> means…", tp:"kin", correct:"also, too, indeed", opts:["also, too, indeed","spice","eye","hmm"]},
+      {type:"match", pairs:[["kin","also"],["namako","spice"],["oko","eye"],["n","hmm"]]},
+      {type:"choose", q:"Which word is the non-pu word for \"eye\"?", correct:"oko", opts:["oko","lukin","lawa","uta"], tpOpts:true},
+      {type:"truefalse", q:"<span class='tp'>namako</span> can mean \"extra\" or \"additional\", not just \"spice\".", correct:true},
+      {type:"choose", q:"You're thinking and pause mid-sentence. Which fits?", correct:"n", opts:["n","kin","oko","namako"], tpOpts:true},
+      {type:"choose", q:"What does \"ku suli\" refer to?", correct:"the essential non-pu words", opts:["the essential non-pu words","the official pu book","grammar particles","color words"]},
+    ]
+  },
+  {
+    id:36, course:"advanced", title:"Beyond pu, part 2", desc:"non-pu words · kipisi, lanpan, leko, jasima", icon:"✨",
+    teach:[
+      {w:"kipisi", def:"to cut, divide, split, slice", note:"\"to cut\", \"split\", or \"slice\". Close to <span class='tp'>tu</span> (to split in two), but <span class='tp'>kipisi</span> is the general \"cut\" verb.",ex:["mi kipisi e kili.","I cut the fruit."]},
+      {w:"lanpan", def:"to take, seize, grab, steal", note:"\"to take\", \"seize\", \"grab\", or \"steal\" — taking something, often without asking.",ex:["ona li lanpan e mani.","They took the money."]},
+      {w:"leko", def:"square, block, cube; stairs", note:"A \"square\", \"block\", \"cube\", \"corner\", or \"stairs\" — angular, blocky shapes.",ex:["tomo li leko.","The building is blocky."]},
+      {w:"jasima", def:"mirror, reflect; opposite", note:"A \"mirror\", to \"reflect\" or \"echo\", or the \"opposite\" of something.",ex:["jasima li lukin e mi.","The mirror shows me."]},
+    ],
+    drills:[
+      {type:"choose", q:"<span class='tp'>lanpan</span> means…", tp:"lanpan", correct:"to take, seize, steal", opts:["to take, seize, steal","to cut","to reflect","a block"]},
+      {type:"match", pairs:[["kipisi","cut"],["lanpan","take"],["leko","block"],["jasima","mirror"]]},
+      {type:"build", q:"Build: \"I cut the fruit.\"", answer:["mi","kipisi","e","kili"], bank:["mi","kipisi","e","kili","leko","li"]},
+      {type:"choose", q:"A \"mirror\" or \"opposite\" is…", correct:"jasima", opts:["jasima","leko","kipisi","lanpan"], tpOpts:true},
+      {type:"choose", q:"Which word describes square, blocky shapes?", correct:"leko", opts:["leko","sike","linja","nena"], tpOpts:true},
+      {type:"truefalse", q:"<span class='tp'>lanpan</span> can imply taking something without asking.", correct:true},
+    ]
+  },
+  {
+    id:37, course:"advanced", title:"Beyond pu, part 3", desc:"non-pu words · monsuta, epiku, meso, soko", icon:"✨",
+    teach:[
+      {w:"monsuta", def:"monster, fear, dread", note:"A \"monster\" or \"scary thing\", or the feeling of \"fear\" / \"dread\" itself.",ex:["mi pilin monsuta.","I feel afraid."]},
+      {w:"epiku", def:"epic, awesome, cool, great", note:"\"epic\", \"awesome\", \"cool\", or \"great\" — a playful, enthusiastic word from the community.",ex:["ni li epiku!","This is epic!"]},
+      {w:"meso", def:"mediocre, average, middling", note:"\"mediocre\", \"average\", or \"middling\" — neither good nor bad, right in the middle.",ex:["moku li meso.","The food is just okay."]},
+      {w:"soko", def:"mushroom, fungus", note:"\"mushroom\" or \"fungus\". In <span class='tp'>pu</span> a mushroom falls under <span class='tp'>kili</span>; <span class='tp'>soko</span> is the dedicated word.",ex:["soko li suli.","The mushroom is big."]},
+    ],
+    drills:[
+      {type:"choose", q:"<span class='tp'>meso</span> means…", tp:"meso", correct:"mediocre, average", opts:["mediocre, average","epic, awesome","monster, fear","mushroom"]},
+      {type:"match", pairs:[["monsuta","fear"],["epiku","awesome"],["meso","average"],["soko","mushroom"]]},
+      {type:"build", q:"Build: \"I feel afraid.\"", answer:["mi","pilin","monsuta"], bank:["mi","pilin","monsuta","epiku","li"]},
+      {type:"choose", q:"Your friend does something amazing. You say…", correct:"epiku", opts:["epiku","meso","monsuta","soko"], tpOpts:true},
+      {type:"choose", q:"Which is the non-pu word for \"mushroom\"?", correct:"soko", opts:["soko","kili","kasi","ko"], tpOpts:true},
+      {type:"truefalse", q:"<span class='tp'>meso</span> describes something neither great nor terrible.", correct:true},
+    ]
+  },
+  {
+    id:38, course:"advanced", title:"Beyond pu, part 4", desc:"non-pu words · misikeke, kokosila, kijetesantakalu, ku", icon:"✨",
+    teach:[
+      {w:"misikeke", def:"medicine, treatment, cure", note:"\"medicine\", \"medical treatment\", \"cure\", or \"remedy\".",ex:["mi wile e misikeke.","I need medicine."]},
+      {w:"kokosila", def:"to speak a non-toki-pona language", note:"To \"speak another language\" in a toki pona setting — i.e. to refuse to use toki pona when you could. A uniquely toki-pona idea with no English single-word equal.",ex:["o kokosila ala!","Don't switch languages!"]},
+      {w:"kijetesantakalu", def:"raccoon (and similar animals)", note:"\"raccoon\" — and other procyonids/musteloids like coatis or otters. Famously the longest common word; it started as a joke and stuck.",ex:["kijetesantakalu li suwi.","The raccoon is cute."]},
+      {w:"ku", def:"interacting with lipu ku", note:"<span class='tp'>ku</span> refers to interacting with <span class='tp'>lipu ku</span>, the Toki Pona Dictionary — the very book these 16 words come from. It mirrors how <span class='tp'>pu</span> refers to the official book.",ex:["mi ku.","I use the dictionary."]},
+    ],
+    drills:[
+      {type:"choose", q:"<span class='tp'>misikeke</span> means…", tp:"misikeke", correct:"medicine, cure", opts:["medicine, cure","raccoon","mushroom","mirror"]},
+      {type:"match", pairs:[["misikeke","medicine"],["kokosila","speak other language"],["kijetesantakalu","raccoon"],["ku","the dictionary"]]},
+      {type:"choose", q:"<span class='tp'>kokosila</span> means to…", correct:"speak a non-toki-pona language", opts:["speak a non-toki-pona language","speak perfectly","stay silent","whisper"]},
+      {type:"choose", q:"Which word is famous for being a long joke word for \"raccoon\"?", correct:"kijetesantakalu", opts:["kijetesantakalu","misikeke","kokosila","monsuta"], tpOpts:true},
+      {type:"choose", q:"<span class='tp'>ku</span> relates to which book?", correct:"lipu ku (the Toki Pona Dictionary)", opts:["lipu ku (the Toki Pona Dictionary)","the official pu book","a grammar guide","a children's book"]},
+      {type:"truefalse", q:"<span class='tp'>ku</span> mirrors <span class='tp'>pu</span>, but for the Dictionary instead of the official book.", correct:true},
+    ]
+  },
+  {
+    id:39, course:"advanced", title:"Capstone & last words", desc:"pu, a + full review", icon:"🏆",
     teach:[
       {w:"a", def:"(emphasis / emotion)", note:"<span class='tp'>a</span> adds feeling — like \"ah!\", \"oh!\", or \"wow!\". <span class='tp'>pona a!</span> = \"so good!\" It can go at the end for emphasis or stand alone as a reaction.",ex:["pona a!","Wonderful!"]},
       {w:"pu", def:"(the official book)", note:"<span class='tp'>pu</span> refers to interacting with the official toki pona book by Sonja Lang. A <span class='tp'>jan pu</span> is someone who learned from it. A rare, special-purpose word.",ex:["mi pu.","I read the official book."]},
@@ -2009,6 +2084,16 @@ function markResult(ok, checkBar, correctText, note){
 function renderTeach(t, qArea, checkBar){
   const exHTML = (t.ex&&t.ex.length) ? `<div class="teach-ex"><b>${t.ex[0]}</b> — ${t.ex[1]}</div>` : '';
   const noteHTML = t.note ? `<div class="teach-note">${t.note}</div>` : '';
+  if(t.info){
+    qArea.innerHTML = `
+      <div class="q-instr">Good to know</div>
+      <div class="teach-card teach-info">
+        <div class="teach-info-title">${t.title||''}</div>
+        <div class="teach-info-body">${t.body||''}</div>
+      </div>`;
+    checkBar.innerHTML = `<button class="btn-primary" onclick="next()">Got it</button>`;
+    return;
+  }
   qArea.innerHTML = `
     <div class="q-instr">New word</div>
     <div class="teach-card">
