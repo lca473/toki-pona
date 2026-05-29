@@ -1701,6 +1701,8 @@ async function finishLogin(name){
   if(cloud){ mergeCloud(cloud); }
   // a fresh login also writes back the merged result
   cloudSave();
+  const btn = document.getElementById('loginBtn');
+  if(btn){ btn.disabled = false; btn.textContent = "Continue"; }
   enterApp();
 }
 
@@ -1754,6 +1756,10 @@ function logout(){
   document.getElementById('view-login').classList.add('active');
   document.getElementById('loginUser').value = "";
   document.getElementById('loginPass').value = "";
+  const btn = document.getElementById('loginBtn');
+  if(btn){ btn.disabled = false; btn.textContent = "Continue"; }
+  const errEl = document.getElementById('loginErr');
+  if(errEl) errEl.textContent = "";
   setSyncState("");
 }
 
