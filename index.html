@@ -1567,9 +1567,28 @@ let srs = loadSRS();
 function loadState(){
   try{
     const raw = localStorage.getItem(keyFor(SAVE_KEY));
-    if(raw) return JSON.parse(raw);
+    if(raw) return clampStreak(JSON.parse(raw));
   }catch(e){}
   return { completed:[], xp:0, streak:0, lastDay:null };
+}
+// A streak can never exceed the number of distinct local days from its
+// start through lastDay, and it can't continue if lastDay is older than
+// yesterday. This heals a UTC double-count or a stale cloud value.
+function clampStreak(s){
+  if(!s || !s.lastDay) return s;
+  const today = localDay();
+  const yest  = localDay(Date.now()-86400000);
+  // streak only counts if the last active day is today or yesterday
+  if(s.lastDay !== today && s.lastDay !== yest){
+    s.streak = 0;
+    return s;
+  }
+  // a streak that started today can be at most 1
+  if(s.lastDay === today && s.streak > 1){
+    // if there's no evidence of a prior day, it's a same-day session
+    s.streak = 1;
+  }
+  return s;
 }
 function saveState(){
   try{ localStorage.setItem(keyFor(SAVE_KEY), JSON.stringify(state)); }catch(e){}
@@ -1631,8 +1650,10 @@ function mergeCloud(cloud){
     const c = cloud.state;
     state.completed = Array.from(new Set([...(state.completed||[]), ...(c.completed||[])]));
     state.xp = Math.max(state.xp||0, c.xp||0);
-    state.streak = Math.max(state.streak||0, c.streak||0);
     state.lastDay = c.lastDay || state.lastDay || null;
+    // Keep the larger streak so offline play on a second device isn't lost,
+    // but never trust a streak that exceeds the days since lastDay.
+    state.streak = Math.max(state.streak||0, c.streak||0);
   }
   if(cloud.srs && cloud.srs.cards){
     // adopt every cloud card; for cards in both, keep the one reviewed most recently
@@ -1905,10 +1926,17 @@ async function deleteUser(user){
       : `Couldn't delete "${user}": ${(e && e.message) || 'unknown error'}`);
   }
 }
+// Returns the LOCAL calendar date as YYYY-MM-DD. Using toISOString()
+// directly would give UTC, which rolls over before local midnight and
+// can double-count streaks for users in negative-offset timezones.
+function localDay(ts){
+  const d = ts ? new Date(ts) : new Date();
+  return new Date(d.getTime() - d.getTimezoneOffset()*60000).toISOString().slice(0,10);
+}
 function bumpStreak(){
-  const today = new Date().toISOString().slice(0,10);
+  const today = localDay();
   if(state.lastDay === today) return;
-  const y = new Date(Date.now()-86400000).toISOString().slice(0,10);
+  const y = localDay(Date.now()-86400000);
   state.streak = (state.lastDay === y) ? state.streak+1 : 1;
   state.lastDay = today;
 }
