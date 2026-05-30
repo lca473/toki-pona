@@ -1958,11 +1958,12 @@ function loadState(){
     const raw = localStorage.getItem(keyFor(SAVE_KEY));
     if(raw) return clampStreak(JSON.parse(raw));
   }catch(e){}
-  return { completed:[], xp:0, streak:0, lastDay:null };
+  return { completed:[], xp:0, streak:0, lastDay:null, streakStart:null };
 }
-// A streak can never exceed the number of distinct local days from its
-// start through lastDay, and it can't continue if lastDay is older than
-// yesterday. This heals a UTC double-count or a stale cloud value.
+// A streak can never exceed the number of distinct local days it has
+// actually spanned (streakStart → lastDay), and it can't continue if
+// lastDay is older than yesterday. This heals a stale cloud value
+// WITHOUT ever punishing a legitimate same-day reopen.
 function clampStreak(s){
   if(!s || !s.lastDay) return s;
   const today = localDay();
@@ -1970,12 +1971,19 @@ function clampStreak(s){
   // streak only counts if the last active day is today or yesterday
   if(s.lastDay !== today && s.lastDay !== yest){
     s.streak = 0;
+    s.streakStart = null;
     return s;
   }
-  // a streak that started today can be at most 1
-  if(s.lastDay === today && s.streak > 1){
-    // if there's no evidence of a prior day, it's a same-day session
-    s.streak = 1;
+  // Backfill streakStart for saves written before this field existed:
+  // trust the stored streak and derive when it must have begun.
+  if(s.streak > 0 && !s.streakStart){
+    s.streakStart = localDay(dayToMs(s.lastDay) - (s.streak - 1) * 86400000);
+  }
+  // Cap the streak at the real span of days from start through lastDay.
+  if(s.streakStart){
+    const span = Math.round((dayToMs(s.lastDay) - dayToMs(s.streakStart)) / 86400000) + 1;
+    if(s.streak > span) s.streak = span;
+    if(s.streak < 1)    s.streak = 1;
   }
   return s;
 }
@@ -2039,10 +2047,26 @@ function mergeCloud(cloud){
     const c = cloud.state;
     state.completed = Array.from(new Set([...(state.completed||[]), ...(c.completed||[])]));
     state.xp = Math.max(state.xp||0, c.xp||0);
-    state.lastDay = c.lastDay || state.lastDay || null;
-    // Keep the larger streak so offline play on a second device isn't lost,
-    // but never trust a streak that exceeds the days since lastDay.
-    state.streak = Math.max(state.streak||0, c.streak||0);
+    // Reconcile the streak triple (streak / lastDay / streakStart). The
+    // record with the more recent lastDay wins; on a tie, keep the larger
+    // streak so offline play on a second device isn't lost. clampStreak
+    // (below) then validates the result against the real elapsed days.
+    const localLast = state.lastDay ? dayToMs(state.lastDay) : -Infinity;
+    const cloudLast = c.lastDay     ? dayToMs(c.lastDay)     : -Infinity;
+    if(cloudLast > localLast){
+      state.streak      = c.streak || 0;
+      state.lastDay     = c.lastDay;
+      state.streakStart = c.streakStart || null;
+    } else if(cloudLast === localLast && cloudLast !== -Infinity){
+      if((c.streak||0) > (state.streak||0)){
+        state.streak = c.streak || 0;
+      }
+      // keep the earliest known start for this shared lastDay
+      if(c.streakStart && (!state.streakStart || dayToMs(c.streakStart) < dayToMs(state.streakStart))){
+        state.streakStart = c.streakStart;
+      }
+    }
+    // else: local lastDay is newer → keep local streak/lastDay/streakStart
   }
   if(cloud.srs && cloud.srs.cards){
     // adopt every cloud card; for cards in both, keep the one reviewed most recently
@@ -2056,6 +2080,8 @@ function mergeCloud(cloud){
       }
     });
   }
+  // validate the merged streak against actual elapsed days before persisting
+  clampStreak(state);
   try{
     localStorage.setItem(keyFor(SAVE_KEY), JSON.stringify(state));
     localStorage.setItem(keyFor(SRS_KEY), JSON.stringify(srs));
@@ -2322,11 +2348,21 @@ function localDay(ts){
   const d = ts ? new Date(ts) : new Date();
   return new Date(d.getTime() - d.getTimezoneOffset()*60000).toISOString().slice(0,10);
 }
+// Parse a YYYY-MM-DD day-key back to a comparable timestamp. Both ends of
+// any subtraction are parsed identically, so day-deltas stay exact.
+function dayToMs(dayStr){ return Date.parse(dayStr + "T00:00:00Z"); }
+
 function bumpStreak(){
   const today = localDay();
-  if(state.lastDay === today) return;
+  if(state.lastDay === today) return;            // already counted today
   const y = localDay(Date.now()-86400000);
-  state.streak = (state.lastDay === y) ? state.streak+1 : 1;
+  if(state.lastDay === y){
+    state.streak = (state.streak || 0) + 1;      // consecutive day → grow
+  } else {
+    state.streak = 1;                            // gap (or first ever) → reset
+    state.streakStart = today;
+  }
+  if(!state.streakStart) state.streakStart = today;  // first-ever active day
   state.lastDay = today;
 }
 
