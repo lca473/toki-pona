@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>sona pona · toki pona trainer</title>
+<title>toki tu · toki pona trainer</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 140'%3E%3Cpath d='M40 20 L34 4' fill='none' stroke='%23111199' stroke-width='8' stroke-linecap='round'/%3E%3Cpath d='M60 16 L60 2' fill='none' stroke='%23111199' stroke-width='8' stroke-linecap='round'/%3E%3Cpath d='M80 20 L86 4' fill='none' stroke='%23111199' stroke-width='8' stroke-linecap='round'/%3E%3Ccircle cx='60' cy='80' r='50' fill='%23FFFF77' stroke='%23111199' stroke-width='8'/%3E%3Cpath d='M38 88 Q60 112 82 88' fill='none' stroke='%23111199' stroke-width='8' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +13,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <style>
 /* ════════════════════════════════════════════════════════════════
-   sona pona — a local toki pona trainer
+   toki tu — a local toki pona trainer
    Design: warm "paper & ink" editorial aesthetic.
    All language content is built from the official pu word list
    (Sonja Lang, Toki Pona: The Language of Good).
@@ -117,7 +117,8 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 @keyframes logoPop{from{opacity:0;transform:scale(.6) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
 .logo-mark{font-family:var(--serif);font-weight:800;font-size:48px;letter-spacing:-1px;color:var(--accent);line-height:1;}
 .logo-mark em{font-style:italic;color:#1CA4C9;}
-.logo-sub{font-family:var(--mono);font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--ink-dim);margin-top:10px;}
+.logo-sub{font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--ink-soft);margin-top:12px;}
+.brand-gloss{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--ink-dim);margin-top:3px;}
 .tagline{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--ink-soft);margin-top:20px;max-width:430px;margin-left:auto;margin-right:auto;line-height:1.55;}
 
 .stat-row{display:flex;gap:10px;justify-content:center;margin:24px 0 8px;flex-wrap:wrap;}
@@ -150,7 +151,7 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 .login-logo svg,.login-logo img{height:100%;width:auto;max-width:140px;display:inline-block;object-fit:contain;}
 .login-title{font-family:var(--serif);font-weight:800;font-size:30px;color:var(--accent);line-height:1;}
 .login-title em{font-style:italic;color:#1CA4C9;}
-.login-sub{font-family:var(--mono);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--ink-dim);margin-top:8px;}
+.login-sub{font-family:var(--mono);font-size:12px;letter-spacing:1.5px;color:var(--ink-soft);margin-top:8px;}
 .login-msg{font-family:var(--serif);font-style:italic;font-size:14.5px;color:var(--ink-soft);margin:18px 0 22px;line-height:1.5;}
 .login-field{width:100%;font-size:16px;padding:13px 15px;border:1.5px solid var(--line);border-radius:11px;background:var(--paper);margin-bottom:12px;color:var(--ink);}
 .login-field:focus{border-color:var(--accent-soft);}
@@ -451,8 +452,9 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
       <div class="login-logo" aria-label="toki pona logo">
         <img src="Toki_pona.svg" alt="toki pona logo">
       </div>
-      <div class="login-title">sona <em>pona</em></div>
-      <div class="login-sub">toki pona trainer</div>
+      <div class="login-title">toki <em>tu</em></div>
+      <div class="login-sub">ilo pi toki pona</div>
+      <div class="brand-gloss">a toki pona trainer</div>
       <div class="login-msg" id="loginMsg">Pick a username to save your progress to the cloud — then you can pick up on any device.</div>
       <div class="login-err" id="loginErr"></div>
       <input class="login-field" id="loginUser" type="text" autocomplete="username" placeholder="Username" maxlength="24" spellcheck="false">
@@ -470,8 +472,9 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
     <div class="tp-logo" aria-label="toki pona logo">
       <img src="Toki_pona.svg" alt="toki pona logo">
     </div>
-    <div class="logo-mark">sona <em>pona</em></div>
-    <div class="logo-sub">toki pona trainer</div>
+    <div class="logo-mark">toki <em>tu</em></div>
+    <div class="logo-sub">ilo pi toki pona</div>
+    <div class="brand-gloss">a toki pona trainer</div>
     <div class="tagline">lessons, flashcards, and a full dictionary — toki pona in your pocket.</div>
   </div>
   <div class="wrap">
