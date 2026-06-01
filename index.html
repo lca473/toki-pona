@@ -326,6 +326,10 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 /* type answer */
 .type-input{width:100%;padding:16px;border:2px solid var(--line);border-radius:var(--radius);background:var(--card);font-size:17px;font-weight:500;}
 .type-input:focus{border-color:var(--accent-soft);}
+/* scripted-conversation speech bubble (partner's line) */
+.convo-them{display:inline-block;background:var(--paper2);border:1.5px solid var(--line);border-radius:14px;border-bottom-left-radius:4px;padding:9px 14px;margin:0 0 14px;font-family:var(--mono);color:var(--ink);font-size:15px;line-height:1.4;max-width:92%;}
+.convo-them .who{display:block;font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:3px;}
+.convo-cue{display:block;font-family:var(--sans);font-size:16px;color:var(--ink-soft);}
 
 .teach-card{background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:22px;margin-bottom:8px;}
 .teach-word{font-family:var(--mono);font-weight:600;font-size:32px;color:var(--accent);}
@@ -1920,6 +1924,128 @@ const LESSONS = [
       {type:"build", q:"Build: 'She is a person of good work.' (good work = <span class='tp'>pali pona</span>)", answer:["ona","li","jan","pi","pali","pona"], bank:["ona","li","jan","pi","pali","pona","e","mi"], note:"Subject <span class='tp'>ona</span> keeps <span class='tp'>li</span>; then <span class='tp'>pi</span> groups <span class='tp'>pali pona</span>."},
       {type:"build", q:"Build: 'I want a teacher.' — 'a person of giving-knowledge' (<span class='tp'>pana sona</span>)", answer:["mi","wile","e","jan","pi","pana","sona"], bank:["mi","wile","e","jan","pi","pana","sona","li"], note:"<span class='tp'>wile</span> pre-verb, object on <span class='tp'>e</span>, and <span class='tp'>pi</span> grouping <span class='tp'>pana sona</span>. No <span class='tp'>li</span> after bare <span class='tp'>mi</span>."},
       {type:"type", q:"Last one, typed — the full sentence: 'I see a good-looking person.' (see = <span class='tp'>lukin</span>)", answers:["mi lukin e jan pi pona lukin"], note:"<span class='tp'>mi lukin e jan pi pona lukin</span> — bare <span class='tp'>mi</span> (no <span class='tp'>li</span>), object on <span class='tp'>e</span>, and the <span class='tp'>pi</span> group, all from memory."},
+    ]
+  },
+  {
+    id:45, course:"advanced", title:"ni — this & that", desc:"the pointing word", icon:"👉",
+    teach:[
+      {info:true, title:"ni points at things",
+       body:"<p><b>ni</b> means 'this' or 'that'. As a modifier it follows the noun, like any other describing word: <span class='tp'>tomo ni</span> (this house), <span class='tp'>jan ni</span> (this person).</p><p>On its own, <span class='tp'>ni</span> means 'this thing' or 'that': <span class='tp'>ni li pona</span> (this is good), <span class='tp'>mi wile e ni</span> (I want this).</p>"},
+      {info:true, title:"ni can stand for a whole idea",
+       body:"<p><span class='tp'>ni</span> can also point back at something just said or shown — a situation, a fact: <span class='tp'>ni li ike</span> (that's bad). To ask about it, put <span class='tp'>seme</span> where the answer would go: <span class='tp'>ni li seme?</span> (what is this?).</p><p>In the next two lessons, this same little word will let you quote people and build 'that…' clauses.</p>"},
+    ],
+    drills:[
+      {type:"choose", q:"<span class='tp'>tomo ni</span> means…", correct:"this house", opts:["this house","that is a house","the house is this","a small house"]},
+      {type:"build", q:"Build: 'This is good.'", answer:["ni","li","pona"], bank:["ni","li","pona","e","mi"], note:"<span class='tp'>ni</span> as the subject, then <span class='tp'>li</span> before the quality."},
+      {type:"build", q:"Build: 'I want this.'", answer:["mi","wile","e","ni"], bank:["mi","wile","e","ni","li"], note:"Bare <span class='tp'>mi</span> drops <span class='tp'>li</span>; <span class='tp'>ni</span> is the object, on <span class='tp'>e</span>."},
+      {type:"build", q:"Build: 'This person is big.'", answer:["jan","ni","li","suli"], bank:["jan","ni","li","suli","e"], note:"<span class='tp'>ni</span> rides on <span class='tp'>jan</span> (this person), then <span class='tp'>li</span> before <span class='tp'>suli</span>."},
+      {type:"type", q:"Type: 'That is bad.' (bad = <span class='tp'>ike</span>)", answers:["ni li ike"], note:"<span class='tp'>ni li ike</span> — <span class='tp'>ni</span> can mean 'this' or 'that'."},
+      {type:"build", q:"Build: 'I see this house.'", answer:["mi","lukin","e","tomo","ni"], bank:["mi","lukin","e","tomo","ni","li"], note:"Object is <span class='tp'>tomo ni</span> (this house), all on one <span class='tp'>e</span>."},
+      {type:"choose", q:"How do you say 'this house'?", correct:"tomo ni", opts:["tomo ni","ni tomo","ni li tomo","tomo li ni"], tpOpts:true},
+      {type:"build", q:"Build: 'What is this?'", answer:["ni","li","seme"], bank:["ni","li","seme","e","mi"], note:"<span class='tp'>seme</span> sits where the answer would — here, after <span class='tp'>li</span>."},
+    ]
+  },
+  {
+    id:46, course:"advanced", title:"ni: — quoting speech", desc:"report what someone says", icon:"💬",
+    teach:[
+      {info:true, title:"ni: points forward to the words",
+       body:"<p>To report speech, end your framing clause with <b>ni:</b> and then give the words themselves. <span class='tp'>ona li toki e ni: toki!</span> = She says: 'Hello!'</p><p>The colon is part of the convention — think of <span class='tp'>ni:</span> as an arrow pointing at what comes next. The quote is usually written without quotation marks.</p>"},
+      {info:true, title:"you're a speaker too",
+       body:"<p>Same shape when you're the one talking: <span class='tp'>mi toki e ni: mi pona</span> = I say: 'I'm good.'</p><p>The quoted part is a normal sentence with its own grammar — here the bare <span class='tp'>mi</span> drops its <span class='tp'>li</span>, just as always.</p>"},
+    ],
+    drills:[
+      {type:"choose", q:"In <span class='tp'>ona li toki e ni: ...</span>, what does <span class='tp'>ni:</span> do?", correct:"points to the words that follow", opts:["points to the words that follow","marks the speaker","means 'this person'","asks a question"]},
+      {type:"build", q:"Build — She says: 'Hello.'", answer:["ona","li","toki","e","ni:","toki"], bank:["ona","li","toki","e","ni:","toki","mi"], note:"Framing clause <span class='tp'>ona li toki e ni:</span>, then the quote <span class='tp'>toki</span>."},
+      {type:"build", q:"Build — I say: 'I'm good.'", answer:["mi","toki","e","ni:","mi","pona"], bank:["mi","toki","e","ni:","mi","pona","li"], note:"<span class='tp'>mi toki e ni:</span> then the quote <span class='tp'>mi pona</span> — both bare <span class='tp'>mi</span>, both drop <span class='tp'>li</span>."},
+      {type:"type", q:"Type — She says: 'I am big.' (she = <span class='tp'>ona</span>, big = <span class='tp'>suli</span>; the quote is first-person)", answers:["ona li toki e ni: mi suli","ona li toki e ni mi suli"], note:"<span class='tp'>ona li toki e ni: mi suli</span> — from her mouth, 'I am big' is <span class='tp'>mi suli</span>."},
+      {type:"build", q:"Build — He says: 'You are good.'", answer:["ona","li","toki","e","ni:","sina","pona"], bank:["ona","li","toki","e","ni:","sina","pona","li"], note:"The quote <span class='tp'>sina pona</span> drops <span class='tp'>li</span> (bare <span class='tp'>sina</span>)."},
+      {type:"choose", q:"Which correctly reports — I say: 'I eat'?", correct:"mi toki e ni: mi moku", opts:["mi toki e ni: mi moku","mi toki e mi moku","mi toki ni: mi moku","mi toki e ni mi moku e"], tpOpts:true},
+      {type:"type", q:"Type — I say: 'I love you.' (love = <span class='tp'>olin</span>)", answers:["mi toki e ni: mi olin e sina","mi toki e ni mi olin e sina"], note:"<span class='tp'>mi toki e ni: mi olin e sina</span> — the quote keeps its own object on <span class='tp'>e</span>."},
+      {type:"build", q:"Build — She says: 'This is good.'", answer:["ona","li","toki","e","ni:","ni","li","pona"], bank:["ona","li","toki","e","ni:","ni","li","pona"], note:"The quote itself uses <span class='tp'>ni</span>: <span class='tp'>ni li pona</span> (this is good)."},
+    ]
+  },
+  {
+    id:47, course:"advanced", title:"ni: — packing in an idea", desc:"build 'that…' clauses", icon:"🧠",
+    teach:[
+      {info:true, title:"ni: can hold a whole sentence",
+       body:"<p>Just as <span class='tp'>ni:</span> can point at a quote, it can point at an entire idea that becomes the object. <span class='tp'>mi wile e ni: sina kama</span> = I want [that you come] = I want you to come.</p><p>The part after <span class='tp'>ni:</span> is a full sentence with its own subject and predicate.</p>"},
+      {info:true, title:"for knowing, seeing, thinking",
+       body:"<p>The same pattern works with <span class='tp'>sona</span> (to know) and <span class='tp'>lukin</span> (to look/see): <span class='tp'>mi sona e ni: ona li pona</span> = I know that she's good.</p><p>There's no separate word for 'that' in toki pona — <span class='tp'>e ni:</span> is how you attach a whole clause.</p>"},
+    ],
+    drills:[
+      {type:"choose", q:"<span class='tp'>mi wile e ni: sina kama</span> means…", correct:"I want you to come.", opts:["I want you to come.","I want this coming.","You want me to come.","I come and I want."]},
+      {type:"build", q:"Build: 'I want you to come.' (come = <span class='tp'>kama</span>)", answer:["mi","wile","e","ni:","sina","kama"], bank:["mi","wile","e","ni:","sina","kama","li"], note:"<span class='tp'>mi wile e ni:</span> then the clause <span class='tp'>sina kama</span> (bare <span class='tp'>sina</span>, no <span class='tp'>li</span>)."},
+      {type:"build", q:"Build: 'I know that she is good.' (know = <span class='tp'>sona</span>)", answer:["mi","sona","e","ni:","ona","li","pona"], bank:["mi","sona","e","ni:","ona","li","pona","e"], note:"The embedded clause <span class='tp'>ona li pona</span> takes <span class='tp'>li</span> (subject <span class='tp'>ona</span>)."},
+      {type:"type", q:"Type: 'I want you to eat.' (want = <span class='tp'>wile</span>, eat = <span class='tp'>moku</span>)", answers:["mi wile e ni: sina moku","mi wile e ni sina moku"], note:"<span class='tp'>mi wile e ni: sina moku</span>."},
+      {type:"build", q:"Build: 'She wants me to sleep.' (sleep = <span class='tp'>lape</span>)", answer:["ona","li","wile","e","ni:","mi","lape"], bank:["ona","li","wile","e","ni:","mi","lape","li"], note:"Framing <span class='tp'>ona li wile</span> (subject <span class='tp'>ona</span> → <span class='tp'>li</span>); clause <span class='tp'>mi lape</span> (bare <span class='tp'>mi</span>)."},
+      {type:"choose", q:"How do you say a 'that…' clause in toki pona?", correct:"with e ni:", opts:["with e ni:","with pi","with en","with a special word for 'that'"]},
+      {type:"type", q:"Type: 'I know that you are big.' (know = <span class='tp'>sona</span>, big = <span class='tp'>suli</span>)", answers:["mi sona e ni: sina suli","mi sona e ni sina suli"], note:"<span class='tp'>mi sona e ni: sina suli</span>."},
+      {type:"build", q:"Build: 'I want you and me to be good.'", answer:["mi","wile","e","ni:","mi","en","sina","li","pona"], bank:["mi","wile","e","ni:","mi","en","sina","li","pona","e"], note:"The clause is <span class='tp'>mi en sina li pona</span> — a compound subject, so <span class='tp'>li</span> returns inside it."},
+    ]
+  },
+  {
+    id:48, course:"advanced", title:"putting it together", desc:"li · e · en · pi · ni — mixed", icon:"🧵",
+    teach:[
+      {info:true, title:"the five particles at a glance",
+       body:"<p>No new words here — just everything working at once. A quick recap:</p><p><span class='tp'>li</span> goes before the predicate (drop it after a bare <span class='tp'>mi</span>/<span class='tp'>sina</span>). <span class='tp'>e</span> goes before each object. <span class='tp'>en</span> joins subjects only. <span class='tp'>pi</span> regroups a multi-word modifier. <span class='tp'>ni</span> means this/that, and <span class='tp'>e ni:</span> opens a quote or a clause.</p><p>These are typed and built from scratch — take them slowly.</p>"},
+    ],
+    drills:[
+      {type:"build", q:"Build: 'We eat fruit and water.' (we = <span class='tp'>mi mute</span>)", answer:["mi","mute","li","moku","e","kili","e","telo"], bank:["mi","mute","li","moku","e","kili","e","telo","en"], note:"Modified subject → <span class='tp'>li</span> returns; two objects → two <span class='tp'>e</span>; never <span class='tp'>en</span> for objects."},
+      {type:"build", q:"Build: 'You and I see this.' (either order)", answer:["mi","en","sina","li","lukin","e","ni"], alts:[["sina","en","mi","li","lukin","e","ni"]], bank:["mi","en","sina","li","lukin","e","ni","pi"], note:"<span class='tp'>en</span> joins the subjects, <span class='tp'>li</span> follows, object <span class='tp'>ni</span> on <span class='tp'>e</span>."},
+      {type:"type", q:"Type: 'I want a teacher.' (a person of giving-knowledge = <span class='tp'>jan pi pana sona</span>)", answers:["mi wile e jan pi pana sona"], note:"<span class='tp'>mi wile e jan pi pana sona</span> — <span class='tp'>pi</span> groups <span class='tp'>pana sona</span>."},
+      {type:"build", q:"Build — She says: 'This is good.'", answer:["ona","li","toki","e","ni:","ni","li","pona"], bank:["ona","li","toki","e","ni:","ni","li","pona"], note:"A quote with <span class='tp'>ni:</span>, and the quote itself uses <span class='tp'>ni</span>."},
+      {type:"build", q:"Build: 'I know that you and I are good.'", answer:["mi","sona","e","ni:","mi","en","sina","li","pona"], bank:["mi","sona","e","ni:","mi","en","sina","li","pona","e"], note:"<span class='tp'>e ni:</span> opens the clause; inside it, <span class='tp'>en</span> + <span class='tp'>li</span>."},
+      {type:"type", q:"Type: 'I fix the big house.' (fix = make good; the big house = <span class='tp'>tomo suli</span>)", answers:["mi pona e tomo suli"], note:"<span class='tp'>mi pona e tomo suli</span> — causative <span class='tp'>e</span>, with <span class='tp'>suli</span> stacked on <span class='tp'>tomo</span>."},
+      {type:"build", q:"Build: 'This person eats and sleeps.'", answer:["jan","ni","li","moku","li","lape"], bank:["jan","ni","li","moku","li","lape","e"], note:"<span class='tp'>jan ni</span> (this person), then two predicates → two <span class='tp'>li</span>."},
+      {type:"type", q:"Type: 'I want you to come.' (come = <span class='tp'>kama</span>)", answers:["mi wile e ni: sina kama","mi wile e ni sina kama"], note:"<span class='tp'>mi wile e ni: sina kama</span>."},
+      {type:"build", q:"Build: 'I see a person of good work.' (good work = <span class='tp'>pali pona</span>)", answer:["mi","lukin","e","jan","pi","pali","pona"], bank:["mi","lukin","e","jan","pi","pali","pona","li"], note:"Bare <span class='tp'>mi</span>, object on <span class='tp'>e</span>, and <span class='tp'>pi</span> grouping <span class='tp'>pali pona</span>."},
+    ]
+  },
+  {
+    id:49, course:"advanced", title:"talk 1 — greetings", desc:"a first conversation", icon:"🗣️",
+    teach:[
+      {info:true, title:"now you actually talk",
+       body:"<p>From here on you hold short conversations. The other person's line appears in a bubble; you build or type your reply. Everything you've learned now does real work.</p><p>Handy openers: <span class='tp'>toki!</span> (hi), <span class='tp'>sina pilin seme?</span> (how do you feel?), <span class='tp'>mi pilin pona</span> (I feel good), <span class='tp'>pona tawa sina</span> (goodbye — 'good to you').</p>"},
+    ],
+    drills:[
+      {type:"type", q:"<div class='convo-them'><span class='who'>Suno</span>toki!</div><span class='convo-cue'>Greet them back.</span>", answers:["toki","toki a","toki!"], note:"<span class='tp'>toki!</span> doubles as 'hello'."},
+      {type:"type", q:"<div class='convo-them'><span class='who'>Suno</span>sina pilin seme?</div><span class='convo-cue'>Say you feel good. (feel = pilin)</span>", answers:["mi pilin pona"], note:"<span class='tp'>mi pilin pona</span> — bare <span class='tp'>mi</span>, no <span class='tp'>li</span>."},
+      {type:"build", q:"<div class='convo-them'><span class='who'>Suno</span>mi pilin pona kin.</div><span class='convo-cue'>Turn it back on them: 'what about you?'</span>", answer:["sina","seme"], bank:["sina","seme","li","e"], note:"<span class='tp'>sina seme?</span> — literally 'you what?', used casually as 'and you?'"},
+      {type:"choose", q:"<div class='convo-them'><span class='who'>Suno</span>nimi sina li seme?</div><span class='convo-cue'>Which says 'My name is Kira'?</span>", correct:"nimi mi li Kira", opts:["nimi mi li Kira","mi li Kira","nimi mi Kira","Kira li nimi"], tpOpts:true},
+      {type:"type", q:"<div class='convo-them'><span class='who'>Suno</span>pona! mi wile lukin e sina.</div><span class='convo-cue'>Say it back: 'I see you.'</span>", answers:["mi lukin e sina"], note:"<span class='tp'>mi lukin e sina</span> — object <span class='tp'>sina</span> on <span class='tp'>e</span>."},
+      {type:"build", q:"<div class='convo-them'><span class='who'>Suno</span>mi wile tawa tomo mi.</div><span class='convo-cue'>Say goodbye: 'good to you.'</span>", answer:["pona","tawa","sina"], bank:["pona","tawa","sina","e","li"], note:"<span class='tp'>pona tawa sina</span> is the standard farewell."},
+    ]
+  },
+  {
+    id:50, course:"advanced", title:"talk 2 — over a meal", desc:"a richer exchange", icon:"🍲",
+    teach:[
+      {info:true, title:"a longer back-and-forth",
+       body:"<p>This conversation leans on what you drilled: objects on <span class='tp'>e</span>, pointing things out with <span class='tp'>ni</span>, and saying no with <span class='tp'>wile ala</span> (don't want).</p><p>Answering a <span class='tp'>X ala X</span> yes/no question? Say the verb for yes: 'do you want…?' → <span class='tp'>wile</span>.</p>"},
+    ],
+    drills:[
+      {type:"type", q:"<div class='convo-them'><span class='who'>Suno</span>sina wile ala wile moku?</div><span class='convo-cue'>Say yes, you want to eat.</span>", answers:["mi wile moku","wile","mi wile"], note:"For a <span class='tp'>wile ala wile</span> question, 'yes' is simply <span class='tp'>wile</span> (or the full <span class='tp'>mi wile moku</span>)."},
+      {type:"build", q:"<div class='convo-them'><span class='who'>Suno</span>pona! mi wile moku e kili.</div><span class='convo-cue'>Say you'll eat fruit and water.</span>", answer:["mi","moku","e","kili","e","telo"], bank:["mi","moku","e","kili","e","telo","en"], note:"Two objects → two <span class='tp'>e</span>."},
+      {type:"type", q:"<div class='convo-them'><span class='who'>Suno</span>mi jo e telo nasa.</div><span class='convo-cue'>Ask what this is: 'what is this?'</span>", answers:["ni li seme"], note:"<span class='tp'>ni li seme?</span>"},
+      {type:"choose", q:"<div class='convo-them'><span class='who'>Suno</span>ni li telo nasa.</div><span class='convo-cue'>Which says 'I don't want alcohol'? (don't want = wile ala)</span>", correct:"mi wile ala e telo nasa", opts:["mi wile ala e telo nasa","mi wile e telo nasa","mi ala wile e telo nasa","wile ala telo nasa"], tpOpts:true},
+      {type:"build", q:"<div class='convo-them'><span class='who'>Suno</span>pona. mi moku e telo.</div><span class='convo-cue'>Tell them: 'you are a good person.'</span>", answer:["sina","jan","pona"], bank:["sina","jan","pona","li","e"], note:"Bare <span class='tp'>sina</span>, so no <span class='tp'>li</span>: <span class='tp'>sina jan pona</span> (you're a friend)."},
+      {type:"type", q:"<div class='convo-them'><span class='who'>Suno</span>sina pona tawa mi kin.</div><span class='convo-cue'>Say you want to see them again: 'I want to see you.'</span>", answers:["mi wile lukin e sina"], note:"<span class='tp'>mi wile lukin e sina</span> — pre-verb <span class='tp'>wile</span>, object on <span class='tp'>e</span>."},
+    ]
+  },
+  {
+    id:51, course:"advanced", title:"talk 3 — the capstone", desc:"a full conversation", icon:"🏅",
+    teach:[
+      {info:true, title:"your capstone conversation",
+       body:"<p>Longer, and freer. A few of the later lines are open — there's more than one good answer, and the checker accepts the natural ones.</p><p>You have every tool now. Take your time and reply like you mean it.</p>"},
+    ],
+    drills:[
+      {type:"build", q:"<div class='convo-them'><span class='who'>Mun</span>toki! nimi mi li Mun. nimi sina li seme?</div><span class='convo-cue'>Greet them, then say your name is Mela.</span>", answer:["toki","nimi","mi","li","Mela"], bank:["toki","nimi","mi","li","Mela","e"], note:"<span class='tp'>toki nimi mi li Mela</span> — a greeting, then 'my name is Mela'."},
+      {type:"type", q:"<div class='convo-them'><span class='who'>Mun</span>pona! sina pilin seme?</div><span class='convo-cue'>Say you feel good.</span>", answers:["mi pilin pona"], note:"<span class='tp'>mi pilin pona</span>."},
+      {type:"build", q:"<div class='convo-them'><span class='who'>Mun</span>mi pilin pona kin. mi wile pali.</div><span class='convo-cue'>Ask: 'what do you want to do?' (do = pali, what = seme)</span>", answer:["sina","wile","pali","e","seme"], bank:["sina","wile","pali","e","seme","li","ni"], note:"<span class='tp'>sina wile pali e seme?</span> — <span class='tp'>seme</span> sits in the object slot."},
+      {type:"type", q:"<div class='convo-them'><span class='who'>Mun</span>mi wile pali e tomo.</div><span class='convo-cue'>Say that's good. (open — a few answers work)</span>", answers:["ni li pona","pona","pona a"], note:"<span class='tp'>ni li pona</span> (that's good) or just <span class='tp'>pona!</span>"},
+      {type:"build", q:"<div class='convo-them'><span class='who'>Mun</span>sina wile pali kin?</div><span class='convo-cue'>Say you want to do this too: 'I want to do this.'</span>", answer:["mi","wile","pali","e","ni"], bank:["mi","wile","pali","e","ni","li"], note:"<span class='tp'>mi wile pali e ni</span> — <span class='tp'>ni</span> as the object."},
+      {type:"type", q:"<div class='convo-them'><span class='who'>Mun</span>pona mute a! mi en sina li pali.</div><span class='convo-cue'>Agree warmly. (open — several answers work)</span>", answers:["mi en sina li pona","sina en mi li pona","pona","pona a","ni li pona"], note:"e.g. <span class='tp'>mi en sina li pona</span> (you and I are good) or just <span class='tp'>pona a!</span>"},
+      {type:"build", q:"<div class='convo-them'><span class='who'>Mun</span>mi wile tawa tomo mi.</div><span class='convo-cue'>Say goodbye: 'good to you.'</span>", answer:["pona","tawa","sina"], bank:["pona","tawa","sina","e","li"], note:"<span class='tp'>pona tawa sina</span>."},
+      {type:"type", q:"<div class='convo-them'><span class='who'>Mun</span>pona tawa sina kin! o pona.</div><span class='convo-cue'>Sign off however feels right. (open)</span>", answers:["pona tawa sina","tawa pona","pona","pona a","o pona"], note:"<span class='tp'>tawa pona</span>, <span class='tp'>pona tawa sina</span>, <span class='tp'>o pona</span> — all natural goodbyes. sina pini e nasin pi toki pona a!"},
     ]
   },
 ];
