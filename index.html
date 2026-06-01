@@ -204,6 +204,7 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 .course-tag{font-family:var(--serif);font-weight:800;font-size:18px;padding:3px 12px;border-radius:9px;}
 .course-tag.intro{background:var(--accent-glow);color:var(--accent);}
 .course-tag.adv{background:var(--gold-bg);color:var(--accent);}
+.course-tag.adv2{background:var(--accent);color:var(--paper);}
 .course-sub{font-size:13px;color:var(--ink-dim);}
 .course-locked{background:var(--card);border:2px dashed var(--line);border-radius:var(--radius);padding:24px 18px;text-align:center;font-size:14.5px;color:var(--ink-soft);line-height:1.6;}
 
@@ -1327,7 +1328,7 @@ const LESSONS = [
   },
   // ══════════════ ADVANCED COURSE (lessons 11-39) ══════════════
   {
-    id:11, course:"advanced", title:"People & family", desc:"jan, meli, mije, mama", icon:"👪",
+    id:11, course:"foundational", title:"People & family", desc:"jan, meli, mije, mama", icon:"👪",
     teach:[
       {w:"jan", def:"person, people", note:"You've seen <span class='tp'>jan</span> already — it means \"person\", \"people\", or \"human\". It has no plural, so it covers one person or a crowd.",ex:["jan li pona.","People are good."]},
       {w:"meli", def:"woman, female", note:"\"woman\" or \"female\". Used as a modifier, it makes something feminine: <span class='tp'>jan meli</span> = \"female person\".",ex:["meli li suli.","The woman is tall."]},
@@ -1344,7 +1345,7 @@ const LESSONS = [
     ]
   },
   {
-    id:12, course:"advanced", title:"The body, part 1", desc:"lawa, luka, noka, uta", icon:"🧍",
+    id:12, course:"foundational", title:"The body, part 1", desc:"lawa, luka, noka, uta", icon:"🧍",
     teach:[
       {w:"lawa", def:"head; to lead", note:"As a noun, \"head\" or \"mind\". As a verb, \"to lead, control, guide\". <span class='tp'>jan lawa</span> = \"leader\" (head-person).",ex:["lawa mi li pona.","My head is fine."]},
       {w:"luka", def:"hand, arm", note:"\"hand\" or \"arm\". It's also the traditional word for the number five (five fingers).",ex:["luka mi li suli.","My arms are big."]},
@@ -1361,7 +1362,7 @@ const LESSONS = [
     ]
   },
   {
-    id:13, course:"advanced", title:"The body, part 2", desc:"sijelo, insa, monsi, sinpin", icon:"🫀",
+    id:13, course:"foundational", title:"The body, part 2", desc:"sijelo, insa, monsi, sinpin", icon:"🫀",
     teach:[
       {w:"sijelo", def:"body", note:"\"body\" or physical condition. <span class='tp'>sijelo pona</span> = \"healthy\" (good-body).",ex:["sijelo mi li pona.","My body is well."]},
       {w:"insa", def:"inside, center", note:"\"inside\", \"inner part\", \"center\" — also the stomach or guts.",ex:["insa tomo","inside the house"]},
@@ -1378,7 +1379,7 @@ const LESSONS = [
     ]
   },
   {
-    id:14, course:"advanced", title:"Animals", desc:"soweli, waso, kala, akesi", icon:"🐾",
+    id:14, course:"foundational", title:"Animals", desc:"soweli, waso, kala, akesi", icon:"🐾",
     teach:[
       {w:"soweli", def:"animal (esp. mammal)", note:"\"animal\", especially a cute land mammal — a dog, cat, bear, etc.",ex:["soweli li suli.","The animal is big."]},
       {w:"waso", def:"bird", note:"\"bird\" or any flying creature.",ex:["waso li tawa sewi.","The bird goes up."]},
@@ -1395,7 +1396,7 @@ const LESSONS = [
     ]
   },
   {
-    id:15, course:"advanced", title:"Creatures & sounds", desc:"pipi, mu, kalama, kute", icon:"🐛",
+    id:15, course:"foundational", title:"Creatures & sounds", desc:"pipi, mu, kalama, kute", icon:"🐛",
     teach:[
       {w:"pipi", def:"insect, bug", note:"\"insect\", \"bug\", or \"spider\" — small crawling creatures.",ex:["pipi li lili.","The bug is small."]},
       {w:"kalama", def:"sound, to make sound", note:"\"sound\" or \"noise\"; as a verb, \"to make a sound\".",ex:["kalama li suli.","The sound is loud."]},
@@ -1412,7 +1413,7 @@ const LESSONS = [
     ]
   },
   {
-    id:16, course:"advanced", title:"Plants & food", desc:"kasi, kili, pan, moku", icon:"🌿",
+    id:16, course:"foundational", title:"Plants & food", desc:"kasi, kili, pan, moku", icon:"🌿",
     teach:[
       {w:"kasi", def:"plant, leaf", note:"\"plant\", \"vegetation\", \"herb\", or \"leaf\" — anything growing and green.",ex:["kasi li laso.","The plant is green."]},
       {w:"kili", def:"fruit, vegetable", note:"\"fruit\", \"vegetable\", or \"mushroom\" — produce you can eat.",ex:["mi moku e kili.","I eat fruit."]},
@@ -1429,7 +1430,7 @@ const LESSONS = [
     ]
   },
   {
-    id:17, course:"advanced", title:"Containers & rest", desc:"poki, lape, kepeken", icon:"🥣",
+    id:17, course:"foundational", title:"Containers & rest", desc:"poki, lape, kepeken", icon:"🥣",
     teach:[
       {w:"poki", def:"container, box", note:"\"container\" — a box, bowl, cup, bag, or bottle. Anything that holds something.",ex:["telo li lon poki.","The water is in the cup."]},
       {w:"lape", def:"to sleep, rest", note:"\"to sleep\" or \"rest\". <span class='tp'>tomo lape</span> = \"bedroom\" (sleep-room).",ex:["mi wile lape.","I want to sleep."]},
@@ -1445,7 +1446,7 @@ const LESSONS = [
     ]
   },
   {
-    id:18, course:"advanced", title:"Sky & nature", desc:"suno, mun, sewi, anpa", icon:"☀️",
+    id:18, course:"foundational", title:"Sky & nature", desc:"suno, mun, sewi, anpa", icon:"☀️",
     teach:[
       {w:"suno", def:"sun, light", note:"\"sun\", \"light\", or \"brightness\". Remember <span class='tp'>tenpo suno</span> = \"day\".",ex:["suno li suli.","The sun is big."]},
       {w:"mun", def:"moon, star", note:"\"moon\" or any night-sky light — also stars. <span class='tp'>tenpo mun</span> can mean a month.",ex:["mun li lon sewi.","The moon is in the sky."]},
@@ -1462,7 +1463,7 @@ const LESSONS = [
     ]
   },
   {
-    id:19, course:"advanced", title:"Earth & substances", desc:"kiwen, ko, kon, ma", icon:"🪨",
+    id:19, course:"foundational", title:"Earth & substances", desc:"kiwen, ko, kon, ma", icon:"🪨",
     teach:[
       {w:"kiwen", def:"hard object; rock, metal", note:"\"rock\", \"stone\", \"metal\" — any hard, solid object.",ex:["kiwen li suli.","The rock is big."]},
       {w:"ko", def:"paste, powder, goo", note:"Semi-solid stuff — clay, paste, powder, dough, goo.",ex:["ko li jaki.","The goo is gross."]},
@@ -1479,7 +1480,7 @@ const LESSONS = [
     ]
   },
   {
-    id:20, course:"advanced", title:"Weather & temperature", desc:"seli, lete + context", icon:"🌡️",
+    id:20, course:"foundational", title:"Weather & temperature", desc:"seli, lete + context", icon:"🌡️",
     teach:[
       {w:"seli", def:"fire, heat; warm", note:"\"fire\", \"heat\", or \"warm/hot\". Also cooking or a chemical reaction.",ex:["seli li suli.","The fire is big."]},
       {w:"lete", def:"cold, cool; raw", note:"The opposite — \"cold\" or \"cool\". Also \"raw\" (uncooked).",ex:["telo li lete.","The water is cold."]},
@@ -1495,7 +1496,7 @@ const LESSONS = [
     ]
   },
   {
-    id:21, course:"advanced", title:"Numbers", desc:"wan, tu, ale, nanpa", icon:"🔢",
+    id:21, course:"foundational", title:"Numbers", desc:"wan, tu, ale, nanpa", icon:"🔢",
     teach:[
       {w:"wan", def:"one; to unite", note:"\"one\". As a verb, \"to combine\" or \"unite\".",ex:["jan wan","one person"]},
       {w:"tu", def:"two; to split", note:"\"two\". As a verb, \"to split in two\".",ex:["soweli tu","two animals"]},
@@ -1512,7 +1513,7 @@ const LESSONS = [
     ]
   },
   {
-    id:22, course:"advanced", title:"Colors complete", desc:"kule, jelo, walo", icon:"🌈",
+    id:22, course:"foundational", title:"Colors complete", desc:"kule, jelo, walo", icon:"🌈",
     teach:[
       {w:"kule", def:"color, colorful", note:"\"color\" or \"colorful\". To say \"what color?\" use <span class='tp'>kule seme</span>.",ex:["len li kule.","The cloth is colorful."]},
       {w:"jelo", def:"yellow", note:"\"yellow\" (and yellowish/light-green tones).",ex:["suno li jelo.","The sun is yellow."]},
@@ -1529,7 +1530,7 @@ const LESSONS = [
     ]
   },
   {
-    id:23, course:"advanced", title:"Doing & becoming", desc:"pali, open, pini, kama", icon:"🔨",
+    id:23, course:"foundational", title:"Doing & becoming", desc:"pali, open, pini, kama", icon:"🔨",
     teach:[
       {w:"pali", def:"to do, make, work", note:"\"to do\", \"make\", \"work on\", or \"build\".",ex:["mi pali e tomo.","I build a house."]},
       {w:"open", def:"to open, begin", note:"\"to open\", \"begin\", \"start\", or \"turn on\".",ex:["mi open e lupa.","I open the door."]},
@@ -1546,7 +1547,7 @@ const LESSONS = [
     ]
   },
   {
-    id:24, course:"advanced", title:"Giving & going", desc:"pana, alasa, poka", icon:"🤝",
+    id:24, course:"foundational", title:"Giving & going", desc:"pana, alasa, poka", icon:"🤝",
     teach:[
       {w:"pana", def:"to give, send", note:"\"to give\", \"send\", \"provide\", \"put\", or \"release\".",ex:["mi pana e moku.","I give food."]},
       {w:"alasa", def:"to hunt, seek", note:"\"to hunt\", \"forage\", \"gather\", or \"search for\".",ex:["mi alasa e kala.","I hunt fish."]},
@@ -1562,7 +1563,7 @@ const LESSONS = [
     ]
   },
   {
-    id:25, course:"advanced", title:"Home & objects", desc:"tomo, supa, lupa, lipu", icon:"🏠",
+    id:25, course:"foundational", title:"Home & objects", desc:"tomo, supa, lupa, lipu", icon:"🏠",
     teach:[
       {w:"tomo", def:"house, room, building", note:"Any indoor space — house, home, room, building. The base for many compounds.",ex:["tomo mi li suli.","My house is big."]},
       {w:"supa", def:"horizontal surface", note:"A flat surface to put things on — table, floor, shelf, bed.",ex:["moku li lon supa.","The food is on the table."]},
@@ -1579,7 +1580,7 @@ const LESSONS = [
     ]
   },
   {
-    id:26, course:"advanced", title:"Tools & writing", desc:"ilo, sitelen, nimi", icon:"🔧",
+    id:26, course:"foundational", title:"Tools & writing", desc:"ilo, sitelen, nimi", icon:"🔧",
     teach:[
       {w:"ilo", def:"tool, machine, device", note:"\"tool\", \"machine\", or \"device\" — any useful object. The key word for building tech terms.",ex:["ilo li pona.","The tool is good."]},
       {w:"sitelen", def:"image, writing; to draw", note:"\"image\", \"picture\", \"symbol\", or \"writing\"; as a verb, \"to draw\" or \"write\".",ex:["mi sitelen e nimi.","I write a word."]},
@@ -1596,7 +1597,7 @@ const LESSONS = [
     ]
   },
   {
-    id:27, course:"advanced", title:"Talking about technology", desc:"Phone, computer, internet, AI", icon:"💻",
+    id:27, course:"foundational", title:"Talking about technology", desc:"Phone, computer, internet, AI", icon:"💻",
     teach:[
       {w:"ilo sona", def:"computer (knowledge-tool)", note:"There are no official words for modern tech — speakers combine existing words, and these are common conventions. <span class='tp'>ilo sona</span> = \"knowledge-tool\" → computer.",ex:["ilo sona mi li suli.","My computer is big."]},
       {w:"ilo toki", def:"phone (talk-tool)", note:"<span class='tp'>ilo toki</span> = \"talk-tool\" → phone. You can add <span class='tp'>lili</span> for a mobile: <span class='tp'>ilo toki lili</span>.",ex:["mi jo e ilo toki.","I have a phone."]},
@@ -1612,7 +1613,7 @@ const LESSONS = [
     ]
   },
   {
-    id:28, course:"advanced", title:"Clothing & change", desc:"len, selo, sin, ante", icon:"👕",
+    id:28, course:"foundational", title:"Clothing & change", desc:"len, selo, sin, ante", icon:"👕",
     teach:[
       {w:"len", def:"cloth, clothing", note:"\"cloth\", \"clothing\", or \"fabric\". Also a \"layer\" or privacy covering.",ex:["len mi li laso.","My clothes are blue."]},
       {w:"selo", def:"skin, shell, outer layer", note:"The outer surface of something — skin, shell, bark, peel.",ex:["selo kili","fruit peel"]},
@@ -1629,7 +1630,7 @@ const LESSONS = [
     ]
   },
   {
-    id:29, course:"advanced", title:"Qualities, part 1", desc:"suwi, nasa, jaki, wawa", icon:"✨",
+    id:29, course:"foundational", title:"Qualities, part 1", desc:"suwi, nasa, jaki, wawa", icon:"✨",
     teach:[
       {w:"suwi", def:"sweet; cute", note:"\"sweet\" (taste or smell) and \"cute\" or \"adorable\".",ex:["soweli li suwi.","The animal is cute."]},
       {w:"nasa", def:"strange, silly; foolish", note:"\"strange\", \"weird\", \"silly\", or \"foolish\". (Also \"intoxicated\" — hence <span class='tp'>telo nasa</span> = alcohol.)",ex:["jan ni li nasa.","This person is silly."]},
@@ -1646,7 +1647,7 @@ const LESSONS = [
     ]
   },
   {
-    id:30, course:"advanced", title:"Qualities, part 2", desc:"musi, sama, ken, awen", icon:"🎲",
+    id:30, course:"foundational", title:"Qualities, part 2", desc:"musi, sama, ken, awen", icon:"🎲",
     teach:[
       {w:"musi", def:"fun, playful; art", note:"\"fun\", \"playful\", \"entertaining\"; also \"art\" or \"game\". As a verb, \"to play\".",ex:["ni li musi.","This is fun."]},
       {w:"sama", def:"same, like; as", note:"\"same\" or \"similar\". As a preposition, \"like\" or \"as\". <span class='tp'>sina sama mi</span> = \"you are like me\".",ex:["mi sama sina.","I am like you."]},
@@ -1663,7 +1664,7 @@ const LESSONS = [
     ]
   },
   {
-    id:31, course:"advanced", title:"Mind & meaning", desc:"toki, sona, lawa, pilin", icon:"🧠",
+    id:31, course:"foundational", title:"Mind & meaning", desc:"toki, sona, lawa, pilin", icon:"🧠",
     teach:[
       {w:"toki", def:"to talk; language; hello", note:"A reminder: \"to talk/speak\", \"language\", and on its own, \"hello\".",ex:["mi toki e ni.","I say this."]},
       {w:"sona", def:"to know; knowledge", note:"\"to know\" or \"understand\". <span class='tp'>jan sona</span> = \"expert\" (knowing-person). <span class='tp'>kama sona</span> = \"to learn\".",ex:["mi sona e toki pona.","I know toki pona."]},
@@ -1680,7 +1681,7 @@ const LESSONS = [
     ]
   },
   {
-    id:32, course:"advanced", title:"Strong verbs", desc:"moli, utala, pakala, weka", icon:"⚔️",
+    id:32, course:"foundational", title:"Strong verbs", desc:"moli, utala, pakala, weka", icon:"⚔️",
     teach:[
       {w:"moli", def:"to die; death", note:"\"to die\" or \"kill\"; \"death\". As an adjective, \"dead\".",ex:["kasi li moli.","The plant is dead."]},
       {w:"utala", def:"to fight, compete", note:"\"to fight\", \"battle\", \"struggle\", or \"compete\".",ex:["jan tu li utala.","Two people fight."]},
@@ -1697,7 +1698,7 @@ const LESSONS = [
     ]
   },
   {
-    id:33, course:"advanced", title:"Trade & society", desc:"esun, mani, kulupu, ijo", icon:"🏪",
+    id:33, course:"foundational", title:"Trade & society", desc:"esun, mani, kulupu, ijo", icon:"🏪",
     teach:[
       {w:"esun", def:"market, shop; to trade", note:"\"market\", \"shop\", \"trade\", or \"deal\"; as a verb, \"to buy/sell\". <span class='tp'>tomo esun</span> = \"shop\" (trade-building).",ex:["mi tawa esun.","I go to the market."]},
       {w:"mani", def:"money, wealth", note:"\"money\", \"currency\", or \"wealth\".",ex:["mi jo e mani.","I have money."]},
@@ -1714,7 +1715,7 @@ const LESSONS = [
     ]
   },
   {
-    id:34, course:"advanced", title:"Shapes & lines", desc:"sike, linja, palisa, nena", icon:"⭕",
+    id:34, course:"foundational", title:"Shapes & lines", desc:"sike, linja, palisa, nena", icon:"⭕",
     teach:[
       {w:"sike", def:"round thing; circle, cycle", note:"\"circle\", \"ball\", \"round thing\", or a \"cycle\". <span class='tp'>tenpo sike</span> = \"a year\" (one cycle).",ex:["sike li suli.","The ball is big."]},
       {w:"linja", def:"long flexible thing", note:"A \"line\", \"rope\", \"string\", \"hair\", or \"cord\" — anything long and bendy.",ex:["linja li linja.","The hair is long."]},
@@ -1731,7 +1732,7 @@ const LESSONS = [
     ]
   },
   {
-    id:35, course:"advanced", title:"Beyond pu, part 1", desc:"non-pu words · kin, namako, oko, n", icon:"✨",
+    id:35, course:"foundational", title:"Beyond pu, part 1", desc:"non-pu words · kin, namako, oko, n", icon:"✨",
     teach:[
       {info:true, title:"pu vs. non-pu words",
        body:"<p>So far every word you've learned comes from <span class='tp'>pu</span> — the official toki pona book by Sonja Lang, which defines 120 core words. That book is the shared foundation almost every speaker agrees on.</p><p>But the language has a living community, and a handful of extra words became popular afterward. The most common ones were gathered in a later book, <span class='tp'>lipu ku</span> (the Toki Pona Dictionary), and are often called <b>ku suli</b> — the \"essential\" non-pu words.</p><p>These 16 words aren't strictly necessary, and not everyone uses them — but you'll see them often enough that they're worth knowing. We teach them separately so you always know which words are core <span class='tp'>pu</span> and which are the extra <b>ku suli</b> set.</p>"},
@@ -1750,7 +1751,7 @@ const LESSONS = [
     ]
   },
   {
-    id:36, course:"advanced", title:"Beyond pu, part 2", desc:"non-pu words · kipisi, lanpan, leko, jasima", icon:"✨",
+    id:36, course:"foundational", title:"Beyond pu, part 2", desc:"non-pu words · kipisi, lanpan, leko, jasima", icon:"✨",
     teach:[
       {w:"kipisi", def:"to cut, divide, split, slice", note:"\"to cut\", \"split\", or \"slice\". Close to <span class='tp'>tu</span> (to split in two), but <span class='tp'>kipisi</span> is the general \"cut\" verb.",ex:["mi kipisi e kili.","I cut the fruit."]},
       {w:"lanpan", def:"to take, seize, grab, steal", note:"\"to take\", \"seize\", \"grab\", or \"steal\" — taking something, often without asking.",ex:["ona li lanpan e mani.","They took the money."]},
@@ -1767,7 +1768,7 @@ const LESSONS = [
     ]
   },
   {
-    id:37, course:"advanced", title:"Beyond pu, part 3", desc:"non-pu words · monsuta, epiku, meso, soko", icon:"✨",
+    id:37, course:"foundational", title:"Beyond pu, part 3", desc:"non-pu words · monsuta, epiku, meso, soko", icon:"✨",
     teach:[
       {w:"monsuta", def:"monster, fear, dread", note:"A \"monster\" or \"scary thing\", or the feeling of \"fear\" / \"dread\" itself.",ex:["mi pilin monsuta.","I feel afraid."]},
       {w:"epiku", def:"epic, awesome, cool, great", note:"\"epic\", \"awesome\", \"cool\", or \"great\" — a playful, enthusiastic word from the community.",ex:["ni li epiku!","This is epic!"]},
@@ -1784,7 +1785,7 @@ const LESSONS = [
     ]
   },
   {
-    id:38, course:"advanced", title:"Beyond pu, part 4", desc:"non-pu words · misikeke, kokosila, kijetesantakalu, ku", icon:"✨",
+    id:38, course:"foundational", title:"Beyond pu, part 4", desc:"non-pu words · misikeke, kokosila, kijetesantakalu, ku", icon:"✨",
     teach:[
       {w:"misikeke", def:"medicine, treatment, cure", note:"\"medicine\", \"medical treatment\", \"cure\", or \"remedy\".",ex:["mi wile e misikeke.","I need medicine."]},
       {w:"kokosila", def:"to speak a non-toki-pona language", note:"To \"speak another language\" in a toki pona setting — i.e. to refuse to use toki pona when you could. A uniquely toki-pona idea with no English single-word equal.",ex:["o kokosila ala!","Don't switch languages!"]},
@@ -1801,7 +1802,7 @@ const LESSONS = [
     ]
   },
   {
-    id:39, course:"advanced", title:"Capstone & last words", desc:"pu, a + full review", icon:"🏆",
+    id:39, course:"foundational", title:"Capstone & last words", desc:"pu, a + full review", icon:"🏆",
     teach:[
       {w:"a", def:"(emphasis / emotion)", note:"<span class='tp'>a</span> adds feeling — like \"ah!\", \"oh!\", or \"wow!\". <span class='tp'>pona a!</span> = \"so good!\" It can go at the end for emphasis or stand alone as a reaction.",ex:["pona a!","Wonderful!"]},
       {w:"pu", def:"(the official book)", note:"<span class='tp'>pu</span> refers to interacting with the official toki pona book by Sonja Lang. A <span class='tp'>jan pu</span> is someone who learned from it. A rare, special-purpose word.",ex:["mi pu.","I read the official book."]},
@@ -1817,6 +1818,102 @@ const LESSONS = [
     ]
   },
 
+  {
+    id:40, course:"advanced", title:"li vs e — the backbone", desc:"what li marks vs what e marks", icon:"⚖️",
+    teach:[
+      {info:true, title:"li and e do different jobs",
+       body:"<p>These two particles cause more mistakes than anything else in toki pona, and the cure is to keep their jobs straight.</p><p><b>li</b> marks the <b>predicate</b> — what the subject <i>does</i> or <i>is</i>. <b>e</b> marks the <b>object</b> — the thing the predicate acts on.</p><p><span class='tp'>soweli li moku e kili</span> → the animal (subject) <span class='tp'>li</span> eats (predicate) <span class='tp'>e</span> fruit (object).</p>"},
+      {info:true, title:"the mi / sina shortcut",
+       body:"<p>One exception: drop <span class='tp'>li</span> when the subject is a bare <span class='tp'>mi</span> or <span class='tp'>sina</span>. So <span class='tp'>mi moku</span>, not <span class='tp'>mi li moku</span>.</p><p>But <span class='tp'>e</span> never drops: <span class='tp'>mi moku e kili</span>. The object marker stays no matter the subject.</p>"},
+    ],
+    drills:[
+      {type:"choose", q:"In <span class='tp'>jan li moku e kili</span>, what does <span class='tp'>e</span> mark?", correct:"the object — kili", opts:["the object — kili","the subject — jan","the verb — moku","a question"]},
+      {type:"build", q:"Build: 'The person eats fruit.'", answer:["jan","li","moku","e","kili"], bank:["jan","li","moku","e","kili","mi","pi"], note:"Subject <span class='tp'>jan</span>, so <span class='tp'>li</span> before the verb, then <span class='tp'>e</span> before the object."},
+      {type:"build", q:"Build: 'I eat fruit.' (watch the li rule)", answer:["mi","moku","e","kili"], bank:["mi","li","moku","e","kili"], note:"Bare <span class='tp'>mi</span> drops <span class='tp'>li</span> — but <span class='tp'>e</span> stays."},
+      {type:"build", q:"This is wrong: <i>mi li moku</i>. Build it correctly.", answer:["mi","moku"], bank:["mi","li","moku","e"], note:"Drop <span class='tp'>li</span> after a bare <span class='tp'>mi</span>."},
+      {type:"type", q:"Type: 'I see water.' (see = <span class='tp'>lukin</span>, water = <span class='tp'>telo</span>)", answers:["mi lukin e telo"], note:"<span class='tp'>mi lukin e telo</span> — no <span class='tp'>li</span> after <span class='tp'>mi</span>, object on <span class='tp'>e</span>."},
+      {type:"build", q:"Build: 'She loves you.'", answer:["ona","li","olin","e","sina"], bank:["ona","li","olin","e","sina","mi"], note:"Subject <span class='tp'>ona</span> keeps <span class='tp'>li</span>; <span class='tp'>sina</span> is the object."},
+      {type:"type", q:"Type: 'You have water.' (have = <span class='tp'>jo</span>)", answers:["sina jo e telo"], note:"<span class='tp'>sina jo e telo</span> — bare <span class='tp'>sina</span> drops <span class='tp'>li</span>, object on <span class='tp'>e</span>."},
+      {type:"choose", q:"Which is correct for 'the person is good'?", correct:"jan li pona", opts:["jan li pona","jan e pona","jan pona li","jan li pona e"], tpOpts:true},
+    ]
+  },
+  {
+    id:41, course:"advanced", title:"li, the fine print", desc:"when li returns; stacking predicates", icon:"🔁",
+    teach:[
+      {info:true, title:"a modified subject brings li back",
+       body:"<p>The <span class='tp'>li</span>-drop only applies to a <i>bare</i> <span class='tp'>mi</span> or <span class='tp'>sina</span>. Add anything to the subject and <span class='tp'>li</span> comes straight back.</p><p><span class='tp'>mi mute li moku</span> (we eat). <span class='tp'>mi en sina li pona</span> (you and I are good). The moment the subject is more than just <span class='tp'>mi</span> or <span class='tp'>sina</span>, you need <span class='tp'>li</span>.</p>"},
+      {info:true, title:"one subject, several predicates",
+       body:"<p>Repeat <span class='tp'>li</span> to give a subject more than one predicate: <span class='tp'>ona li moku li lape</span> (she eats and sleeps), <span class='tp'>ona li suli li pona</span> (it is big and good).</p><p>After a bare <span class='tp'>mi</span>/<span class='tp'>sina</span>, only the <i>first</i> <span class='tp'>li</span> drops; later ones stay: <span class='tp'>mi lape li pona</span> (I sleep and am good).</p>"},
+    ],
+    drills:[
+      {type:"choose", q:"Which is correct for 'we eat'? (we = <span class='tp'>mi mute</span>)", correct:"mi mute li moku", opts:["mi mute li moku","mi mute moku","mi moku mute","mi li moku mute"], tpOpts:true},
+      {type:"build", q:"Build: 'We are good.' (we = <span class='tp'>mi mute</span>)", answer:["mi","mute","li","pona"], bank:["mi","mute","li","pona","e"], note:"<span class='tp'>mi mute</span> is not a bare <span class='tp'>mi</span>, so <span class='tp'>li</span> returns."},
+      {type:"build", q:"Build: 'You and I are good.'", answer:["mi","en","sina","li","pona"], bank:["mi","en","sina","li","pona","e"], note:"A compound subject always takes <span class='tp'>li</span>."},
+      {type:"build", q:"This is wrong: <i>mi mute moku</i>. Build it correctly.", answer:["mi","mute","li","moku"], bank:["mi","mute","li","moku","e"], note:"Add <span class='tp'>li</span> — the subject isn't a bare <span class='tp'>mi</span>."},
+      {type:"build", q:"Build: 'She eats and sleeps.'", answer:["ona","li","moku","li","lape"], bank:["ona","li","moku","li","lape","e"], note:"Two predicates, so two <span class='tp'>li</span>."},
+      {type:"type", q:"Type: 'It is big and good.' (big = <span class='tp'>suli</span>, good = <span class='tp'>pona</span>, it = <span class='tp'>ona</span>)", answers:["ona li suli li pona"], note:"<span class='tp'>ona li suli li pona</span> — repeat <span class='tp'>li</span> for the second quality."},
+      {type:"build", q:"Build: 'I sleep and I am good.' (sleep = <span class='tp'>lape</span>)", answer:["mi","lape","li","pona"], bank:["mi","lape","li","pona","e"], note:"Bare <span class='tp'>mi</span> drops the first <span class='tp'>li</span>, but the second predicate keeps it: <span class='tp'>mi lape li pona</span>."},
+      {type:"choose", q:"<span class='tp'>ona li moku li lape</span> means…", correct:"She eats and sleeps.", opts:["She eats and sleeps.","She eats sleep.","She and sleep are eating.","She is a sleepy eater."]},
+    ]
+  },
+  {
+    id:42, course:"advanced", title:"e in depth", desc:"many objects, the causative, pre-verbs", icon:"🎯",
+    teach:[
+      {info:true, title:"more than one object",
+       body:"<p>To act on several things, repeat <span class='tp'>e</span> before each one: <span class='tp'>mi moku e kili e telo</span> (I consume fruit and water).</p><p>Do <b>not</b> use <span class='tp'>en</span> here — <span class='tp'>en</span> is only for subjects. Objects always repeat <span class='tp'>e</span>.</p>"},
+      {info:true, title:"e can mean 'make it ___'",
+       body:"<p>Put <span class='tp'>e</span> after almost any quality word and it becomes 'cause / make': <span class='tp'>mi pona e ilo</span> (I make the tool good = I fix it), <span class='tp'>mi suli e tomo</span> (I make the house big = I enlarge it). One of toki pona's most useful tricks.</p><p>With a pre-verb like <span class='tp'>wile</span>, the <span class='tp'>e</span> goes on the main verb: <span class='tp'>mi wile moku e kili</span> (I want to eat fruit).</p>"},
+    ],
+    drills:[
+      {type:"build", q:"Build: 'I eat fruit and water.'", answer:["mi","moku","e","kili","e","telo"], bank:["mi","moku","e","kili","e","telo","en"], note:"Two objects → two <span class='tp'>e</span>. Never <span class='tp'>en</span> for objects."},
+      {type:"choose", q:"Which is correct for 'I eat fruit and water'?", correct:"mi moku e kili e telo", opts:["mi moku e kili e telo","mi moku e kili en telo","mi moku e kili telo","mi en moku e kili telo"], tpOpts:true},
+      {type:"build", q:"Build: 'I fix the tool.' (= make the tool good)", answer:["mi","pona","e","ilo"], bank:["mi","pona","e","ilo","li"], note:"<span class='tp'>pona</span> + <span class='tp'>e</span> = 'make good' → fix."},
+      {type:"build", q:"Build: 'I enlarge the house.' (= make the house big)", answer:["mi","suli","e","tomo"], bank:["mi","suli","e","tomo","li"], note:"<span class='tp'>suli e</span> = 'make big'."},
+      {type:"type", q:"Type: 'I want to eat fruit.' (want = <span class='tp'>wile</span>)", answers:["mi wile moku e kili"], note:"<span class='tp'>mi wile moku e kili</span> — <span class='tp'>e</span> attaches to the main verb <span class='tp'>moku</span>, not to <span class='tp'>wile</span>."},
+      {type:"build", q:"This is wrong: <i>mi moku e kili en telo</i>. Build it correctly.", answer:["mi","moku","e","kili","e","telo"], bank:["mi","moku","e","kili","e","telo","en"], note:"Objects repeat <span class='tp'>e</span> — <span class='tp'>en</span> is only for joining subjects."},
+      {type:"type", q:"Type: 'She makes the water good.' (she = <span class='tp'>ona</span>)", answers:["ona li pona e telo"], note:"<span class='tp'>ona li pona e telo</span> — <span class='tp'>li</span> (subject ona) plus the causative <span class='tp'>e</span>."},
+      {type:"choose", q:"<span class='tp'>mi suli e tomo</span> means…", correct:"I enlarge the house.", opts:["I enlarge the house.","The house is big.","I am a big house.","My big house."]},
+    ]
+  },
+  {
+    id:43, course:"advanced", title:"en, and how to say 'and'", desc:"en joins subjects — not everything", icon:"➕",
+    teach:[
+      {info:true, title:"en joins subjects — only subjects",
+       body:"<p>Use <span class='tp'>en</span> to combine the things <i>doing</i> the action: <span class='tp'>mi en sina li pona</span> (you and I are good), <span class='tp'>soweli en waso li moku</span> (the animal and bird eat).</p><p>Order doesn't matter — <span class='tp'>mi en sina</span> and <span class='tp'>sina en mi</span> mean the same thing.</p>"},
+      {info:true, title:"'and' isn't one word",
+       body:"<p>Outside the subject, <span class='tp'>en</span> is wrong. Objects repeat <span class='tp'>e</span> (<span class='tp'>moku e kili e telo</span>). Predicates repeat <span class='tp'>li</span> (<span class='tp'>li moku li lape</span>). Plain qualities just stack (<span class='tp'>tomo suli pona</span>).</p><p>So 'and' maps to a different structure depending on what you're joining. <span class='tp'>en</span> is just one of them.</p>"},
+    ],
+    drills:[
+      {type:"build", q:"Build: 'You and I are good.' (either order works)", answer:["sina","en","mi","li","pona"], alts:[["mi","en","sina","li","pona"]], bank:["sina","en","mi","li","pona","e"], note:"<span class='tp'>en</span> joins the subjects; <span class='tp'>li</span> follows. <span class='tp'>sina en mi</span> and <span class='tp'>mi en sina</span> are both fine."},
+      {type:"choose", q:"Which is correct for 'I eat fruit and water'?", correct:"mi moku e kili e telo", opts:["mi moku e kili e telo","mi moku e kili en telo","mi en moku e kili e telo","mi moku en kili en telo"], tpOpts:true},
+      {type:"build", q:"This is wrong: <i>mi moku e kili en telo</i>. Build it correctly.", answer:["mi","moku","e","kili","e","telo"], bank:["mi","moku","e","kili","e","telo","en"], note:"<span class='tp'>en</span> is for subjects; objects repeat <span class='tp'>e</span>."},
+      {type:"build", q:"Build: 'The person and the animal are good.'", answer:["jan","en","soweli","li","pona"], bank:["jan","en","soweli","li","pona","e"], note:"A compound subject with <span class='tp'>en</span>, then <span class='tp'>li</span>."},
+      {type:"type", q:"Type: 'You and I see water.' (see = <span class='tp'>lukin</span>)", answers:["mi en sina li lukin e telo","sina en mi li lukin e telo"], note:"<span class='tp'>mi en sina li lukin e telo</span> — compound subject (so <span class='tp'>li</span> returns) plus an object on <span class='tp'>e</span>."},
+      {type:"build", q:"This is wrong: <i>mi en sina moku</i>. Build it correctly.", answer:["mi","en","sina","li","moku"], bank:["mi","en","sina","li","moku","e"], note:"A compound subject takes <span class='tp'>li</span> — the drop is only for a bare <span class='tp'>mi</span>/<span class='tp'>sina</span>."},
+      {type:"choose", q:"When do you use <span class='tp'>en</span>?", correct:"to join two subjects", opts:["to join two subjects","to join two objects","to mean 'or'","before every 'and'"]},
+      {type:"build", q:"Build: 'She eats and sleeps.' (this is NOT en)", answer:["ona","li","moku","li","lape"], bank:["ona","li","moku","li","lape","en"], note:"Two verbs → repeat <span class='tp'>li</span>, not <span class='tp'>en</span>."},
+    ]
+  },
+  {
+    id:44, course:"advanced", title:"pi — regrouping", desc:"group modifiers; never before one word", icon:"🧩",
+    teach:[
+      {info:true, title:"pi regroups your words",
+       body:"<p>Modifiers pile onto the word before them, left to right. <span class='tp'>tomo telo</span> is a water-room — a bathroom. Add another and it keeps stacking: <span class='tp'>tomo telo nasa</span> reads as a <i>crazy bathroom</i>, because <span class='tp'>nasa</span> ends up describing the whole <span class='tp'>tomo telo</span>.</p><p><b>pi</b> snaps that chain and starts a fresh group. <span class='tp'>tomo pi telo nasa</span> = a house <i>of</i> crazy-water (alcohol) → a bar. Same three words, regrouped, a different meaning.</p>"},
+      {info:true, title:"one rule fixes most pi mistakes",
+       body:"<p>Use <b>pi</b> only when a modifier has <i>its own</i> modifier — when two or more words need to act as one unit.</p><p>Never put <b>pi</b> before a single word. <span class='tp'>jan pona</span> is right; <span class='tp'>jan pi pona</span> is wrong. That one slip is most of what trips people up.</p>"},
+    ],
+    drills:[
+      {type:"choose", q:"Which means 'a bar' (a house of alcohol)?", correct:"tomo pi telo nasa", opts:["tomo pi telo nasa","tomo telo nasa","tomo telo pi nasa","pi tomo telo nasa"], tpOpts:true},
+      {type:"build", q:"Build: 'a bar' — literally 'house of crazy-water'", answer:["tomo","pi","telo","nasa"], bank:["tomo","telo","nasa","pi","li","e"], note:"<span class='tp'>pi</span> groups <span class='tp'>telo nasa</span> under <span class='tp'>tomo</span>. A noun phrase, so no <span class='tp'>li</span> or <span class='tp'>e</span>."},
+      {type:"build", q:"This is wrong: <i>jan pi pona</i>. Build it correctly.", answer:["jan","pona"], bank:["jan","pona","pi","li"], note:"<span class='tp'>pona</span> is a single word, so it just sits after <span class='tp'>jan</span>. Drop the <span class='tp'>pi</span>."},
+      {type:"build", q:"Build: 'a good-looking person' — a person 'of good looking' (<span class='tp'>pona lukin</span>)", answer:["jan","pi","pona","lukin"], bank:["jan","pona","lukin","pi","li","e"], note:"<span class='tp'>lukin</span> rides on <span class='tp'>pona</span>, so <span class='tp'>pi</span> groups them: <span class='tp'>jan pi pona lukin</span>."},
+      {type:"type", q:"Type it from memory: 'a person of much knowledge' (much knowledge = <span class='tp'>sona mute</span>)", answers:["jan pi sona mute"], note:"<span class='tp'>jan pi sona mute</span> — <span class='tp'>mute</span> rides on <span class='tp'>sona</span>, so <span class='tp'>pi</span> groups them under <span class='tp'>jan</span>."},
+      {type:"build", q:"Build: 'a big good house' — two plain qualities, order is free", answer:["tomo","suli","pona"], alts:[["tomo","pona","suli"]], bank:["tomo","suli","pona","pi","li"], note:"Two single-word modifiers just stack — no <span class='tp'>pi</span>. <span class='tp'>tomo suli pona</span> and <span class='tp'>tomo pona suli</span> are both fine."},
+      {type:"build", q:"Build: 'She is a person of good work.' (good work = <span class='tp'>pali pona</span>)", answer:["ona","li","jan","pi","pali","pona"], bank:["ona","li","jan","pi","pali","pona","e","mi"], note:"Subject <span class='tp'>ona</span> keeps <span class='tp'>li</span>; then <span class='tp'>pi</span> groups <span class='tp'>pali pona</span>."},
+      {type:"build", q:"Build: 'I want a teacher.' — 'a person of giving-knowledge' (<span class='tp'>pana sona</span>)", answer:["mi","wile","e","jan","pi","pana","sona"], bank:["mi","wile","e","jan","pi","pana","sona","li"], note:"<span class='tp'>wile</span> pre-verb, object on <span class='tp'>e</span>, and <span class='tp'>pi</span> grouping <span class='tp'>pana sona</span>. No <span class='tp'>li</span> after bare <span class='tp'>mi</span>."},
+      {type:"type", q:"Last one, typed — the full sentence: 'I see a good-looking person.' (see = <span class='tp'>lukin</span>)", answers:["mi lukin e jan pi pona lukin"], note:"<span class='tp'>mi lukin e jan pi pona lukin</span> — bare <span class='tp'>mi</span> (no <span class='tp'>li</span>), object on <span class='tp'>e</span>, and the <span class='tp'>pi</span> group, all from memory."},
+    ]
+  },
 ];
 
 /* ════════════════════════════════════════════════════════════════
@@ -2535,6 +2632,7 @@ function srsCounts(){
 ═══════════════════════════════════════════════════════════════ */
 function lessonsByCourse(course){ return LESSONS.filter(l=>l.course===course); }
 function introDone(){ return lessonsByCourse('intro').every(l=>state.completed.includes(l.id)); }
+function foundationalDone(){ const f=lessonsByCourse('foundational'); return f.length>0 && f.every(l=>state.completed.includes(l.id)); }
 
 /* ════════════════════════════════════════════════════════════════
    NAVIGATION
@@ -2567,22 +2665,35 @@ function renderHome(){
   if(badgeEl) badgeEl.textContent = due>0 ? `${due} due` : (c.total>0 ? 'all caught up' : 'none yet');
 }
 
-/* ── LESSON LIST (two courses, intro gates advanced) ── */
+/* ── LESSON LIST (three courses: intro → foundations → advanced) ── */
 function renderLessonList(){
   const el = document.getElementById('lessonList');
   const intro = lessonsByCourse('intro');
-  const adv = lessonsByCourse('advanced');
-  const gateOpen = introDone() || isAdmin(username);
+  const foundational = lessonsByCourse('foundational');
+  const advanced = lessonsByCourse('advanced');
+  const admin = isAdmin(username);
+  const foundOpen = introDone() || admin;
+  const advOpen = foundationalDone() || admin;
 
   let html = `<div class="course-label"><span class="course-tag intro">Intro course</span><span class="course-sub">The essentials — grammar & first words</span></div>`;
   html += renderCourseCards(intro);
 
-  html += `<div class="course-label" style="margin-top:30px"><span class="course-tag adv">Advanced course</span><span class="course-sub">All remaining vocabulary & richer sentences</span></div>`;
-  if(!gateOpen){
+  html += `<div class="course-label" style="margin-top:30px"><span class="course-tag adv">Foundations course</span><span class="course-sub">All remaining vocabulary & richer sentences</span></div>`;
+  if(!foundOpen){
     const remain = intro.filter(l=>!state.completed.includes(l.id)).length;
-    html += `<div class="course-locked">🔒 Finish the intro course to unlock these ${adv.length} lessons.<br><span style="font-size:13px;color:var(--ink-dim)">${remain} intro lesson${remain>1?'s':''} to go.</span></div>`;
+    html += `<div class="course-locked">🔒 Finish the intro course to unlock these ${foundational.length} lessons.<br><span style="font-size:13px;color:var(--ink-dim)">${remain} intro lesson${remain!==1?'s':''} to go.</span></div>`;
   } else {
-    html += renderCourseCards(adv);
+    html += renderCourseCards(foundational);
+  }
+
+  if(advanced.length>0){
+    html += `<div class="course-label" style="margin-top:30px"><span class="course-tag adv2">Advanced course</span><span class="course-sub">Master the grammar — li, e, en, pi, ni</span></div>`;
+    if(!advOpen){
+      const remain = foundational.filter(l=>!state.completed.includes(l.id)).length;
+      html += `<div class="course-locked">🔒 Finish the foundations course to unlock these ${advanced.length} lessons.<br><span style="font-size:13px;color:var(--ink-dim)">${remain} foundations lesson${remain!==1?'s':''} to go.</span></div>`;
+    } else {
+      html += renderCourseCards(advanced);
+    }
   }
   el.innerHTML = html;
 }
@@ -2642,6 +2753,7 @@ function renderStep(){
   if(d.type==='match')     renderMatch(d, qArea, checkBar);
   if(d.type==='build')     renderBuild(d, qArea, checkBar);
   if(d.type==='truefalse') renderTrueFalse(d, qArea, checkBar);
+  if(d.type==='type')      renderType(d, qArea, checkBar);
 }
 
 function next(){ run.idx++; renderStep(); }
@@ -2821,11 +2933,33 @@ function renderBuild(d, qArea, checkBar){
 
   window.checkBuild = function(){
     const attempt = placed.map(i=>bank[i]);
-    const ok = attempt.length===d.answer.length && attempt.every((w,i)=>w===d.answer[i]);
+    const valids = [d.answer].concat(d.alts||[]);
+    const ok = valids.some(v => v.length===attempt.length && v.every((w,i)=>w===attempt[i]));
     // lock chips
     bankEl.querySelectorAll('.chip').forEach(c=>c.style.pointerEvents='none');
     answerEl.querySelectorAll('.chip').forEach(c=>c.style.pointerEvents='none');
     markResult(ok, checkBar, d.answer.join(' '), d.note);
+  };
+}
+
+/* TYPE the answer (free text, no word bank) */
+function renderType(d, qArea, checkBar){
+  qArea.innerHTML = `
+    <div class="q-instr">Type your answer · no tiles</div>
+    <div class="q-prompt">${d.q}</div>
+    <input class="type-input" id="typeIn" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="write in toki pona…">`;
+  const inp = document.getElementById('typeIn');
+  setTimeout(()=>{ try{ inp.focus(); }catch(e){} }, 50);
+  checkBar.innerHTML = `<button class="btn-primary" id="typeCheck" disabled onclick="checkType()">Check</button>`;
+  const upd = ()=>{ const b=document.getElementById('typeCheck'); if(b) b.disabled = inp.value.trim()===''; };
+  inp.addEventListener('input', upd);
+  inp.addEventListener('keydown', e=>{ if(e.key==='Enter'){ const b=document.getElementById('typeCheck'); if(b && !b.disabled) checkType(); } });
+  window.checkType = function(){
+    const norm = s => s.toLowerCase().trim().replace(/[.,!?;:]+$/,'').replace(/\s+/g,' ');
+    const attempt = norm(inp.value);
+    const ok = (d.answers||[]).some(a=>norm(a)===attempt);
+    inp.disabled = true;
+    markResult(ok, checkBar, (d.answers||[''])[0], d.note);
   };
 }
 
@@ -2854,6 +2988,8 @@ function finishLesson(){
     lessonsByCourse('intro').every(l=>state.completed.includes(l.id));
   // Show the special gate screen only once — when the last remaining intro lesson is cleared
   const showIntroGate = justFinishedIntro && firstTime;
+  // Likewise when the foundations course is finished, unlocking the advanced tier
+  const showFoundGate = les.course==='foundational' && foundationalDone() && firstTime && lessonsByCourse('advanced').length>0;
 
   const cardLine = newCards>0
     ? `<div class="complete-cards">🃏 ${newCards} new flashcard${newCards>1?'s':''} added to your reviews</div>` : '';
@@ -2865,7 +3001,29 @@ function finishLesson(){
         <h2>Congratulations!</h2>
         <div class="tp-line">sina pini e nasin open!</div>
         <div style="color:var(--ink-soft);font-size:15px;line-height:1.6;max-width:420px;margin:8px auto 0">
-          You completed the <b>Intro Course</b> — all the core grammar and your first words. The <b>Advanced Course</b> is now unlocked, with 25 more lessons covering the rest of the language.
+          You completed the <b>Intro Course</b> — all the core grammar and your first words. The <b>Foundations Course</b> is now unlocked, with the rest of the vocabulary and richer sentences.
+        </div>
+        <div class="complete-stats">
+          <div class="complete-stat"><div class="n">${run.correct}/${run.total}</div><div class="l">correct</div></div>
+          <div class="complete-stat"><div class="n">+${earned}</div><div class="l">XP</div></div>
+        </div>
+        ${cardLine}
+        <div style="display:grid;gap:10px;max-width:300px;margin:20px auto 0">
+          <button class="btn-primary" onclick="go('lessons')">Start the Foundations Course →</button>
+          <button class="btn-primary btn-leaf" onclick="go('review')">Review flashcards</button>
+        </div>
+      </div>`;
+    return;
+  }
+
+  if(showFoundGate){
+    qArea.innerHTML = `
+      <div class="complete fade-up">
+        <div class="complete-mark">🏆</div>
+        <h2>Foundations complete!</h2>
+        <div class="tp-line">sina sona e nimi ale!</div>
+        <div style="color:var(--ink-soft);font-size:15px;line-height:1.6;max-width:420px;margin:8px auto 0">
+          You know the whole vocabulary now. The <b>Advanced Course</b> is unlocked — a deep dive into the grammar that trips everyone up: <span class='tp'>li</span>, <span class='tp'>e</span>, <span class='tp'>en</span>, <span class='tp'>pi</span>, and <span class='tp'>ni</span>, drilled until you can produce them in a real conversation.
         </div>
         <div class="complete-stats">
           <div class="complete-stat"><div class="n">${run.correct}/${run.total}</div><div class="l">correct</div></div>
@@ -3536,6 +3694,9 @@ function rateCard(rating){
   const card = srs.cards[w];
   srsRate(card, rating);
   saveSRS();
+  // reviewing flashcards counts as activity — keep the daily streak alive
+  // (bumpStreak is idempotent per day, so this never double-counts)
+  bumpStreak();
   // award a little XP per reviewed card
   state.xp += 1; saveState();
   s.reviewed++;
