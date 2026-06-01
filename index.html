@@ -168,7 +168,7 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 .sync-state{font-size:11px;color:var(--ink-dim);text-align:center;margin-top:6px;margin-bottom:6px;min-height:14px;font-weight:600;}
 .home-actions{display:flex;gap:8px;justify-content:center;margin-bottom:10px;flex-wrap:wrap;}
 .account-bar{display:flex;align-items:center;gap:8px;margin-top:6px;}
-.account-bar .account-chip{margin-right:auto;}
+.account-bar-spacer{flex:1 1 auto;}
 .home-action{font-size:12.5px;font-weight:700;padding:7px 14px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);transition:.15s;}
 .home-action:hover{border-color:var(--accent-soft);}
 .home-action.logout{color:var(--bad);}
@@ -503,6 +503,8 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
     </div>
     <div class="account-bar" id="homeActions">
       <button class="account-chip" id="accountChip" onclick="openAccount()"><span class="dot" id="accountDot"></span><span id="accountLabel">account</span></button>
+      <button class="home-action" id="renameBtn" onclick="changeUsername()" style="display:none">✎ Rename</button>
+      <span class="account-bar-spacer"></span>
       <button class="home-action admin" id="adminBtn" onclick="openAdmin()" style="display:none">👁 Admin</button>
       <button class="home-action logout" id="logoutBtn" onclick="logout()">⎋ Log out</button>
     </div>
@@ -2171,7 +2173,9 @@ function updateAccountChip(){
   // logout button only makes sense when signed in; admin button only for admins
   const logoutBtn = document.getElementById('logoutBtn');
   const adminBtn = document.getElementById('adminBtn');
+  const renameBtn = document.getElementById('renameBtn');
   if(logoutBtn) logoutBtn.style.display = username ? '' : 'none';
+  if(renameBtn) renameBtn.style.display = username ? '' : 'none';
   if(adminBtn) adminBtn.style.display = isAdmin(username) ? '' : 'none';
 }
 
@@ -2200,6 +2204,86 @@ function logout(){
   const errEl = document.getElementById('loginErr');
   if(errEl) errEl.textContent = "";
   setSyncState("");
+}
+
+/* Change the signed-in user's username, carrying their progress,
+   flashcards, and stored password across to the new name. Local-first:
+   when the cloud is connected the data is moved there too — the NEW
+   location is written BEFORE the old one is removed, so an error partway
+   through never loses anything. */
+async function changeUsername(){
+  if(!username){
+    alert("You're playing as a guest, so there's no account name to change yet. Use the account button to sign in or pick a username first.");
+    return;
+  }
+  const oldName = username;
+
+  let next = prompt(`Signed in as "${oldName}".\n\nEnter a new username:`, oldName);
+  if(next === null) return;                 // cancelled
+  next = next.trim();
+
+  if(next === oldName) return;              // unchanged
+  if(next.length < 2){ alert("Username must be at least 2 characters."); return; }
+  if(next.length > 24){ alert("Username must be 24 characters or fewer."); return; }
+
+  const oldKey = fbKey(oldName);
+  const newKey = fbKey(next);
+
+  // Different spelling but the same storage key (e.g. only the case changed,
+  // or characters that sanitise identically) → just relabel, no data moves.
+  if(newKey === oldKey){
+    username = next;
+    try{ localStorage.setItem(USER_KEY, next); }catch(e){}
+    updateAccountChip();
+    setSyncState("✓ renamed to "+next);
+    return;
+  }
+
+  // ── move cloud data, if connected ──
+  if(firebaseReady && db){
+    setSyncState("renaming…");
+    try{
+      // Don't clobber a different person's account.
+      const [uSnap, pSnap] = await Promise.all([
+        db.ref("users/"+newKey).once("value"),
+        db.ref("passwords/"+newKey).once("value")
+      ]);
+      if(uSnap.exists() || pSnap.exists()){
+        alert(`The username "${next}" is already taken. Please pick another.`);
+        setSyncState("");
+        return;
+      }
+      // Carry the password over first (if one was set), then the data,
+      // writing the new node before deleting the old one.
+      const pwOld = await db.ref("passwords/"+oldKey).once("value");
+      if(pwOld.exists()) await db.ref("passwords/"+newKey).set(pwOld.val());
+      await db.ref("users/"+newKey).set({ state: state, srs: srs, updatedAt: Date.now() });
+      await db.ref("users/"+oldKey).remove();
+      await db.ref("passwords/"+oldKey).remove();
+    }catch(e){
+      console.warn("Rename failed:", e);
+      const perm = e && (e.code === 'PERMISSION_DENIED' || /permission_denied|Permission denied/i.test(e.message||''));
+      alert(perm
+        ? "Rename denied by Firebase — your database rules don't allow writing under users/ or passwords/ for the new name."
+        : `Couldn't rename to "${next}": ${(e && e.message) || 'unknown error'}`);
+      setSyncState("");
+      return;                               // abort; everything stays on the old name
+    }
+  }
+
+  // ── move local data ──
+  username = next;                          // keyFor() now resolves to the new name
+  try{ localStorage.setItem(USER_KEY, next); }catch(e){}
+  try{
+    localStorage.setItem(keyFor(SAVE_KEY), JSON.stringify(state));
+    localStorage.setItem(keyFor(SRS_KEY),  JSON.stringify(srs));
+    localStorage.removeItem(SAVE_KEY+"__"+oldKey);
+    localStorage.removeItem(SRS_KEY +"__"+oldKey);
+  }catch(e){}
+
+  updateAccountChip();
+  setSyncState("✓ renamed to "+next);
+  alert(`Done — you're now "${next}". Your progress and flashcards came with you.`);
 }
 
 /* ════════════════════════════════════════════════════════════════
