@@ -201,7 +201,7 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 
 /* course labels in lesson list — collapsible */
 .course-group{margin-bottom:6px;}
-.course-group + .course-group{margin-top:22px;}
+.course-group + .course-group{margin-top:30px;}
 .course-label{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:6px 6px;margin-bottom:12px;border-radius:11px;transition:background .15s;}
 .course-label:hover{background:var(--accent-glow);}
 .course-label-text{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;flex:1;min-width:0;}
@@ -213,7 +213,7 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 .course-chev{flex-shrink:0;font-size:20px;line-height:1;color:var(--ink-dim);transition:transform .25s;}
 .course-group.open .course-chev{transform:rotate(180deg);}
 .course-body{display:none;}
-.course-group.open .course-body{display:block;animation:fadeIn .25s;}
+.course-group.open .course-body{display:grid;gap:11px;animation:fadeIn .25s;}
 .course-locked{background:var(--card);border:2px dashed var(--line);border-radius:var(--radius);padding:24px 18px;text-align:center;font-size:14.5px;color:var(--ink-soft);line-height:1.6;}
 
 /* review home */
@@ -272,7 +272,7 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 .section-head p{font-size:14px;color:var(--ink-dim);margin-top:5px;line-height:1.5;}
 
 /* ── lesson list ── */
-.lesson-list{display:grid;gap:11px;padding-bottom:60px;}
+.lesson-list{padding-bottom:60px;}
 .lesson-card{display:flex;align-items:center;gap:15px;background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:16px 18px;text-align:left;transition:.16s;}
 .lesson-card:active{transform:scale(.985);}
 .lesson-card:not(.locked):hover{border-color:var(--accent-soft);}
