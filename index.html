@@ -199,13 +199,21 @@ input,textarea,select{font-family:var(--sans);outline:none;color:var(--ink);}
 .del-protected{color:var(--ink-dim);font-weight:700;}
 .admin-note{font-size:12px;color:var(--ink-dim);line-height:1.6;margin:14px 0 50px;}
 
-/* course labels in lesson list */
-.course-label{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
+/* course labels in lesson list — collapsible */
+.course-group{margin-bottom:6px;}
+.course-group + .course-group{margin-top:22px;}
+.course-label{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:6px 6px;margin-bottom:12px;border-radius:11px;transition:background .15s;}
+.course-label:hover{background:var(--accent-glow);}
+.course-label-text{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;flex:1;min-width:0;}
 .course-tag{font-family:var(--serif);font-weight:800;font-size:18px;padding:3px 12px;border-radius:9px;}
 .course-tag.intro{background:var(--accent-glow);color:var(--accent);}
 .course-tag.adv{background:var(--gold-bg);color:var(--accent);}
 .course-tag.adv2{background:var(--accent);color:var(--paper);}
 .course-sub{font-size:13px;color:var(--ink-dim);}
+.course-chev{flex-shrink:0;font-size:20px;line-height:1;color:var(--ink-dim);transition:transform .25s;}
+.course-group.open .course-chev{transform:rotate(180deg);}
+.course-body{display:none;}
+.course-group.open .course-body{display:block;animation:fadeIn .25s;}
 .course-locked{background:var(--card);border:2px dashed var(--line);border-radius:var(--radius);padding:24px 18px;text-align:center;font-size:14.5px;color:var(--ink-soft);line-height:1.6;}
 
 /* review home */
@@ -2675,27 +2683,50 @@ function renderLessonList(){
   const foundOpen = introDone() || admin;
   const advOpen = foundationalDone() || admin;
 
-  let html = `<div class="course-label"><span class="course-tag intro">Intro course</span><span class="course-sub">The essentials — grammar & first words</span></div>`;
-  html += renderCourseCards(intro);
+  // Each course is a collapsible group; build its body first, then wrap it.
+  const introBody = renderCourseCards(intro);
 
-  html += `<div class="course-label" style="margin-top:30px"><span class="course-tag adv">Foundations course</span><span class="course-sub">All remaining vocabulary & richer sentences</span></div>`;
+  let foundBody;
   if(!foundOpen){
     const remain = intro.filter(l=>!state.completed.includes(l.id)).length;
-    html += `<div class="course-locked">🔒 Finish the intro course to unlock these ${foundational.length} lessons.<br><span style="font-size:13px;color:var(--ink-dim)">${remain} intro lesson${remain!==1?'s':''} to go.</span></div>`;
+    foundBody = `<div class="course-locked">🔒 Finish the intro course to unlock these ${foundational.length} lessons.<br><span style="font-size:13px;color:var(--ink-dim)">${remain} intro lesson${remain!==1?'s':''} to go.</span></div>`;
   } else {
-    html += renderCourseCards(foundational);
+    foundBody = renderCourseCards(foundational);
   }
 
+  let html = courseGroup('intro', 'Intro course', 'The essentials — grammar & first words', introBody, true);
+  html += courseGroup('adv', 'Foundations course', 'All remaining vocabulary & richer sentences', foundBody, true);
+
   if(advanced.length>0){
-    html += `<div class="course-label" style="margin-top:30px"><span class="course-tag adv2">Advanced course</span><span class="course-sub">Master the grammar — li, e, en, pi, ni</span></div>`;
+    let advBody;
     if(!advOpen){
       const remain = foundational.filter(l=>!state.completed.includes(l.id)).length;
-      html += `<div class="course-locked">🔒 Finish the foundations course to unlock these ${advanced.length} lessons.<br><span style="font-size:13px;color:var(--ink-dim)">${remain} foundations lesson${remain!==1?'s':''} to go.</span></div>`;
+      advBody = `<div class="course-locked">🔒 Finish the foundations course to unlock these ${advanced.length} lessons.<br><span style="font-size:13px;color:var(--ink-dim)">${remain} foundations lesson${remain!==1?'s':''} to go.</span></div>`;
     } else {
-      html += renderCourseCards(advanced);
+      advBody = renderCourseCards(advanced);
     }
+    html += courseGroup('adv2', 'Advanced course', 'Master the grammar — li, e, en, pi, ni', advBody, true);
   }
   el.innerHTML = html;
+}
+
+/* wraps one course (header + body) in a collapsible group */
+function courseGroup(tagClass, title, sub, bodyHTML, open){
+  return `<div class="course-group${open?' open':''}">
+    <button class="course-label" onclick="toggleCourse(this)" aria-expanded="${open?'true':'false'}">
+      <span class="course-label-text">
+        <span class="course-tag ${tagClass}">${title}</span>
+        <span class="course-sub">${sub}</span>
+      </span>
+      <span class="course-chev">⌄</span>
+    </button>
+    <div class="course-body">${bodyHTML}</div>
+  </div>`;
+}
+
+function toggleCourse(btn){
+  const open = btn.parentElement.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
 }
 
 function renderCourseCards(list){
