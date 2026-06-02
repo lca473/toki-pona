@@ -3090,7 +3090,7 @@ function renderBuild(d, qArea, checkBar){
 
   window.checkBuild = function(){
     const attempt = placed.map(i=>bank[i]);
-    const valids = [d.answer].concat(d.alts||[]);
+    const valids = buildOrderVariants(d.answer).concat(d.alts||[]);
     const ok = valids.some(v => v.length===attempt.length && v.every((w,i)=>w===attempt[i]));
     // lock chips
     bankEl.querySelectorAll('.chip').forEach(c=>c.style.pointerEvents='none');
@@ -3905,6 +3905,93 @@ function toggleGram(btn){ btn.parentElement.classList.toggle('open'); }
    UTILITIES
 ═══════════════════════════════════════════════════════════════ */
 function shuffle(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+
+/* ── grammar-aware answer checking for BUILD drills ──────────────────
+   Given the canonical answer tokens, return EVERY ordering that is
+   grammatically equivalent in toki pona. Only two constructions have a
+   genuinely free order, and those are the only things permuted here:
+     • a compound subject joined by `en`  (mi en sina  ==  sina en mi)
+     • a list of objects with repeated `e`  (e kili e telo  ==  e telo e kili)
+   Word order is NOT free anywhere else, so we deliberately leave it alone:
+   modifiers (jan pona != pona jan), pi-groups (telo nasa != nasa telo),
+   and li-predicates (whose order interacts with the bare mi/sina li-drop).
+   This means the checker never turns a wrong answer into an accepted one;
+   it only stops rejecting answers that are in fact correct. Exercises with
+   an order-free *modifier* pair still supply those variants via `alts`. */
+function buildOrderVariants(tokens){
+  const STRUCT = new Set(['li','e','en','ni:','la','o']); // tokens that bound a noun phrase
+  const MAXMEM = 4;                                        // cap permutation blow-up
+  function permute(arr){
+    if(arr.length<=1) return [arr.slice()];
+    const out=[];
+    for(let i=0;i<arr.length;i++){
+      const rest=arr.slice(0,i).concat(arr.slice(i+1));
+      for(const p of permute(rest)) out.push([arr[i]].concat(p));
+    }
+    return out;
+  }
+  // compound subjects: NP (en NP)+  — members sit on BOTH sides of each `en`
+  function enGroups(toks){
+    const g=[]; let i=0;
+    while(i<toks.length){
+      if(toks[i]==='en'){
+        let s=i; while(s-1>=0 && !STRUCT.has(toks[s-1])) s--;
+        const members=[]; let cur=[]; let j=s;
+        while(j<i){ cur.push(toks[j]); j++; } members.push(cur);
+        while(j<toks.length && toks[j]==='en'){
+          j++; cur=[];
+          while(j<toks.length && !STRUCT.has(toks[j])){ cur.push(toks[j]); j++; }
+          members.push(cur);
+        }
+        if(members.length>=2 && members.length<=MAXMEM) g.push({s,e:j,members,sep:'en',leading:false});
+        i=j;
+      } else i++;
+    }
+    return g;
+  }
+  // object lists: e NP e NP …  — every member follows an `e`; `e ni:` is a
+  // clause object, never a plain list item, so it is skipped.
+  function eGroups(toks){
+    const g=[]; let i=0;
+    while(i<toks.length){
+      if(toks[i]==='e' && toks[i+1]!=='ni:'){
+        const s=i; const members=[]; let j=i;
+        while(j<toks.length && toks[j]==='e' && toks[j+1]!=='ni:'){
+          j++; let cur=[];
+          while(j<toks.length && !STRUCT.has(toks[j])){ cur.push(toks[j]); j++; }
+          members.push(cur);
+        }
+        if(members.length>=2 && members.length<=MAXMEM) g.push({s,e:j,members,sep:'e',leading:true});
+        i=j;
+      } else i++;
+    }
+    return g;
+  }
+  function render(group, ordering){
+    const out=[];
+    ordering.forEach((m,idx)=>{
+      if(group.leading){ out.push(group.sep); out.push(...m); }   // e NP e NP
+      else { if(idx>0) out.push(group.sep); out.push(...m); }      // NP en NP
+    });
+    return out;
+  }
+  const groups = enGroups(tokens).concat(eGroups(tokens));
+  if(groups.length===0) return [tokens.slice()];
+  groups.sort((a,b)=>a.s-b.s);                  // disjoint, left-to-right
+  // Each rendered span keeps the original length, so indices stay valid as we
+  // splice multiple groups; expand the cartesian product across all groups.
+  let results=[tokens.slice()];
+  for(const g of groups){
+    const perms = permute(g.members).map(p=>render(g,p));
+    const next=[];
+    for(const r of results) for(const span of perms)
+      next.push([...r.slice(0,g.s), ...span, ...r.slice(g.e)]);
+    results=next;
+  }
+  const seen=new Set(), uniq=[];
+  for(const r of results){ const k=r.join('\u0001'); if(!seen.has(k)){ seen.add(k); uniq.push(r);} }
+  return uniq;
+}
 function escapeHTML(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function escapeAttr(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
