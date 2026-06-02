@@ -1917,7 +1917,7 @@ const LESSONS = [
     drills:[
       {type:"choose", q:"Which means 'a bar' (a house of alcohol)?", correct:"tomo pi telo nasa", opts:["tomo pi telo nasa","tomo telo nasa","tomo telo pi nasa","pi tomo telo nasa"], tpOpts:true},
       {type:"build", q:"Build: 'a bar' — literally 'house of crazy-water'", answer:["tomo","pi","telo","nasa"], bank:["tomo","telo","nasa","pi","li","e"], note:"<span class='tp'>pi</span> groups <span class='tp'>telo nasa</span> under <span class='tp'>tomo</span>. A noun phrase, so no <span class='tp'>li</span> or <span class='tp'>e</span>."},
-      {type:"build", q:"This is wrong: <i>jan pi pona</i>. Build it correctly.", answer:["jan","pona"], bank:["jan","pona","pi","li"], note:"<span class='tp'>pona</span> is a single word, so it just sits after <span class='tp'>jan</span>. Drop the <span class='tp'>pi</span>."},
+      {type:"build", q:"This is wrong: <i>jan pi pona</i> — meaning <i>'a good person'</i>. Build the phrase correctly.", answer:["jan","pona"], bank:["jan","pona","pi","li"], note:"<span class='tp'>pona</span> is a single word, so it just sits after <span class='tp'>jan</span>. Drop the <span class='tp'>pi</span>.", nearMiss:[{attempt:["jan","li","pona"], note:"<span class='tp'>jan li pona</span> is a valid <i>sentence</i> — 'the person is good.' But here you're building the <i>phrase</i> 'a good person' (<span class='tp'>jan pona</span>): a noun plus one modifier, which needs no particle at all. Drop the <span class='tp'>pi</span> — don't swap it for <span class='tp'>li</span>."}]},
       {type:"build", q:"Build: 'a good-looking person' — a person 'of good looking' (<span class='tp'>pona lukin</span>)", answer:["jan","pi","pona","lukin"], bank:["jan","pona","lukin","pi","li","e"], note:"<span class='tp'>lukin</span> rides on <span class='tp'>pona</span>, so <span class='tp'>pi</span> groups them: <span class='tp'>jan pi pona lukin</span>."},
       {type:"type", q:"Type it from memory: 'a person of much knowledge' (much knowledge = <span class='tp'>sona mute</span>)", answers:["jan pi sona mute"], note:"<span class='tp'>jan pi sona mute</span> — <span class='tp'>mute</span> rides on <span class='tp'>sona</span>, so <span class='tp'>pi</span> groups them under <span class='tp'>jan</span>."},
       {type:"build", q:"Build: 'a big good house' — two plain qualities, order is free", answer:["tomo","suli","pona"], alts:[["tomo","pona","suli"]], bank:["tomo","suli","pona","pi","li"], note:"Two single-word modifiers just stack — no <span class='tp'>pi</span>. <span class='tp'>tomo suli pona</span> and <span class='tp'>tomo pona suli</span> are both fine."},
@@ -2918,12 +2918,16 @@ function next(){ run.idx++; renderStep(); }
 function markResult(ok, checkBar, correctText, note){
   if(ok){ run.correct++; }
   else { run.hearts = Math.max(0, run.hearts-1); updateRunnerBar(); }
+  const dead = run.hearts<=0;
   checkBar.className = 'check-bar ' + (ok?'feedback-correct':'feedback-wrong');
   const msg = ok
     ? `<div class="feedback-msg ok">✓ Correct!</div>`
     : `<div class="feedback-msg no">✗ Not quite. Answer: <span class="ans">${correctText||''}</span></div>`;
   const noteHTML = note ? `<div style="font-size:13px;color:var(--ink-soft);margin:-4px 0 12px;line-height:1.5">${note}</div>` : '';
-  checkBar.innerHTML = msg + noteHTML + `<button class="btn-primary ${ok?'btn-leaf':''}" onclick="next()">Continue</button>`;
+  const btn = dead
+    ? `<button class="btn-primary" onclick="failLesson()">Out of hearts →</button>`
+    : `<button class="btn-primary ${ok?'btn-leaf':''}" onclick="next()">Continue</button>`;
+  checkBar.innerHTML = msg + noteHTML + btn;
 }
 
 /* TEACH */
@@ -3092,10 +3096,16 @@ function renderBuild(d, qArea, checkBar){
     const attempt = placed.map(i=>bank[i]);
     const valids = buildOrderVariants(d.answer).concat(d.alts||[]);
     const ok = valids.some(v => v.length===attempt.length && v.every((w,i)=>w===attempt[i]));
+    // if wrong, see whether it matches a known near-miss with its own explanation
+    let note = d.note;
+    if(!ok && d.nearMiss){
+      const hit = d.nearMiss.find(nm => nm.attempt.length===attempt.length && nm.attempt.every((w,i)=>w===attempt[i]));
+      if(hit) note = hit.note;
+    }
     // lock chips
     bankEl.querySelectorAll('.chip').forEach(c=>c.style.pointerEvents='none');
     answerEl.querySelectorAll('.chip').forEach(c=>c.style.pointerEvents='none');
-    markResult(ok, checkBar, d.answer.join(' '), d.note);
+    markResult(ok, checkBar, d.answer.join(' '), note);
   };
 }
 
@@ -3209,6 +3219,27 @@ function finishLesson(){
       <div style="display:grid;gap:10px;max-width:300px;margin:18px auto 0">
         <button class="btn-primary btn-leaf" onclick="go('lessons')">Back to lessons</button>
         ${newCards>0?`<button class="btn-secondary" onclick="go('review')">Review new cards</button>`:''}
+      </div>
+    </div>`;
+}
+
+function failLesson(){
+  const les = run.lesson;
+  const qArea = document.getElementById('qArea');
+  document.getElementById('checkBar').innerHTML='';
+  qArea.className='q-area';
+  qArea.innerHTML = `
+    <div class="complete fade-up">
+      <div class="complete-mark">💔</div>
+      <h2>Out of hearts</h2>
+      <div class="tp-line">sina pini ala e sona ${les.id}.</div>
+      <div style="color:var(--ink-dim);font-size:14px">You ran out of hearts on “${les.title}”. This lesson isn't complete yet — give it another go.</div>
+      <div class="complete-stats">
+        <div class="complete-stat"><div class="n">${run.correct}/${run.total}</div><div class="l">correct</div></div>
+      </div>
+      <div style="display:grid;gap:10px;max-width:300px;margin:18px auto 0">
+        <button class="btn-primary" onclick="startLesson(${les.id})">Try again</button>
+        <button class="btn-secondary" onclick="go('lessons')">Back to lessons</button>
       </div>
     </div>`;
 }
