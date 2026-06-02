@@ -2767,6 +2767,7 @@ function srsCounts(){
 function lessonsByCourse(course){ return LESSONS.filter(l=>l.course===course); }
 function introDone(){ return lessonsByCourse('intro').every(l=>state.completed.includes(l.id)); }
 function foundationalDone(){ const f=lessonsByCourse('foundational'); return f.length>0 && f.every(l=>state.completed.includes(l.id)); }
+function advancedDone(){ const a=lessonsByCourse('advanced'); return a.length>0 && a.every(l=>state.completed.includes(l.id)); }
 
 /* ════════════════════════════════════════════════════════════════
    NAVIGATION
@@ -3157,6 +3158,7 @@ function finishLesson(){
   const showIntroGate = justFinishedIntro && firstTime;
   // Likewise when the foundations course is finished, unlocking the advanced tier
   const showFoundGate = les.course==='foundational' && foundationalDone() && firstTime && lessonsByCourse('advanced').length>0;
+  const finishedAdvanced = les.course==='advanced' && advancedDone() && firstTime;
 
   const cardLine = newCards>0
     ? `<div class="complete-cards">🃏 ${newCards} new flashcard${newCards>1?'s':''} added to your reviews</div>` : '';
@@ -3200,6 +3202,29 @@ function finishLesson(){
         <div style="display:grid;gap:10px;max-width:300px;margin:20px auto 0">
           <button class="btn-primary" onclick="go('lessons')">Start the Advanced Course →</button>
           <button class="btn-primary btn-leaf" onclick="go('review')">Review flashcards</button>
+        </div>
+      </div>`;
+    return;
+  }
+
+  if(finishedAdvanced){
+    qArea.innerHTML = `
+      <div class="complete fade-up">
+        <div class="complete-mark">🎓</div>
+        <h2>You did it!</h2>
+        <div class="tp-line">sina sona e toki pona!</div>
+        <div style="color:var(--ink-soft);font-size:15px;line-height:1.6;max-width:420px;margin:8px auto 0">
+          You’ve finished all three courses — the whole vocabulary and every piece of toki pona’s grammar. From here, fluency comes from use: keep your flashcards fresh, try reading and writing in toki pona, and dip into the community (the official course, r/tokipona, the Discord). That’s a real accomplishment — pona mute a!
+        </div>
+        <div class="complete-stats">
+          <div class="complete-stat"><div class="n">${state.completed.length}</div><div class="l">lessons done</div></div>
+          <div class="complete-stat"><div class="n">${state.xp}</div><div class="l">total XP</div></div>
+          <div class="complete-stat"><div class="n">${srsCounts().total}</div><div class="l">flashcards</div></div>
+        </div>
+        ${cardLine}
+        <div style="display:grid;gap:10px;max-width:300px;margin:20px auto 0">
+          <button class="btn-primary" onclick="go('review')">Keep practicing — review flashcards</button>
+          <button class="btn-primary btn-leaf" onclick="go('home')">Back to home</button>
         </div>
       </div>`;
     return;
