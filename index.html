@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>toki tu · toki pona trainer</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 140'%3E%3Cpath d='M40 20 L34 4' fill='none' stroke='%23111199' stroke-width='8' stroke-linecap='round'/%3E%3Cpath d='M60 16 L60 2' fill='none' stroke='%23111199' stroke-width='8' stroke-linecap='round'/%3E%3Cpath d='M80 20 L86 4' fill='none' stroke='%23111199' stroke-width='8' stroke-linecap='round'/%3E%3Ccircle cx='60' cy='80' r='50' fill='%23FFFF77' stroke='%23111199' stroke-width='8'/%3E%3Cpath d='M38 88 Q60 112 82 88' fill='none' stroke='%23111199' stroke-width='8' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="Toki_pona.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,500&family=Spline+Sans:wght@400;500;600;700&family=Spline+Sans+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -4210,10 +4210,10 @@ boot();
 <script>
 (function(){
   /* ─────────────── CONFIG ─────────────── */
-  const EMAIL = 'mijannijo@gmail.com';            // ← your inbox
+  const EMAIL = ['mijannijo','gmail.com'].join('@');   // ← your inbox (assembled at runtime so scrapers don't catch the literal)
   const MODE  = 'formsubmit';                      // 'mailto' | 'formsubmit' | 'emailjs'
 
-  const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/' + EMAIL;  // used only when MODE==='formsubmit'
+  const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/eb5ab4eaa94d922fdd9012b679e1a91b';  // FormSubmit alias — keeps your raw address off the automatic report path
 
   // used only when MODE==='emailjs' — get these from your EmailJS dashboard.
   const EMAILJS = {
@@ -4425,14 +4425,13 @@ boot();
 </script>
 
 <!-- ════════════════════════════════════════════════════════════════
-     PRODUCTION REMINDER (formsubmit mode):
-       Your raw email currently sits in the page source. Swap it for the
-       random FormSubmit alias (the string FormSubmit emailed you when you
-       confirmed) so bots can't scrape your address:
-           const EMAIL = 'mijannijo@gmail.com';            // ← becomes…
-           const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/abc123yourAlias';
-       (Leave EMAIL as-is for the mailto fallback subject line, and just
-        point FORMSUBMIT_ENDPOINT at the alias.)
+     PRODUCTION NOTE (formsubmit mode):
+       FORMSUBMIT_ENDPOINT points at your FormSubmit alias, so your raw
+       address is never exposed on the automatic report path. EMAIL is
+       assembled at runtime — ['name','domain'].join('@') — and used only
+       for the mailto fallback (Safari, or when a file can't be attached),
+       so the literal address no longer appears anywhere in the source,
+       which keeps regex-based email scrapers from harvesting it.
 ═══════════════════════════════════════════════════════════════════ -->
 
 </body>
