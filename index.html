@@ -2736,7 +2736,7 @@ function srsRate(card, rating){
     card.interval = SRS_FAIL_INTERVAL;
   } else if(rating==="hard"){
     card.ease = Math.max(SRS_MIN_EASE, card.ease-0.15);
-    card.interval = card.interval===0 ? SRS_NEW_GOOD : Math.max(card.interval*SRS_HARD_MULT, card.interval+1/24);
+    card.interval = card.interval===0 ? SRS_NEW_GOOD : card.interval*SRS_HARD_MULT;
   } else if(rating==="good"){
     card.interval = card.interval===0 ? SRS_NEW_GOOD : card.interval*card.ease;
   } else if(rating==="easy"){
