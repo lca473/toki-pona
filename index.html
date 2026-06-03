@@ -1175,8 +1175,8 @@ const LESSONS = [
     teach:[
       {w:"mi", def:"I, me, we", note:"toki pona doesn't change words for singular vs plural — <span class='tp'>mi</span> means \"I\" or \"we\" depending on context.",ex:["mi pona.","I am good."]},
       {w:"sina", def:"you", note:"Like <span class='tp'>mi</span>, <span class='tp'>sina</span> covers both \"you\" (one person) and \"you all\".",ex:["sina pona.","You are good."]},
-      {w:"ona", def:"he, she, it, they", note:"One word for every third-person pronoun. Context tells you which.",ex:["ona li pona.","They are good."]},
-      {w:"pona", def:"good, simple", note:"<span class='tp'>pona</span> is one of the most-used words — \"good\", \"simple\", \"fix\", even \"hello\" in some phrases.",ex:["ni li pona.","This is good."]},
+      {w:"ona", def:"he, she, it, they", note:"One word for every third-person pronoun. Context tells you which. (The little <span class='tp'>li</span> here is a connector word — you'll learn it in the next lesson.)",ex:["ona li pona.","They are good."]},
+      {w:"pona", def:"good, simple", note:"<span class='tp'>pona</span> is one of the most-used words — \"good\", \"simple\", \"fix\", even \"hello\" in some phrases. (Here <span class='tp'>ni</span> means this — you'll learn it in a later lesson.)",ex:["ni li pona.","This is good."]},
     ],
     drills:[
       {type:"choose", q:"What does <span class='tp'>mi</span> mean?", tp:"mi", correct:"I, me, we", opts:["I, me, we","you","he, she, it","good"]},
@@ -1190,16 +1190,16 @@ const LESSONS = [
   {
     id:2, course:"intro", title:"The li particle", desc:"li, suli, lili, ike", icon:"🔗",
     teach:[
-      {w:"li", def:"(separates subject from verb)", note:"<span class='tp'>li</span> goes between the subject and what it does or is. <b>Important exception:</b> you drop <span class='tp'>li</span> when the subject is exactly <span class='tp'>mi</span> or <span class='tp'>sina</span> alone.",ex:["jan li pona.","The person is good."]},
+      {w:"li", def:"(separates subject from verb)", note:"<span class='tp'>li</span> goes between the subject and what it does or is. <b>Important exception:</b> you drop <span class='tp'>li</span> when the subject is exactly <span class='tp'>mi</span> or <span class='tp'>sina</span> alone.",ex:["ona li pona.","It is good."]},
       {w:"suli", def:"big, important", note:"\"big\", \"large\", \"tall\", or \"important\".",ex:["ona li suli.","It is big."]},
-      {w:"lili", def:"small, little", note:"The opposite of <span class='tp'>suli</span> — \"small\", \"few\", or \"young\".",ex:["ni li lili.","This is small."]},
+      {w:"lili", def:"small, little", note:"The opposite of <span class='tp'>suli</span> — \"small\", \"few\", or \"young\".",ex:["ona li lili.","It is small."]},
       {w:"ike", def:"bad", note:"\"bad\", \"negative\", or \"overly complex\".",ex:["ona li ike.","It is bad."]},
     ],
     drills:[
-      {type:"choose", q:"In <span class='tp'>jan li pona</span>, what does <span class='tp'>li</span> do?", correct:"Separates the subject from the verb", opts:["Separates the subject from the verb","Means \"and\"","Marks the object","Means \"good\""]},
+      {type:"choose", q:"In <span class='tp'>ona li pona</span>, what does <span class='tp'>li</span> do?", correct:"Separates the subject from the verb", opts:["Separates the subject from the verb","Means \"and\"","Marks the object","Means \"good\""]},
       {type:"truefalse", q:"You use <span class='tp'>li</span> after <span class='tp'>mi</span>, as in \"mi li pona\".", correct:"False", note:"Right — drop <span class='tp'>li</span> after a bare <span class='tp'>mi</span> or <span class='tp'>sina</span>. It's just <span class='tp'>mi pona</span>."},
       {type:"choose", q:"What does <span class='tp'>suli</span> mean?", tp:"suli", correct:"big, important", opts:["big, important","small","bad","good"]},
-      {type:"build", q:"Build: \"The person is big.\"", answer:["jan","li","suli"], bank:["jan","li","suli","mi","pona"]},
+      {type:"build", q:"Build: \"It is big.\"", answer:["ona","li","suli"], bank:["ona","li","suli","mi","pona"]},
       {type:"build", q:"Build: \"I am small.\" (remember the li rule!)", answer:["mi","lili"], bank:["mi","li","lili","suli"]},
       {type:"match", pairs:[["suli","big"],["lili","small"],["ike","bad"],["pona","good"]]},
     ]
@@ -1207,7 +1207,7 @@ const LESSONS = [
   {
     id:3, course:"intro", title:"Objects with e", desc:"e, jo, moku, telo", icon:"🍵",
     teach:[
-      {w:"e", def:"(marks the direct object)", note:"<span class='tp'>e</span> comes right before the thing the verb acts on.",ex:["mi moku e kili.","I eat fruit."]},
+      {w:"e", def:"(marks the direct object)", note:"<span class='tp'>e</span> comes right before the thing the verb acts on. (<span class='tp'>kili</span> means fruit or vegetable — you'll learn it in a later lesson.)",ex:["mi moku e kili.","I eat fruit."]},
       {w:"jo", def:"to have, hold, carry", note:"\"to have\", \"hold\", \"contain\", or \"carry\".",ex:["mi jo e telo.","I have water."]},
       {w:"moku", def:"to eat; food", note:"As a verb, \"to eat/drink\"; as a noun, \"food\".",ex:["sina moku.","You eat."]},
       {w:"telo", def:"water, liquid", note:"Any liquid — water, juice, etc.",ex:["telo li pona.","The water is good."]},
@@ -1218,16 +1218,16 @@ const LESSONS = [
       {type:"build", q:"Build: \"You have water.\"", answer:["sina","jo","e","telo"], bank:["sina","jo","e","telo","li"]},
       {type:"choose", q:"<span class='tp'>jo</span> means…", tp:"jo", correct:"to have", opts:["to have","to eat","water","good"]},
       {type:"match", pairs:[["jo","to have"],["moku","food / eat"],["telo","water"],["e","(object)"]]},
-      {type:"build", q:"Build: \"The person has water.\"", answer:["jan","li","jo","e","telo"], bank:["jan","li","jo","e","telo","mi"]},
+      {type:"build", q:"Build: \"The person has water.\"", answer:["jan","li","jo","e","telo"], bank:["jan","li","jo","e","telo","mi"], note:"<span class='tp'>jan</span> means person — you'll learn it in a later lesson."},
     ]
   },
   {
     id:4, course:"intro", title:"Asking questions", desc:"ni, seme, ala, lukin, sona", icon:"❓",
     teach:[
       {w:"ni", def:"this, that", note:"<span class='tp'>ni</span> points at something — \"this\" or \"that\". It can also point at a whole idea. You'll see it a lot, including in questions like \"what is this?\"",ex:["ni li pona.","This is good."]},
-      {w:"seme", def:"what, which", note:"Put <span class='tp'>seme</span> where the unknown thing goes. <span class='tp'>sina pali e seme?</span> = \"You do what?\"",ex:["ni li seme?","What is this?"]},
+      {w:"seme", def:"what, which", note:"Put <span class='tp'>seme</span> where the unknown thing goes. <span class='tp'>sina pali e seme?</span> = \"You do what?\" (<span class='tp'>pali</span> means to do or make — you'll learn it in a later lesson.)",ex:["ni li seme?","What is this?"]},
       {w:"ala", def:"no, not", note:"For yes/no questions, repeat the verb with <span class='tp'>ala</span> between: <span class='tp'>sina pona ala pona?</span> = \"Are you good?\" Answer <span class='tp'>pona</span> (yes) or <span class='tp'>ala</span> (no).",ex:["sina sona ala sona?","Do you know (or not)?"]},
-      {w:"lukin", def:"to see, look, read", note:"\"to look\", \"see\", \"watch\", or \"read\".",ex:["mi lukin e lipu.","I read the book."]},
+      {w:"lukin", def:"to see, look, read", note:"\"to look\", \"see\", \"watch\", or \"read\". (<span class='tp'>lipu</span> means a book or document — you'll learn it in a later lesson.)",ex:["mi lukin e lipu.","I read the book."]},
       {w:"sona", def:"to know; knowledge", note:"\"to know\" or \"understand\".",ex:["mi sona.","I know."]},
     ],
     drills:[
@@ -1244,10 +1244,10 @@ const LESSONS = [
   {
     id:5, course:"intro", title:"Describing things", desc:"Modifiers + colors", icon:"🎨",
     teach:[
-      {w:"(order)", def:"Modifiers come AFTER the word", note:"In toki pona, describing words follow the thing they describe. <span class='tp'>tomo suli</span> = \"big house\" (literally \"house big\"). <span class='tp'>jan pona</span> = \"good person\" → \"friend\".",ex:["tomo lili","a small house"]},
+      {w:"(order)", def:"Modifiers come AFTER the word", note:"In toki pona, describing words follow the thing they describe. <span class='tp'>tomo suli</span> = \"big house\" (literally \"house big\"). <span class='tp'>jan pona</span> = \"good person\" → \"friend\". (<span class='tp'>tomo</span> means a house or building — you'll learn it in a later lesson.)",ex:["tomo lili","a small house"]},
       {w:"loje", def:"red", note:"",ex:["kili loje","red fruit"]},
       {w:"laso", def:"blue, green", note:"toki pona uses one word for blue and green together.",ex:["telo laso","blue water"]},
-      {w:"pimeja", def:"black, dark", note:"",ex:["len pimeja","black cloth"]},
+      {w:"pimeja", def:"black, dark", note:" (<span class='tp'>len</span> means cloth or clothing — you'll learn it in a later lesson.)",ex:["len pimeja","black cloth"]},
     ],
     drills:[
       {type:"choose", q:"How do you say \"big house\"?", correct:"tomo suli", opts:["tomo suli","suli tomo","tomo li suli","tomo e suli"], tpOpts:true},
@@ -1296,7 +1296,7 @@ const LESSONS = [
     id:8, course:"intro", title:"Commands & feelings", desc:"o, wile, olin, pilin", icon:"💗",
     teach:[
       {w:"o", def:"(command / addressing)", note:"<span class='tp'>o</span> before a verb makes a command: <span class='tp'>o moku!</span> = \"eat!\" After a name, it's how you address someone: <span class='tp'>jan Mali o!</span> = \"Hey Mary!\"",ex:["o pona!","Be good! / Take care!"]},
-      {w:"wile", def:"to want, need; must", note:"\"want\", \"need\", or \"must\". Followed directly by another verb: <span class='tp'>mi wile moku</span> = \"I want to eat\".",ex:["mi wile lape.","I want to sleep."]},
+      {w:"wile", def:"to want, need; must", note:"\"want\", \"need\", or \"must\". Followed directly by another verb: <span class='tp'>mi wile moku</span> = \"I want to eat\". (<span class='tp'>lape</span> means to sleep — you'll learn it in a later lesson.)",ex:["mi wile lape.","I want to sleep."]},
       {w:"olin", def:"to love", note:"Deep love, respect, or compassion.",ex:["mi olin e sina.","I love you."]},
       {w:"pilin", def:"to feel; heart", note:"\"to feel\" or \"feelings/heart\". <span class='tp'>pilin pona</span> = \"feel good / happy\".",ex:["mi pilin pona.","I feel good."]},
     ],
@@ -1312,8 +1312,8 @@ const LESSONS = [
   {
     id:9, course:"intro", title:"The la & pi particles", desc:"la, pi, tenpo, nasin", icon:"🧩",
     teach:[
-      {w:"la", def:"(context / if-when)", note:"<span class='tp'>la</span> attaches a context phrase to the front of a sentence. <span class='tp'>tenpo suno ni la, mi pali</span> = \"Today, I work.\" It can mean \"if\", \"when\", or \"as for…\".",ex:["sina kama la, mi pilin pona.","If you come, I feel good."]},
-      {w:"pi", def:"(regroups modifiers)", note:"<span class='tp'>pi</span> isn't really a word with a meaning — it's a grouping tool. It makes a modifier apply to a whole phrase instead of just the word before it. <span class='tp'>tomo pi telo nasa</span> = \"house of crazy-water\" → \"bar\". It often translates as \"of\" in English, but that's just a convenient translation, not its meaning. Only use <span class='tp'>pi</span> when there are 2+ modifier words.",ex:["jan pi sona mute","person of much knowledge"]},
+      {w:"la", def:"(context / if-when)", note:"<span class='tp'>la</span> attaches a context phrase to the front of a sentence. <span class='tp'>tenpo suno ni la, mi pali</span> = \"Today, I work.\" It can mean \"if\", \"when\", or \"as for…\". (Here <span class='tp'>suno</span> means sun or day, and <span class='tp'>kama</span> means to come — both are taught in later lessons.)",ex:["sina kama la, mi pilin pona.","If you come, I feel good."]},
+      {w:"pi", def:"(regroups modifiers)", note:"<span class='tp'>pi</span> isn't really a word with a meaning — it's a grouping tool. It makes a modifier apply to a whole phrase instead of just the word before it. <span class='tp'>tomo pi telo nasa</span> = \"house of crazy-water\" → \"bar\". It often translates as \"of\" in English, but that's just a convenient translation, not its meaning. Only use <span class='tp'>pi</span> when there are 2+ modifier words. (<span class='tp'>nasa</span> means silly or strange — you'll learn it in a later lesson.)",ex:["jan pi sona mute","person of much knowledge"]},
       {w:"tenpo", def:"time", note:"\"time\", \"moment\", \"period\". Combine it to talk about parts of the day: <span class='tp'>tenpo suno</span> = \"day\" (sun-time); <span class='tp'>tenpo pimeja</span> = \"night\" (dark-time). Add <span class='tp'>ni</span> (\"this\", from earlier) to point at the current one: <span class='tp'>tenpo suno ni</span> = \"this day\" → <b>today</b>.",ex:["tenpo suno ni la, mi pali.","Today, I work."]},
       {w:"nasin", def:"way, path, method", note:"\"way\", \"road\", \"method\", or \"custom\".",ex:["nasin pona","a good way"]},
     ],
@@ -1367,7 +1367,7 @@ const LESSONS = [
       {w:"lawa", def:"head; to lead", note:"As a noun, \"head\" or \"mind\". As a verb, \"to lead, control, guide\". <span class='tp'>jan lawa</span> = \"leader\" (head-person).",ex:["lawa mi li pona.","My head is fine."]},
       {w:"luka", def:"hand, arm", note:"\"hand\" or \"arm\". It's also the traditional word for the number five (five fingers).",ex:["luka mi li suli.","My arms are big."]},
       {w:"noka", def:"leg, foot", note:"\"leg\" or \"foot\" — the lower limbs.",ex:["noka li tawa.","The legs move."]},
-      {w:"uta", def:"mouth", note:"\"mouth\" or \"lips\" — used for eating, speaking, kissing.",ex:["uta li open.","The mouth opens."]},
+      {w:"uta", def:"mouth", note:"\"mouth\" or \"lips\" — used for eating, speaking, kissing. (<span class='tp'>open</span> means to open or begin — you'll learn it in a later lesson.)",ex:["uta li open.","The mouth opens."]},
     ],
     drills:[
       {type:"choose", q:"<span class='tp'>luka</span> means…", tp:"luka", correct:"hand, arm", opts:["hand, arm","leg, foot","head","mouth"]},
@@ -1383,8 +1383,8 @@ const LESSONS = [
     teach:[
       {w:"sijelo", def:"body", note:"\"body\" or physical condition. <span class='tp'>sijelo pona</span> = \"healthy\" (good-body).",ex:["sijelo mi li pona.","My body is well."]},
       {w:"insa", def:"inside, center", note:"\"inside\", \"inner part\", \"center\" — also the stomach or guts.",ex:["insa tomo","inside the house"]},
-      {w:"monsi", def:"back, rear", note:"\"back\" or \"behind\" — the rear of something.",ex:["monsi mi li pakala.","My back is hurt."]},
-      {w:"sinpin", def:"front, face", note:"\"front\", \"face\", or a vertical surface like a wall or chest.",ex:["sinpin mi li suwi.","My face is cute."]},
+      {w:"monsi", def:"back, rear", note:"\"back\" or \"behind\" — the rear of something. (<span class='tp'>pakala</span> means broken or hurt — you'll learn it in a later lesson.)",ex:["monsi mi li pakala.","My back is hurt."]},
+      {w:"sinpin", def:"front, face", note:"\"front\", \"face\", or a vertical surface like a wall or chest. (<span class='tp'>suwi</span> means sweet or cute — you'll learn it in a later lesson.)",ex:["sinpin mi li suwi.","My face is cute."]},
     ],
     drills:[
       {type:"choose", q:"<span class='tp'>insa</span> means…", tp:"insa", correct:"inside, center", opts:["inside, center","back","front","body"]},
@@ -1399,9 +1399,9 @@ const LESSONS = [
     id:14, course:"foundational", title:"Animals", desc:"soweli, waso, kala, akesi", icon:"🐾",
     teach:[
       {w:"soweli", def:"animal (esp. mammal)", note:"\"animal\", especially a cute land mammal — a dog, cat, bear, etc.",ex:["soweli li suli.","The animal is big."]},
-      {w:"waso", def:"bird", note:"\"bird\" or any flying creature.",ex:["waso li tawa sewi.","The bird goes up."]},
+      {w:"waso", def:"bird", note:"\"bird\" or any flying creature. (<span class='tp'>sewi</span> means high or up — you'll learn it in a later lesson.)",ex:["waso li tawa sewi.","The bird goes up."]},
       {w:"kala", def:"fish", note:"\"fish\" or any sea creature.",ex:["kala li lon telo.","The fish is in the water."]},
-      {w:"akesi", def:"reptile, amphibian", note:"The \"non-cute\" animals — reptiles and amphibians like snakes, lizards, and frogs. (Just a category, not an insult!)",ex:["akesi li lete.","The reptile is cold."]},
+      {w:"akesi", def:"reptile, amphibian", note:"The \"non-cute\" animals — reptiles and amphibians like snakes, lizards, and frogs. (Just a category, not an insult!) (<span class='tp'>lete</span> means cold — you'll learn it in a later lesson.)",ex:["akesi li lete.","The reptile is cold."]},
     ],
     drills:[
       {type:"choose", q:"<span class='tp'>waso</span> means…", tp:"waso", correct:"bird", opts:["bird","fish","reptile","mammal"]},
@@ -1451,7 +1451,7 @@ const LESSONS = [
     teach:[
       {w:"poki", def:"container, box", note:"\"container\" — a box, bowl, cup, bag, or bottle. Anything that holds something.",ex:["telo li lon poki.","The water is in the cup."]},
       {w:"lape", def:"to sleep, rest", note:"\"to sleep\" or \"rest\". <span class='tp'>tomo lape</span> = \"bedroom\" (sleep-room).",ex:["mi wile lape.","I want to sleep."]},
-      {w:"kepeken", def:"to use; using", note:"A preposition: \"using\" or \"with (a tool)\". It attaches the means of doing something, without <span class='tp'>e</span>. <span class='tp'>mi moku kepeken luka</span> = \"I eat using my hand.\"",ex:["mi pali kepeken ilo.","I work using a tool."]},
+      {w:"kepeken", def:"to use; using", note:"A preposition: \"using\" or \"with (a tool)\". It attaches the means of doing something, without <span class='tp'>e</span>. <span class='tp'>mi moku kepeken luka</span> = \"I eat using my hand.\" (<span class='tp'>ilo</span> means a tool or machine — you'll learn it in a later lesson.)",ex:["mi pali kepeken ilo.","I work using a tool."]},
     ],
     drills:[
       {type:"choose", q:"<span class='tp'>kepeken</span> means…", tp:"kepeken", correct:"to use; using", opts:["to use; using","to sleep","container","to hold"]},
@@ -1483,7 +1483,7 @@ const LESSONS = [
     id:19, course:"foundational", title:"Earth & substances", desc:"kiwen, ko, kon, ma", icon:"🪨",
     teach:[
       {w:"kiwen", def:"hard object; rock, metal", note:"\"rock\", \"stone\", \"metal\" — any hard, solid object.",ex:["kiwen li suli.","The rock is big."]},
-      {w:"ko", def:"paste, powder, goo", note:"Semi-solid stuff — clay, paste, powder, dough, goo.",ex:["ko li jaki.","The goo is gross."]},
+      {w:"ko", def:"paste, powder, goo", note:"Semi-solid stuff — clay, paste, powder, dough, goo. (<span class='tp'>jaki</span> means gross or dirty — you'll learn it in a later lesson.)",ex:["ko li jaki.","The goo is gross."]},
       {w:"kon", def:"air, breath; spirit", note:"\"air\", \"breath\", \"gas\" — and more abstractly, \"essence\" or \"spirit\".",ex:["kon li pona.","The air is good."]},
       {w:"ma", def:"land, country", note:"A reminder: <span class='tp'>ma</span> is \"land\", \"earth\", \"country\", or \"outdoors\".",ex:["ma li suli.","The land is big."]},
     ],
@@ -1550,7 +1550,7 @@ const LESSONS = [
     id:23, course:"foundational", title:"Doing & becoming", desc:"pali, open, pini, kama", icon:"🔨",
     teach:[
       {w:"pali", def:"to do, make, work", note:"\"to do\", \"make\", \"work on\", or \"build\".",ex:["mi pali e tomo.","I build a house."]},
-      {w:"open", def:"to open, begin", note:"\"to open\", \"begin\", \"start\", or \"turn on\".",ex:["mi open e lupa.","I open the door."]},
+      {w:"open", def:"to open, begin", note:"\"to open\", \"begin\", \"start\", or \"turn on\". (<span class='tp'>lupa</span> means a hole or door — you'll learn it in a later lesson.)",ex:["mi open e lupa.","I open the door."]},
       {w:"pini", def:"to end, finish; past", note:"\"to end\" or \"finish\". As an adjective, \"finished\" or \"past\". <span class='tp'>tenpo pini</span> = \"the past\".",ex:["mi pini e pali.","I finish the work."]},
       {w:"kama", def:"to come, become", note:"\"to come\", \"arrive\", or \"become\". Before another verb it means an action is starting: <span class='tp'>mi kama sona</span> = \"I come-to-know\" → \"I learn\".",ex:["mi kama.","I come / I arrive."]},
     ],
@@ -1618,7 +1618,7 @@ const LESSONS = [
     teach:[
       {w:"ilo sona", def:"computer (knowledge-tool)", note:"There are no official words for modern tech — speakers combine existing words, and these are common conventions. <span class='tp'>ilo sona</span> = \"knowledge-tool\" → computer.",ex:["ilo sona mi li suli.","My computer is big."]},
       {w:"ilo toki", def:"phone (talk-tool)", note:"<span class='tp'>ilo toki</span> = \"talk-tool\" → phone. You can add <span class='tp'>lili</span> for a mobile: <span class='tp'>ilo toki lili</span>.",ex:["mi jo e ilo toki.","I have a phone."]},
-      {w:"(internet & AI)", def:"Describing the web and AI", note:"The internet is often <span class='tp'>linja sona</span> (\"knowledge-line/web\") or <span class='tp'>ma sona</span> (\"knowledge-land\"). An AI might be <span class='tp'>ilo sona</span> or <span class='tp'>ilo pi sona musi</span>. These aren't fixed — toki pona invites you to describe, not label.",ex:["linja sona","the internet (knowledge-web)"]},
+      {w:"(internet & AI)", def:"Describing the web and AI", note:"The internet is often <span class='tp'>linja sona</span> (\"knowledge-line/web\") or <span class='tp'>ma sona</span> (\"knowledge-land\"). An AI might be <span class='tp'>ilo sona</span> or <span class='tp'>ilo pi sona musi</span>. These aren't fixed — toki pona invites you to describe, not label. (Here <span class='tp'>linja</span> means a line or string, and <span class='tp'>musi</span> means fun or playful — both are taught in later lessons.)",ex:["linja sona","the internet (knowledge-web)"]},
     ],
     drills:[
       {type:"choose", q:"<span class='tp'>ilo sona</span> (\"knowledge-tool\") most likely means…", correct:"computer", opts:["computer","phone","calculator","TV"]},
