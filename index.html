@@ -2235,9 +2235,26 @@ function saveState(){
 function loadSRS(){
   try{
     const raw = localStorage.getItem(keyFor(SRS_KEY));
-    if(raw) return JSON.parse(raw);
+    if(raw) return migrateCardData(JSON.parse(raw));
   }catch(e){}
   return { cards:{} }; // cards keyed by tp word
+}
+// A card froze a copy of its gloss + pos when it was first created, so a later
+// dictionary edit (e.g. the adj→modifier re-tagging) wouldn't reach cards that
+// already existed. Re-sync each card from the current dictionary on load so the
+// flashcards always match. Multi-word concept cards (srsExtras, not in WORDS)
+// have no dictionary entry and are left untouched.
+function migrateCardData(data){
+  if(data && data.cards){
+    Object.values(data.cards).forEach(c=>{
+      const info = wordInfo(c.w);
+      if(info){
+        if(info.en)  c.en  = info.en;
+        if(info.pos) c.pos = info.pos;  // compound entries have no pos — leave card's as-is
+      }
+    });
+  }
+  return data;
 }
 function saveSRS(){
   try{ localStorage.setItem(keyFor(SRS_KEY), JSON.stringify(srs)); }catch(e){}
