@@ -2340,6 +2340,11 @@ function mergeCloud(cloud){
   }
   // validate the merged streak against actual elapsed days before persisting
   clampStreak(state);
+  // Cloud cards can carry labels saved before a dictionary edit (e.g. the
+  // adj→modifier re-tagging). Re-sync the merged result so adopted cloud cards
+  // match the current dictionary too. finishLogin's cloudSave() then writes
+  // this corrected copy back, healing the cloud record permanently.
+  migrateCardData(srs);
   try{
     localStorage.setItem(keyFor(SAVE_KEY), JSON.stringify(state));
     localStorage.setItem(keyFor(SRS_KEY), JSON.stringify(srs));
