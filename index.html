@@ -745,7 +745,7 @@ const WORDS = [
   {w:"palisa",pos:"noun",   def:"long hard thing; stick, rod, branch, pole", keys:["stick","rod","branch","pole","long hard thing","staff","bar","wand"]},
   {w:"pan", pos:"noun",     def:"grain; bread, pasta, rice, cereal", keys:["grain","bread","rice","pasta","cereal","wheat","corn","starch"]},
   {w:"pana",pos:"verb",     def:"to give, send, emit, provide, put, release", keys:["give","send","emit","provide","put","release","offer","deliver","grant","transmit"]},
-  {w:"pi",  pos:"particle", def:"of; (regroups modifiers so they apply to a phrase)", keys:["of","particle pi","regroup","modifier grouping"]},
+  {w:"pi",  pos:"particle", def:"(groups the words after it into a single modifier)", keys:["particle pi","regroup","modifier grouping"]},
   {w:"pilin",pos:"noun/verb",def:"heart, feelings; to feel, sense, think, perceive", keys:["feel","feeling","emotion","heart","sense","think","perceive","touch","mood"]},
   {w:"pimeja",pos:"modifier",    def:"black, dark; unlit", keys:["black","dark","darkness","unlit","shadow"]},
   {w:"pini",pos:"modifier/verb", def:"end, finish; finished, past, completed; to stop", keys:["end","finish","done","complete","stop","past","over","conclude","final"]},
@@ -1319,7 +1319,7 @@ const LESSONS = [
     id:9, course:"intro", title:"The la & pi particles", desc:"la, pi, tenpo, nasin", icon:"🧩",
     teach:[
       {w:"la", def:"(context / if-when)", note:"<span class='tp'>la</span> attaches a context phrase to the front of a sentence. <span class='tp'>tenpo suno ni la, mi pali</span> = \"Today, I work.\" It can mean \"if\", \"when\", or \"as for…\". (Here <span class='tp'>suno</span> means sun or day, and <span class='tp'>kama</span> means to come — both are taught in later lessons.)",ex:["sina kama la, mi pilin pona.","If you come, I feel good."]},
-      {w:"pi", def:"(regroups modifiers)", note:"<span class='tp'>pi</span> isn't really a word with a meaning — it's a grouping tool. It makes a modifier apply to a whole phrase instead of just the word before it. <span class='tp'>tomo pi telo nasa</span> = \"house of crazy-water\" → \"bar\". It often translates as \"of\" in English, but that's just a convenient translation, not its meaning. Only use <span class='tp'>pi</span> when there are 2+ modifier words. (<span class='tp'>nasa</span> means silly or strange — you'll learn it in a later lesson.)",ex:["jan pi sona mute","person of much knowledge"]},
+      {w:"pi", def:"(regroups modifiers)", note:"<span class='tp'>pi</span> isn't really a word with a meaning — it's a grouping tool. Normally the words after a noun all pile up to describe it, so a modifier isn't tied to just the word right before it. <span class='tp'>pi</span> changes that grouping: it bundles the words after it into one unit, and that whole unit then acts as a single modifier on the noun. <span class='tp'>tomo pi telo nasa</span> = \"house of crazy-water\" → \"bar\". It often translates as \"of\" in English, but that's just a convenient translation, not its meaning. Only use <span class='tp'>pi</span> when there are 2+ modifier words. (<span class='tp'>nasa</span> means silly or strange — you'll learn it in a later lesson.)",ex:["jan pi sona mute","person of much knowledge"]},
       {w:"tenpo", def:"time", note:"\"time\", \"moment\", \"period\". Combine it to talk about parts of the day: <span class='tp'>tenpo suno</span> = \"day\" (sun-time); <span class='tp'>tenpo pimeja</span> = \"night\" (dark-time). Add <span class='tp'>ni</span> (\"this\", from earlier) to point at the current one: <span class='tp'>tenpo suno ni</span> = \"this day\" → <b>today</b>.",ex:["tenpo suno ni la, mi pali.","Today, I work."]},
       {w:"nasin", def:"way, path, method", note:"\"way\", \"road\", \"method\", or \"custom\".",ex:["nasin pona","a good way"]},
     ],
@@ -4203,6 +4203,13 @@ boot();
     font-family:var(--sans,system-ui,sans-serif); font-size:14.5px; line-height:1.4;
   }
   #tpFlagNote:focus{ border-color:var(--accent-soft,#3a3ac0); }
+  #tpFlagEmail{
+    width:100%; box-sizing:border-box; padding:11px 13px; margin-top:10px;
+    border-radius:10px; border:1.5px solid var(--line,#c7c7ec);
+    background:var(--paper,#fcfbe4); color:var(--ink,#13136b);
+    font-family:var(--sans,system-ui,sans-serif); font-size:14.5px;
+  }
+  #tpFlagEmail:focus{ border-color:var(--accent-soft,#3a3ac0); }
   #tpFlagActions{ display:flex; gap:10px; margin-top:14px; }
   #tpFlagActions button{
     flex:1; padding:12px; border-radius:11px; font-weight:700; font-size:15px;
@@ -4237,6 +4244,7 @@ boot();
     <div id="tpFlagBody">
       <img id="tpFlagShot" alt="Screenshot of what you're seeing">
       <textarea id="tpFlagNote" placeholder="What looks wrong? e.g. the word X should mean Y… (optional)"></textarea>
+      <input id="tpFlagEmail" type="email" autocomplete="email" inputmode="email" aria-label="Your email, optional" placeholder="Your email (optional — only if you'd like a reply)">
       <div id="tpFlagActions">
         <button id="tpFlagCancel" type="button">Cancel</button>
         <button id="tpFlagSend" type="button">Send report</button>
@@ -4269,12 +4277,14 @@ boot();
   const overlay = document.getElementById('tpFlagOverlay');
   const shotImg = document.getElementById('tpFlagShot');
   const noteEl  = document.getElementById('tpFlagNote');
+  const emailEl = document.getElementById('tpFlagEmail');
   const ctxEl   = document.getElementById('tpFlagCtx');
   const sendBtn = document.getElementById('tpFlagSend');
   const cancelBtn = document.getElementById('tpFlagCancel');
   const toast   = document.getElementById('tpFlagToast');
 
   let pngBlob = null, jpgBlob = null;
+  const isEmail = v => { const a = v.indexOf('@'); return a > 0 && v.indexOf('.', a) > a + 1 && a === v.lastIndexOf('@'); };
 
   const VIEW_NAMES = {
     'view-home':'Home', 'view-lessons':'Lessons', 'view-runner':'Lesson',
@@ -4344,6 +4354,7 @@ boot();
   function closeFlag(){
     overlay.classList.remove('show');
     noteEl.value = '';
+    emailEl.value = '';
   }
 
   function downloadBlob(blob, name){
@@ -4354,7 +4365,7 @@ boot();
     a.remove(); setTimeout(()=>URL.revokeObjectURL(u), 4000);
   }
 
-  function sendViaMailto(c, note, fname){
+  function sendViaMailto(c, note, fname, email){
     if(pngBlob) downloadBlob(pngBlob, fname);       // reporter attaches this one file
     const subject = 'toki tu — flagged error on ' + c.page;
     const body =
@@ -4363,6 +4374,7 @@ boot();
       '\nURL: ' + c.url +
       '\nTime: ' + c.time +
       '\nBrowser: ' + c.ua +
+      (email ? '\nReply to: ' + email : '') +
       (pngBlob ? '\n\n[Screenshot "' + fname + '" was just downloaded — please attach it to this email.]' : '');
     window.location.href = 'mailto:' + encodeURIComponent(EMAIL) +
       '?subject=' + encodeURIComponent(subject) +
@@ -4375,9 +4387,9 @@ boot();
     try{ new DataTransfer(); return true; }catch(e){ return false; }
   }
 
-  function sendViaFormsubmit(c, note, fname){
+  function sendViaFormsubmit(c, note, fname, email){
     if(!jpgBlob || !canInjectFile()){
-      sendViaMailto(c, note, fname);                // graceful fallback (e.g. Safari)
+      sendViaMailto(c, note, fname, email);                // graceful fallback (e.g. Safari)
       return;
     }
     const iframe = document.createElement('iframe');
@@ -4393,7 +4405,9 @@ boot();
     add('_subject', 'toki tu — flagged error on ' + c.page);
     add('_captcha', 'false');
     add('_template', 'table');
+    if(isEmail(email)) add('_replyto', email);   // lets you reply straight to the reporter
     add('Note', note || '(no note)');
+    if(email) add('Reply to', email);
     add('Page', c.page);
     add('URL', c.url);
     add('Time', c.time);
@@ -4429,13 +4443,14 @@ boot();
       r.onerror = rej; r.readAsDataURL(blob);
     });
   }
-  async function sendViaEmailjs(c, note, fname){
+  async function sendViaEmailjs(c, note, fname, email){
     try{
       await ensureEmailJS();
       emailjs.init({ publicKey: EMAILJS.publicKey });
       const params = {
         page: c.page, url: c.url, time: c.time, browser: c.ua,
-        note: note || '(no note)', to_email: EMAIL
+        note: note || '(no note)', to_email: EMAIL,
+        reply_to: email || ''
       };
       if(EMAILJS.attachScreenshot && jpgBlob){
         params.screenshot = await blobToBase64(jpgBlob);
@@ -4445,17 +4460,18 @@ boot();
       showToast('Thanks — your report was sent');
       closeFlag();
     }catch(err){
-      sendViaMailto(c, note, fname);   // graceful fallback if the SDK or send fails
+      sendViaMailto(c, note, fname, email);   // graceful fallback if the SDK or send fails
     }
   }
 
   sendBtn.addEventListener('click', ()=>{
     const c = currentContext();
     const note = noteEl.value.trim();
+    const email = emailEl.value.trim();
     const fname = 'toki-tu-report-' + Date.now() + '.png';
-    if(MODE === 'formsubmit')   sendViaFormsubmit(c, note, fname);
-    else if(MODE === 'emailjs') sendViaEmailjs(c, note, fname);
-    else                        sendViaMailto(c, note, fname);
+    if(MODE === 'formsubmit')   sendViaFormsubmit(c, note, fname, email);
+    else if(MODE === 'emailjs') sendViaEmailjs(c, note, fname, email);
+    else                        sendViaMailto(c, note, fname, email);
   });
 
   fab.addEventListener('click', openFlag);
