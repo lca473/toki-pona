@@ -1608,7 +1608,7 @@ const LESSONS = [
       {w:"ilo", def:"tool, machine, device", note:"\"tool\", \"machine\", or \"device\" — any useful object. The key word for building tech terms.",ex:["ilo li pona.","The tool is good."]},
       {w:"sitelen", def:"image, writing; to draw", note:"\"image\", \"picture\", \"symbol\", or \"writing\"; as a verb, \"to draw\" or \"write\".",ex:["mi sitelen e nimi.","I write a word."]},
       {w:"nimi", def:"word, name", note:"\"word\" or \"name\".",ex:["nimi mi li Ken.","My name is Ken."]},
-      {w:"(building terms)", def:"How to name new things", note:"With ~130 words, toki pona names modern things by combining: <span class='tp'>ilo</span> (tool) + a describing word. <span class='tp'>ilo toki</span> = \"talk-tool\" → phone. <span class='tp'>ilo sitelen</span> = \"image/writing-tool\" → camera or screen.",ex:["ilo toki","phone (talk-tool)"]},
+      {w:"(building terms)", def:"How to name new things", note:"With ~120 words, toki pona names modern things by combining: <span class='tp'>ilo</span> (tool) + a describing word. <span class='tp'>ilo toki</span> = \"talk-tool\" → phone. <span class='tp'>ilo sitelen</span> = \"image/writing-tool\" → camera or screen.",ex:["ilo toki","phone (talk-tool)"]},
     ],
     drills:[
       {type:"choose", q:"<span class='tp'>ilo</span> means…", tp:"ilo", correct:"tool, machine, device", opts:["tool, machine, device","image","word","house"]},
@@ -2102,28 +2102,34 @@ const GRAMMAR = [
   {t:"Objects: the e particle", body:`
     <p>To mark the thing a verb acts on (the direct object), put <span class='tp'>e</span> in front of it.</p>
     <div class="gram-ex"><div class="ex-tp">mi moku e kili.</div><div class="ex-en">I eat fruit.</div></div>
-    <p>You can stack multiple objects, each with its own <span class='tp'>e</span>: <span class='tp'>mi moku e kili e telo</span> = "I eat fruit and drink water".</p>`},
+    <p>You can stack multiple objects, each with its own <span class='tp'>e</span>: <span class='tp'>mi moku e kili e telo</span> = "I eat fruit and drink water" — <span class='tp'>moku</span> covers both eating and drinking.</p>`},
   {t:"Word order & modifiers", body:`
     <p>Describing words come <b>after</b> the word they modify — the reverse of English.</p>
     <div class="gram-ex"><div class="ex-tp">tomo suli</div><div class="ex-en">big house <i>(literally "house big")</i></div></div>
     <div class="gram-ex"><div class="ex-tp">jan pona</div><div class="ex-en">good person → friend</div></div>
     <p>Possession also works this way — a pronoun after a noun shows ownership: <span class='tp'>tomo mi</span> = "my house".</p>`},
   {t:"The pi particle (regrouping)", body:`
-    <p>Normally each modifier attaches to the single word before it. <span class='tp'>pi</span> lets a modifier apply to a whole phrase instead.</p>
-    <div class="gram-ex"><div class="ex-tp">jan pi sona mute</div><div class="ex-en">a person of much knowledge</div></div>
-    <p>Without <span class='tp'>pi</span>, "jan sona mute" would read as "many knowledgeable people". Only reach for <span class='tp'>pi</span> when grouping <b>two or more</b> modifier words.</p>`},
+    <p>By default, the words after a noun all pile up to describe it — a later modifier isn't tied to just the single word before it. That's why <span class='tp'>jan sona mute</span> reads as "many knowledgeable people".</p>
+    <p><span class='tp'>pi</span> changes the grouping: it bundles the words after it into their own unit, and that whole unit then acts as a single modifier.</p>
+    <div class="gram-ex"><div class="ex-tp">jan pi sona mute</div><div class="ex-en">a person of much knowledge <i>(sona mute = "much knowledge", describing jan as one idea)</i></div></div>
+    <p>Reach for <span class='tp'>pi</span> only when grouping <b>two or more</b> modifier words; before a single word it isn't needed.</p>`},
   {t:"Asking questions", body:`
     <p><b>Yes/no:</b> repeat the verb with <span class='tp'>ala</span> in the middle.</p>
     <div class="gram-ex"><div class="ex-tp">sina pona ala pona?</div><div class="ex-en">Are you good? <i>(answer: pona = yes, ala = no)</i></div></div>
     <p><b>Open questions:</b> put <span class='tp'>seme</span> ("what/which") where the unknown belongs.</p>
     <div class="gram-ex"><div class="ex-tp">sina pali e seme?</div><div class="ex-en">What are you doing?</div></div>`},
   {t:"Commands with o", body:`
-    <p><span class='tp'>o</span> before a verb turns it into a command or request.</p>
+    <p>Like <span class='tp'>li</span>, the particle <span class='tp'>o</span> marks the word after it as the predicate — but it turns the sentence into a command, request, or wish.</p>
     <div class="gram-ex"><div class="ex-tp">o kama!</div><div class="ex-en">Come!</div></div>
-    <p>Placed after a name, <span class='tp'>o</span> is how you call out to someone: <span class='tp'>jan Mali o!</span> = "Hey Mary!"</p>`},
+    <p>Place <span class='tp'>o</span> after a noun — any noun, not just a name — to call out to someone or something.</p>
+    <div class="gram-ex"><div class="ex-tp">jan Mali o!</div><div class="ex-en">Hey Mary!</div></div>
+    <div class="gram-ex"><div class="ex-tp">mama o!</div><div class="ex-en">Hey parent!</div></div>
+    <p>You can do both at once — addressee, then <span class='tp'>o</span>, then the command:</p>
+    <div class="gram-ex"><div class="ex-tp">jan Mali o kama!</div><div class="ex-en">Mary, come!</div></div>`},
   {t:"Prepositions", body:`
-    <p>A handful of words act as prepositions, attaching extra info without <span class='tp'>e</span>: <span class='tp'>tawa</span> (to/toward), <span class='tp'>lon</span> (at/in), <span class='tp'>tan</span> (from/because), <span class='tp'>kepeken</span> (using), <span class='tp'>poka</span> (with/beside), <span class='tp'>sama</span> (like/as).</p>
-    <div class="gram-ex"><div class="ex-tp">mi pali kepeken ilo.</div><div class="ex-en">I work using a tool.</div></div>`},
+    <p>A handful of words act as prepositions, attaching extra info without <span class='tp'>e</span>: <span class='tp'>tawa</span> (to/toward), <span class='tp'>lon</span> (at/in), <span class='tp'>tan</span> (from/because), <span class='tp'>kepeken</span> (using), <span class='tp'>sama</span> (like/as).</p>
+    <div class="gram-ex"><div class="ex-tp">mi pali kepeken ilo.</div><div class="ex-en">I work using a tool.</div></div>
+    <p>Many speakers also use <span class='tp'>poka</span> (with/beside) as a preposition. It isn't one of the official <i>pu</i> prepositions — there it's a content word meaning "side" — but the usage is common.</p>`},
   {t:"The la particle (context)", body:`
     <p><span class='tp'>la</span> sets a context before the main sentence — time, condition, or topic.</p>
     <div class="gram-ex"><div class="ex-tp">tenpo suno ni la, mi pali.</div><div class="ex-en">Today, I work.</div></div>
@@ -2135,7 +2141,7 @@ const GRAMMAR = [
     <p>The core "pu" number words are small: <span class='tp'>ala</span> (0), <span class='tp'>wan</span> (1), <span class='tp'>tu</span> (2), <span class='tp'>mute</span> (many/several), <span class='tp'>ale</span> (all/∞).</p>
     <p>Bigger numbers are built by adding: <span class='tp'>tu wan</span> = 3, <span class='tp'>tu tu</span> = 4. Many speakers also use <span class='tp'>luka</span> for 5 and <span class='tp'>mute</span> for 20 in a longer counting system. For everyday use, exact numbers are rare — toki pona prefers "few" vs "many".</p>`},
   {t:"Building compound ideas", body:`
-    <p>With only ~130 words, toki pona combines them to express more. These are conventions, not fixed vocabulary:</p>
+    <p>With only ~120 words, toki pona combines them to express more. These are conventions, not fixed vocabulary:</p>
     <div class="gram-ex"><div class="ex-tp">tomo telo</div><div class="ex-en">water-room → bathroom</div></div>
     <div class="gram-ex"><div class="ex-tp">jan pona</div><div class="ex-en">good person → friend</div></div>
     <div class="gram-ex"><div class="ex-tp">ilo toki</div><div class="ex-en">talk-tool → phone</div></div>
